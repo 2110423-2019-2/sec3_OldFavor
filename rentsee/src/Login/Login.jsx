@@ -36,7 +36,8 @@ class Login extends Component {
                 return response.json();
             })
             .then(resJson => {
-                console.log(resJson);
+                localStorage.setItem('userInfo', JSON.stringify(resJson));
+                console.log('saved userInfo to localStorage');
             })
             .catch(error => {
                 console.log(error);
