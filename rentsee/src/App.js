@@ -1,6 +1,6 @@
 import React from 'react';
 // import logo from './logo.svg';
-// import './App.css';
+import './App.css';
 import Register from './Register/Register';
 import Home from './Home/Home';
 import Login from './Login/Login';

@@ -1,0 +1,20 @@
+.full-screen {
+    height: 100vh;
+}
+.login-banner {
+    width: 100%;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(324.89deg, #bdd3e1 0%, rgba(189, 211, 225, 0) 100%);
+    background-blend-mode: screen;
+    mix-blend-mode: normal;
+}
+
+.login-inner-banner {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    background: #8494ae;
+}
