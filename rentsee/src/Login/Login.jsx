@@ -4,7 +4,44 @@ import loginCar from './images/login-car.svg';
 import rentseeLogo from './images/logo-rentsee.svg';
 
 class Login extends Component {
-    state = {};
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: ''
+        };
+        this.handleFormChange = this.handleFormChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleFormChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        this.setState({ [name]: value });
+    }
+    handleSubmit(event) {
+        event.preventDefault();
+        fetch('http://rentsee.krist7599555.ml/api/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password
+            })
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(resJson => {
+                console.log(resJson);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
     render() {
         return (
             <div className='container-fluid full-screen'>
@@ -20,13 +57,15 @@ class Login extends Component {
                     <div className='col-lg-6 col-md-6 col-xs-4 h-100 login-form-container'>
                         <div className='login-form form-group ml-5'>
                             <h1 className='mb-4'>Login</h1>
-                            <form method='post'>
+                            <form onSubmit={this.handleSubmit}>
                                 <div className='input-with-icon mt-4'>
                                     <input
                                         className='form-control'
                                         type='text'
-                                        name='email'
-                                        placeholder='Email Address'
+                                        name='username'
+                                        placeholder='Username'
+                                        value={this.state.username}
+                                        onChange={this.handleFormChange}
                                     />
                                     <i>
                                         <svg
@@ -46,6 +85,8 @@ class Login extends Component {
                                         type='password'
                                         name='password'
                                         placeholder='Password'
+                                        value={this.state.password}
+                                        onChange={this.handleFormChange}
                                     />
                                     <i>
                                         <svg
@@ -62,7 +103,7 @@ class Login extends Component {
                                 <a className='d-block my-3' href='/login'>
                                     Forget password?
                                 </a>
-                                <input type='submit' className='btn mt-4' value='Submit' />
+                                <input type='submit' className='btn mt-4' value='Login' />
                             </form>
                             <div className='mt-5'>
                                 Don’t have an account yet?{' '}
