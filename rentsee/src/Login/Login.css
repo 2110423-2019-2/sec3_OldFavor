@@ -1,7 +1,42 @@
 .full-screen {
     height: 100vh;
 }
+h1 {
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 43px;
+}
+a:link {
+    color: #545372 !important;
+    text-decoration: none;
+}
+a:active,
+a:visited,
+a:hover {
+    color: #545372 !important;
+    text-decoration: underline;
+}
+.logo {
+    position: absolute;
+    width: 119px;
+    height: 39px;
+    left: 7vh;
+    top: 7vh;
+}
+.image-container {
+    vertical-align: middle;
+    text-align: center;
+    line-height: 100vh;
+}
+
+.login-car {
+    position: relative;
+    width: 95%;
+}
+
 .login-banner {
+    z-index: -1;
+    position: absolute;
     width: 100%;
     height: 100vh;
     left: 0px;
@@ -12,9 +47,44 @@
 }
 
 .login-inner-banner {
+    z-index: -2;
+    position: absolute;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     left: 0px;
     top: 0px;
     background: #8494ae;
+}
+.login-form-container {
+    display: flex;
+}
+
+.login-form {
+    margin: auto 0px;
+}
+
+.input-with-icon {
+    position: relative;
+}
+.input-with-icon input {
+    position: relative;
+    padding-left: 48px;
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+.input-with-icon input:focus {
+    box-shadow: 0 0 8px 0 #bdd3e1;
+    border-color: #bdd3e1;
+}
+.input-with-icon i {
+    position: absolute;
+    left: 12px;
+    top: 5px;
+}
+.btn {
+    padding-left: 35px;
+    padding-right: 35px;
+    color: #ffffff;
+    background-color: #545372;
 }
