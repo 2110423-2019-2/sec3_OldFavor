@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Login.css';
 import loginCar from './images/login-car.svg';
 import rentseeLogo from './images/logo-rentsee.svg';
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
     constructor(props) {
@@ -33,14 +34,20 @@ class Login extends Component {
             })
         })
             .then(response => {
-                return response.json();
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    alert('Username or password is wrong');
+                }
             })
             .then(resJson => {
-                localStorage.setItem('userInfo', JSON.stringify(resJson));
-                console.log('saved userInfo to localStorage');
+                if (resJson) {
+                    localStorage.setItem('userInfo', JSON.stringify(resJson));
+                    this.props.history.push('/');
+                }
             })
             .catch(error => {
-                console.log(error);
+                console.log('error: ', error);
             });
     }
     render() {
@@ -120,4 +127,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
