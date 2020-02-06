@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import utils from '../utils.js';
 
 class Home extends Component {
-    state = { username: '' };
+    constructor(props) {
+        super(props);
+        this.state = { username: '' };
+        this.hello = this.hello.bind(this);
+    }
     componentDidMount() {
         fetch('http://rentsee.krist7599555.ml/api/profile', {
             method: 'GET',
@@ -19,11 +23,18 @@ class Home extends Component {
                 console.log(error);
             });
     }
+    hello() {
+        if (this.state.username) {
+            return <div>Hello, {this.state.username}</div>;
+        } else {
+            return <div>You are not logged in</div>;
+        }
+    }
     render() {
         return (
             <div>
                 <h1>Home</h1>
-                <div>Hello, {this.state.username}</div>
+                {this.hello()}
             </div>
         );
     }
