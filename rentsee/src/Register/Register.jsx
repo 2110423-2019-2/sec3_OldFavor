@@ -159,9 +159,11 @@ class Register extends Component {
                                 </label>
                                 <input className='btn mt-4 d-flex' type='submit' value='Submit' />
                             </form>
-                            <div className='mt-1 d-flex'>
-                                Already have account?
-                                <a href='/login'>Sign in</a>
+                            <div className='mt-5'>
+                                Already have account?{' '}
+                                <a href='/login' style={{ fontWeight: 'bold' }}>
+                                    Sign in
+                                </a>
                             </div>
                         </div>
                     </div>
