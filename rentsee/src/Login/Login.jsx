@@ -55,7 +55,9 @@ class Login extends Component {
             <div className='container-fluid full-screen'>
                 <div className='row h-100'>
                     <div className='col-lg-6 col-md-6 d-none d-lg-block h-100'>
-                        <img className='logo' src={rentseeLogo} alt=''></img>
+                        <a href='/'>
+                            <img className='logo' src={rentseeLogo} alt=''></img>
+                        </a>
                         <div className='image-container h-100'>
                             <img className='login-car' src={loginCar} alt=''></img>
                         </div>
@@ -63,7 +65,7 @@ class Login extends Component {
                         <div className='login-inner-banner'></div>
                     </div>
                     <div className='col-lg-6 col-md-6 col-xs-4 h-100 login-form-container'>
-                        <div className='login-form form-group ml-5'>
+                        <div className='login-form ml-5'>
                             <h1 className='mb-4'>Login</h1>
                             <form onSubmit={this.handleSubmit}>
                                 <div className='input-with-icon mt-4'>

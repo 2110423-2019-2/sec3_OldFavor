@@ -10,12 +10,12 @@ function App() {
     return (
         <div className='App'>
             <header className='App-header'>
-                <ul>
+                {/* <ul>
                     <a href='/'>Home</a>
                     <a href='/login'>Login</a>
                     <a href='/register'>Register</a>
                     <a href='/logout'>Logout</a>
-                </ul>
+                </ul> */}
                 <Router>
                     <Route exact path='/' component={Home} />
                     <Route path='/login' component={Login} />

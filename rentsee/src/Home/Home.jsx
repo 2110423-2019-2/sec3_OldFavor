@@ -34,6 +34,12 @@ class Home extends Component {
         return (
             <div>
                 <h1>Home</h1>
+                <ul>
+                    <a href='/'>Home</a>
+                    <a href='/login'>Login</a>
+                    <a href='/register'>Register</a>
+                    <a href='/logout'>Logout</a>
+                </ul>
                 {this.hello()}
             </div>
         );

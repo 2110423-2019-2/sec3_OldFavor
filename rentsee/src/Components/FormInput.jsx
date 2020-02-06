@@ -18,6 +18,7 @@ class FormInput extends Component {
                     placeholder={this.props.placeholder}
                     value={this.props.value}
                     onChange={this.handleChange}
+                    // style={{ fontSize: '14px' }}
                 />
                 <i>
                     <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='#C4C4C4'>
