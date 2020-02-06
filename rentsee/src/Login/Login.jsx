@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import loginCar from './images/login-car.svg';
-import rentseeLogo from './images/logo-rentsee.svg';
+import rentseeLogo from '../images/logo-rentsee.svg';
 import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
