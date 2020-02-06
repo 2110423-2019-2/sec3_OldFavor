@@ -10,7 +10,11 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-html,
-body {
-    height: 100vh;
+::selection {
+    background: #545372; /* WebKit/Blink Browsers */
+    color: #fff;
+}
+::-moz-selection {
+    background: #545372; /* Gecko Browsers */
+    color: #fff;
 }
