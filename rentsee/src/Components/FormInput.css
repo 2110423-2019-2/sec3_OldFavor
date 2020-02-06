@@ -1,0 +1,19 @@
+.input-with-icon {
+    position: relative;
+}
+.input-with-icon input {
+    position: relative;
+    padding-left: 48px;
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+.input-with-icon input:focus {
+    box-shadow: 0 0 8px 0 #bdd3e1;
+    border-color: #bdd3e1;
+}
+.input-with-icon i {
+    position: absolute;
+    left: 12px;
+    top: 5px;
+}
