@@ -3,7 +3,8 @@ import './App.css';
 import Register from './Register/Register';
 import Home from './Home/Home';
 import Login from './Login/Login';
-import Logout from './Logout/Logout';
+import Logout from './Logout/Logout'
+import AddCar from './AddCar/AddCar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
                     <Route path='/logout' component={Logout} />
+                    <Route path='/AddCar' component={AddCar} />
                 </Router>
             </header>
         </div>

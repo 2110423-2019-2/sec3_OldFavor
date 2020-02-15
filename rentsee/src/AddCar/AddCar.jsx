@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import utils from '../utils.js';
 import SearchBar from '../Components/SearchBar';
 
-class Home extends Component {
+class AddCar extends Component {
     constructor(props) {
         super(props);
         this.state = { username: '' };
@@ -34,7 +34,7 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Home</h1>
+                <h1>AddCar</h1>
                 <ul>
                     <a href='/'>Home</a>
                     <a href='/login'>Login</a>
@@ -50,4 +50,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default AddCar;
