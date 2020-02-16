@@ -3,7 +3,7 @@ import './Register.css';
 import rentseeLogo from '../images/logo-rentsee.svg';
 import bannerImg from './images/register-banner.svg';
 import FormInput from '../Components/FormInput';
-
+import utils from '../utils.js';
 class AddCar extends Component {
     constructor(props) {
         super(props);
@@ -33,12 +33,12 @@ class AddCar extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        fetch('http://rentsee.krist7599555.ml/api/addcar', {
+        fetch('http://rentsee.krist7599555.ml/api/cars', {
             method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
+            
+            
+            headers: utils.authHeader(),
+                
             body: JSON.stringify({
                 username: this.state.username,
                 password: this.state.password
