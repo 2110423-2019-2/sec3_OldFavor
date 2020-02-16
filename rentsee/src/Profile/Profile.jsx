@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import utils from '../utils.js';
+//import loginCar from './images/login-car.svg';
+import rentseeLogo from '../images/logo-rentsee.svg';
+
 
 
 class Profile extends Component{
@@ -48,7 +51,11 @@ class Profile extends Component{
     render(){
         return(
             <div className='container-fluid full-screen'>
-                <h1> WOW </h1>
+                <div className="row h-100">
+                    <a href='/'>
+                        <img className='logo' src={rentseeLogo} alt=''></img>
+                    </a>
+                </div>
             </div>
 
         );
