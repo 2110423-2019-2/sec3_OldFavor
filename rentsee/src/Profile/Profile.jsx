@@ -9,7 +9,13 @@ class Profile extends Component{
         this.state = {
             username : "",
             password : "",
-            birthdate : ""
+            drivingLisense : "",
+            email : "",
+            bankAccountNumber : "",
+            address : "",
+            phoneNumber : "",
+            creditCardNumber : "",
+
         };
 
     }
@@ -25,7 +31,14 @@ class Profile extends Component{
             console.log(resJson);
             this.setState({ 
                 username: resJson.username,
-                password : resJson.password
+                password : resJson.password,
+                drivingLisense : resJson.drivingLisense,
+                email : resJson.email,
+                bankAccountNumber : resJson.bankAccountNumber,
+                address : resJson.address,
+                phoneNumber : resJson.phoneNumber,
+                creditCardNumber : resJson.creditCardNumber
+
             });
         })
         .catch(error => {
