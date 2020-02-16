@@ -6,16 +6,6 @@ h1 {
     font-size: 36px;
     line-height: 43px;
 }
-a:link {
-    color: #545372 !important;
-    text-decoration: none;
-}
-a:active,
-a:visited,
-a:hover {
-    color: #545372 !important;
-    text-decoration: underline;
-}
 .logo {
     position: absolute;
     width: 119px;

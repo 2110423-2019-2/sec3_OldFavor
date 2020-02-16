@@ -126,7 +126,7 @@ class Register extends Component {
                             </form>
                             <div className='mt-5'>
                                 Already have account?{' '}
-                                <a href='/login' style={{ fontWeight: 'bold' }}>
+                                <a className='text' href='/login' style={{ fontWeight: 'bold' }}>
                                     Sign in
                                 </a>
                             </div>

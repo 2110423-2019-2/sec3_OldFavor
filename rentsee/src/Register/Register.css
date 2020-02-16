@@ -13,16 +13,16 @@ h2 {
     font-size: 1em;
     line-height: 24px;
 }
-a:link {
+/* .text a:link {
     color: #545372 !important;
     text-decoration: none;
 }
-a:active,
+.text a:active,
 a:visited,
 a:hover {
     color: #545372 !important;
     text-decoration: underline;
-}
+} */
 .logo {
     z-index: 10;
     position: absolute;
