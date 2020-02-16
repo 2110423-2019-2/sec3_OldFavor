@@ -110,14 +110,14 @@ class Login extends Component {
                                         </svg>
                                     </i>
                                 </div>
-                                <a className='d-block my-3' href='/login'>
+                                <a className='text d-block my-3' href='/login'>
                                     Forget password?
                                 </a>
                                 <input type='submit' className='btn mt-4' value='Login' />
                             </form>
                             <div className='mt-5'>
                                 Don’t have an account yet?{' '}
-                                <a href='/register' style={{ fontWeight: 'bold' }}>
+                                <a className='text' href='/register' style={{ fontWeight: 'bold' }}>
                                     Register
                                 </a>
                             </div>
