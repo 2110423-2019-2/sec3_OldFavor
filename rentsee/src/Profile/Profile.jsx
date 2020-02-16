@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import utils from "../utils.js";
-import rentseeLogo from "../images/logo-rentsee.svg";
 import FormInput from "../Components/FormInput";
+import Header from "../Components/Header"
 
 class Profile extends Component {
   constructor(props) {
@@ -85,7 +85,7 @@ class Profile extends Component {
       <div className="container-fluid full-screen" >
         <div className="col">
           <div className="row">
-            
+            <Header/>
           </div>
         </div>
         <div className="col">
