@@ -1,0 +1,13 @@
+{
+  "watch": ["src"],
+  "ext": "ts",
+  "ignore": ["src/**/*.spec.ts"],
+  "exec": "ts-node ./src/index.ts",
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": "19888",
+    "MONGO_URI": "mongodb://localhost:27017/rentsee",
+    "MONGO_DB": "rentsee",
+    "JWT_SECRET": "superhardsecret"
+  }
+}
