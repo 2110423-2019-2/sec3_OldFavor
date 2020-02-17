@@ -21,7 +21,7 @@ class FormInput extends Component {
                     // style={{ fontSize: '14px' }}
                 />
                 <i>
-                    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='#C4C4C4'>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 24 24' fill='#C4C4C4'>
                         <path d={this.props.icon} />
                     </svg>
                 </i>
