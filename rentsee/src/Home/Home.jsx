@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import utils from '../utils.js';
 import SearchBar from '../Components/SearchBar';
+import Header from '../Components/Header';
 
 class Home extends Component {
     constructor(props) {
@@ -34,6 +35,7 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <h1>Home</h1>
                 <ul>
                     <a href='/'>Home</a>
@@ -41,7 +43,6 @@ class Home extends Component {
                     <a href='/register'>Register</a>
                     <a href='/logout'>Logout</a>
                     <a href='/AddCar'>AddCar</a>
-                    
                 </ul>
                 <SearchBar />
                 {this.hello()}
