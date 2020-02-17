@@ -11,7 +11,7 @@ export async function findById(ctx: Context) {
   ctx.body = await service.findById(ctx.params.id);
 }
 export async function search(ctx: Context) {
-  const query = ctx.req.url.split('?q=')[1];
+  const query = ctx.query.q;
   console.log(await service.search(query));
   ctx.body = await service.search(query);
 }
