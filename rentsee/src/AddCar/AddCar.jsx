@@ -12,7 +12,6 @@ class AddCar extends Component {
             fullname: '',
             birthdate: '',
 
-            xxxxx: '',
             username: '',
             password: '',
 
