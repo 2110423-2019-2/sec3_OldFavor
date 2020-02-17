@@ -32,7 +32,7 @@ class Header extends Component {
         const username = this.state.username;
         if (username) {
             return (
-                <a className='text text-bold' style={{ float: 'right', margin: '35px 18px 35px 80px' }} href='/profile'>
+                <a className='text text-bold' style={{ float: 'right', margin: '35px 80px 35px 50px' }} href='/profile'>
                     {username}
                 </a>
             );
