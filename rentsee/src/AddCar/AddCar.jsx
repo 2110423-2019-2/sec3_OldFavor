@@ -4,6 +4,7 @@ import rentseeLogo from '../images/logo-rentsee.svg';
 import bannerImg from './images/register-banner.svg';
 import FormInput from '../Components/FormInput';
 import utils from '../utils.js';
+
 class AddCar extends Component {
     constructor(props) {
         super(props);
@@ -34,17 +35,16 @@ class AddCar extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        fetch('http://rentsee.krist7599555.ml/api/cars', {
+        fetch('https://hueco.ml/rentsee/api/cars', {
             method: 'POST',
-            
-            
+
             headers: utils.authHeader(),
-                
+
             body: JSON.stringify({
                 xxxxx: this.state.xxxxx,
                 password: this.state.password
             })
-        })  
+        })
             .then(response => {
                 if (response.status === 200) {
                     return response.json();
@@ -54,7 +54,6 @@ class AddCar extends Component {
             })
             .then(resJson => {
                 if (resJson) {
-                    localStorage.setItem('userInfo', JSON.stringify(resJson));
                     this.props.history.push('/');
                 }
             })
@@ -93,7 +92,7 @@ class AddCar extends Component {
                                             placeholder='LicensePlate'
                                             icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
                                         />
-                                        <input type = "file" onChange = {this.handleFormChange}/>
+                                        <input type='file' onChange={this.handleFormChange} />
                                         <FormInput
                                             name='capacity'
                                             handleFormChange={this.handleFormChange}
@@ -132,7 +131,6 @@ class AddCar extends Component {
                                 </div>
                                 <input className='btn mt-4 d-flex' type='submit' value='AddCar' />
                             </form>
-                           
                         </div>
                     </div>
                 </div>
@@ -141,5 +139,4 @@ class AddCar extends Component {
     }
 }
 
-export default AddCar
-;
+export default AddCar;

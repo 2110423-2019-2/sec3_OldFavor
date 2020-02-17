@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Header.css';
 import rentseeLogo from '../images/logo-rentsee-color.svg';
+import utils from '../utils.js';
 
 class Header extends Component {
     constructor(props) {
@@ -9,6 +10,48 @@ class Header extends Component {
             sideNavWidth: '0px'
         };
         this.openNav = this.openNav.bind(this);
+        this.profileDiv = this.profileDiv.bind(this);
+    }
+    componentDidMount() {
+        fetch('https://hueco.ml/rentsee/api/profile', {
+            method: 'GET',
+            headers: utils.authHeader()
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(resJson => {
+                console.log(resJson);
+                this.setState({ username: resJson.username });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+    profileDiv() {
+        const username = this.state.username;
+        if (username) {
+            return (
+                <a className='text text-bold' style={{ float: 'right', margin: '35px 18px 35px 80px' }} href='/profile'>
+                    {username}
+                </a>
+            );
+        }
+        return (
+            <React.Fragment>
+                <a
+                    style={{ float: 'right', margin: '27px 100px 18px 0px' }}
+                    className='btn header'
+                    href='/register'
+                    role='button'
+                >
+                    Sign Up
+                </a>
+                <a className='text' style={{ float: 'right', margin: '35px 18px 35px 80px' }} href='/login'>
+                    Login
+                </a>
+            </React.Fragment>
+        );
     }
     openNav(event) {
         event.preventDefault();
@@ -55,17 +98,7 @@ class Header extends Component {
                     </svg>
                 </button>
                 <div className='d-none d-lg-block' style={{ float: 'right' }}>
-                    <a
-                        style={{ float: 'right', margin: '27px 100px 18px 0px' }}
-                        className='btn header'
-                        href='/register'
-                        role='button'
-                    >
-                        Sign Up
-                    </a>
-                    <a className='text' style={{ float: 'right', margin: '35px 18px 35px 80px' }} href='/login'>
-                        Login
-                    </a>
+                    {this.profileDiv()}
                     <a className='text' style={{ float: 'right', margin: '35px 18px' }} href='/'>
                         Help
                     </a>
