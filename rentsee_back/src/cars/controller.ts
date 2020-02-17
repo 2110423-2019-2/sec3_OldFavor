@@ -12,7 +12,6 @@ export async function findById(ctx: Context) {
 }
 export async function search(ctx: Context) {
   const query = ctx.query.q;
-  console.log(await service.search(query));
   ctx.body = await service.search(query);
 }
 
