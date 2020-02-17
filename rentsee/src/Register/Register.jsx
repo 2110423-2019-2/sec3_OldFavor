@@ -33,7 +33,7 @@ class Register extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        fetch('http://rentsee.krist7599555.ml/api/register', {
+        fetch('https://hueco.ml/rentsee/api/register', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

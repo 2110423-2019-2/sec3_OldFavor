@@ -9,7 +9,7 @@ class Home extends Component {
         this.hello = this.hello.bind(this);
     }
     componentDidMount() {
-        fetch('http://rentsee.krist7599555.ml/api/profile', {
+        fetch('https://hueco.ml/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
         })
