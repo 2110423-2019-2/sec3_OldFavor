@@ -12,9 +12,9 @@
 .addcar-card {
   z-index: 1;
   position: absolute;
-  width: 350px;
-  height: 700px;
-  left: calc(50vw - 175px);
+  width: 450px;
+  height: 600px;
+  left: calc(50vw - 275px);
   top: 170px;
   background: linear-gradient(
     180deg,
