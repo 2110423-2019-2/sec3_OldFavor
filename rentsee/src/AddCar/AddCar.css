@@ -1,0 +1,29 @@
+.test {
+  width: 100%;
+  justify-content: center;
+}
+
+.test3 {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.addcar-card {
+  z-index: 1;
+  position: absolute;
+  width: 350px;
+  height: 700px;
+  left: calc(50vw - 175px);
+  top: 170px;
+  background: linear-gradient(
+    180deg,
+    #ffff 0%,
+    rgba(189, 211, 225, 0.1) 114.11%
+  );
+  background-blend-mode: screen;
+  mix-blend-mode: normal;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+}
