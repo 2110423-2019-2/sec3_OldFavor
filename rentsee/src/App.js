@@ -15,6 +15,7 @@ function App() {
             <header className='App-header'>
                 {/* <ul>
                     <a href='/'>Home</a>
+                    <a href='/'>Profile</a>
                     <a href='/login'>Login</a>
                     <a href='/register'>Register</a>
                     <a href='/logout'>Logout</a>
