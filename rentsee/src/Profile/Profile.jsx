@@ -399,11 +399,12 @@ class Profile extends Component {
                     <div className="input">
                       <input
                         className="form-control"
-                        type="text"
+                        type="password"
                         name="creditCardPas"
                         placeholder="CreditcardPas"
                         value={this.state.creditCardPas}
                         onChange={this.handleFormChange}
+                        maxLength="3"
                       />
                     </div>
                   </div>
