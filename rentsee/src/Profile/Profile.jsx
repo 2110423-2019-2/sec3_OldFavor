@@ -31,14 +31,24 @@ class Profile extends Component {
       .then(resJson => {
         console.log(resJson);
         this.setState({
+          email: resJson.email,
           username: resJson.username,
           password: resJson.password,
-          drivingLisense: resJson.drivingLisense,
-          email: resJson.email,
-          bankAccountNumber: resJson.bankAccountNumber,
-          address: resJson.address,
+          fullname: resJson.fullName,
+          dateOfBirth: resJson.dateOfBirth,
           phoneNumber: resJson.phoneNumber,
-          creditCardNumber: resJson.creditCardNumber
+          drivingLisense: resJson.drivingLisense,
+          address: resJson.address,
+
+          bankOwner:resJson.bankOwner,
+          bankAccountNumber: resJson.bankAccountNumber,
+
+          creditCardName: resJson.creditCardName,
+          creditCardNumber: resJson.creditCardNumber,
+          creditCardEXP_M: resJson.creditCardEXP_M,
+          creditCardEXP_Y: resJson.creditCardEXP_Y,
+          creditCardPas: resJson.creditCardPas
+         
         });
       })
       .catch(error => {
@@ -51,14 +61,24 @@ class Profile extends Component {
       method: "PATCH",
       headers: utils.authHeader(),
       body: JSON.stringify({
+        email: this.state.email,
         username: this.state.username,
         password: this.state.password,
-        drivingLisense: this.state.drivingLisense,
-        email: this.state.email,
-        bankAccountNumber: this.state.bankAccountNumber,
-        address: this.state.address,
+        fullName: this.state.fullName,
+        dateOfBirth: this.state.dateOfBirth,
         phoneNumber: this.state.phoneNumber,
-        creditCardNumber: this.state.creditCardNumber
+        drivingLisense: this.state.drivingLisense,
+        address: this.state.address,
+        
+        bankOwner:this.state.bankOwner,
+        bankAccountNumber: this.state.bankAccountNumber,
+        
+        creditCardName:this.state.creditCardName,
+        creditCardNumber: this.state.creditCardNumber,
+        creditCardEXP_M:this.state.creditCardEXP_M,
+        creditCardEXP_Y:this.state.creditCardEXP_Y,
+        creditCardPas:this.state.creditCardPas
+
       })
     })
       .then(response => {
@@ -91,33 +111,32 @@ class Profile extends Component {
           <div className="col">
             <h1 className="ml-0">Edit Profile</h1>
           </div>
-          <div className="col">
-
-          </div>
+          <div className="col"></div>
           <form className="col" onSubmit={this.handleSubmit}>
             <input
-              className="btn d-flex float-right"
+              className="btn d-flex float-right "
               type="submit"
               value="Edt Profile"
-
             />
           </form>
           <div className="col-2"></div>
         </div>
+        <div className="row mb-4"></div>
         <div className="row">
           <div className="col-2"></div>
           <div
             className="col h-100 d-flex"
           >
             <form className="row"  >
+
               <div className="col">
-                <p> Username</p>
+                <p>E-mail</p>
                 <FormInput
-                  name="username"
+                  name="email"
                   handleFormChange={this.handleFormChange}
-                  value={this.state.username}
-                  placeholder="Username"
-                  icon="M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z"
+                  value={this.state.email}
+                  placeholder="Email"
+                  icon="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"
                 />
               </div>
               <div className="col">
@@ -132,16 +151,19 @@ class Profile extends Component {
                   icon="M10 17c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm2-7v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10-4c0-2.206 1.795-4 4-4s4 1.794 4 4v4h-8v-4zm11 16h-14v-10h14v10z"
                 />
               </div>
+
               <div class="w-100"></div>
+              <div className="row mb-4"></div>
+              <div class="w-100 border-top"></div>
               <div className="col">
-                <p style={{ padding: "20px 0px 0px 0px" }}>E-mail</p>
+                <p style={{ padding: "20px 0px 0px 0px" }}>Fullname</p>
                 <div className="input-with-icon mt-4">
                   <input
                     className="form-control"
                     type="text"
-                    name="email"
-                    placeholder="Email"
-                    value={this.state.email}
+                    name="fullName"
+                    placeholder="FullName"
+                    value={this.state.fullName}
                     onChange={this.handleFormChange}
                   />
                   <i>
@@ -152,14 +174,48 @@ class Profile extends Component {
                       viewBox="0 0 24 24"
                       fill="#C4C4C4"
                     >
-                      <path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z" />
+                      <path d="M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z" />
                     </svg>
                   </i>
                 </div>
-
               </div>
-              <hr />
+              <div className="col">
+                <p style={{ padding: "20px 0px 7px 0px" }}>Date of Birth</p>
+                <FormInput
+                  name="dateOfBirth"
+                  type="date"
+                  width="200px"
+                  handleFormChange={this.handleFormChange}
+                  value={this.state.dateOfBirth}
+                  placeholder="DateOfBirth"
+                  icon="M10 17c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm2-7v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10-4c0-2.206 1.795-4 4-4s4 1.794 4 4v4h-8v-4zm11 16h-14v-10h14v10z"
+                />
+              </div>
               <div class="w-100"></div>
+              <div className="col">
+                <p style={{ padding: "20px 0px 0px 0px" }}>Phone Number</p>
+                <div className="input-with-icon mt-4">
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="phoneNumber"
+                    placeholder="PhoneNumber"
+                    value={this.state.phoneNumber}
+                    onChange={this.handleFormChange}
+                  />
+                  <i>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="#C4C4C4"
+                    >
+                      <path d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z" />
+                    </svg>
+                  </i>
+                </div>
+              </div>
               <div className="col">
                 <p style={{ padding: "20px 0px 0px 0px" }}>Driving Lisense</p>
                 <div className="input-with-icon mt-4">
@@ -180,31 +236,6 @@ class Profile extends Component {
                       fill="#C4C4C4"
                     >
                       <path d="M22 5v14h-20v-14h20zm2-2h-24v18h24v-18zm-10 13.597v.403h-10v-.417c-.004-1.112.044-1.747 1.324-2.043 1.403-.324 2.787-.613 2.122-1.841-1.973-3.637-.563-5.699 1.554-5.699 2.077 0 3.521 1.985 1.556 5.699-.647 1.22.688 1.51 2.121 1.841 1.284.297 1.328.936 1.323 2.057zm6-9.597h-4v2h4v-2zm0 4h-4v2h4v-2zm0 4h-4v2h4v-2z" />
-                    </svg>
-                  </i>
-                </div>
-              </div>
-              <div class="w-100"></div>
-              <div className="col">
-                <p style={{ padding: "20px 0px 0px 0px" }}>Bank Account Number</p>
-                <div className="input-with-icon mt-4">
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="bankAccountNumber"
-                    placeholder="BankAccountNumber"
-                    value={this.state.bankAccountNumber}
-                    onChange={this.handleFormChange}
-                  />
-                  <i>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="#C4C4C4"
-                    >
-                      <path d="M7 21h-4v-11h4v11zm7-11h-4v11h4v-11zm7 0h-4v11h4v-11zm2 12h-22v2h22v-2zm-23-13h24l-12-9-12 9z" />
                     </svg>
                   </i>
                 </div>
@@ -235,15 +266,22 @@ class Profile extends Component {
                 </div>
               </div>
               <div class="w-100"></div>
+              <div className="row mb-4"></div>
+              <div class="w-100 border-top"></div>
+              <div className="row mb-4"></div>
+              <div class="col">
+                <h3 class="ml-0">Bank Account Details</h3>
+              </div>
+              <div class="w-100"></div>
               <div className="col">
-                <p style={{ padding: "20px 0px 0px 0px" }}>Phone Number</p>
+                <p style={{ padding: "20px 0px 0px 0px" }}>Bank Owner</p>
                 <div className="input-with-icon mt-4">
                   <input
                     className="form-control"
                     type="text"
-                    name="phoneNumber"
-                    placeholder="PhoneNumber"
-                    value={this.state.phoneNumber}
+                    name="bankOwner"
+                    placeholder="BankOwner"
+                    value={this.state.bankOwner}
                     onChange={this.handleFormChange}
                   />
                   <i>
@@ -254,15 +292,59 @@ class Profile extends Component {
                       viewBox="0 0 24 24"
                       fill="#C4C4C4"
                     >
-                      <path d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z" />
+                      <path d="M7 21h-4v-11h4v11zm7-11h-4v11h4v-11zm7 0h-4v11h4v-11zm2 12h-22v2h22v-2zm-23-13h24l-12-9-12 9z" />
+                    </svg>
+                  </i>
+                </div>
+              </div>
+              <div className="col">
+                <p style={{ padding: "20px 0px 0px 0px" }}>Bank Account Number</p>
+                <div className="input-with-icon mt-4">
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="bankAccountNumber"
+                    placeholder="BankAccountNumber"
+                    value={this.state.bankAccountNumber}
+                    onChange={this.handleFormChange}
+                  />
+                  <i>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="#C4C4C4"
+                    >
+                      <path d="M7 21h-4v-11h4v11zm7-11h-4v11h4v-11zm7 0h-4v11h4v-11zm2 12h-22v2h22v-2zm-23-13h24l-12-9-12 9z" />
                     </svg>
                   </i>
                 </div>
               </div>
               <div class="w-100"></div>
+              <div className="row mb-4"></div>
+              <div class="w-100 border-top"></div>
+              <div className="row mb-4"></div>
+              <div class="col">
+                <h3 class="ml-0">Bank Account Details</h3>
+              </div>
+              <div class="w-100"></div>
               <div className="col">
-                <p style={{ padding: "20px 0px 0px 0px" }}>Creditcard Number</p>
-                <div className="input-with-icon mt-4">
+                <p style={{ padding: "20px 0px 0px 0px" }}>Credit Card Name</p>
+                <div className="input mt-4">
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="creditCardName"
+                    placeholder="CreditcardName"
+                    value={this.state.creditCardName}
+                    onChange={this.handleFormChange}
+                  />
+                </div>
+              </div>
+              <div className="col">
+                <p style={{ padding: "20px 0px 0px 0px" }}>Credit Card Number</p>
+                <div className="input mt-4">
                   <input
                     className="form-control"
                     type="text"
@@ -271,22 +353,63 @@ class Profile extends Component {
                     value={this.state.creditCardNumber}
                     onChange={this.handleFormChange}
                   />
-                  <i>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="#C4C4C4"
-                    >
-                      <path d="M22 2h-14c-1.104 0-2 .896-2 2v4h16v3.5c0 .276-.224.5-.5.5h-1.5v2h2c1.104 0 2-.896 2-2v-8c0-1.104-.896-2-2-2zm0 3h-14v-.5c0-.276.224-.5.5-.5h13c.276 0 .5.224.5.5v.5zm-6 5h-14c-1.104 0-2 .896-2 2v8c0 1.104.896 2 2 2h14c1.104 0 2-.896 2-2v-8c0-1.104-.896-2-2-2zm-11 10h-2v-1h2v1zm3 0h-2v-1h2v1zm.32-3.377c-.383.239-.836.377-1.32.377-1.381 0-2.5-1.119-2.5-2.5s1.119-2.5 2.5-2.5c.484 0 .937.138 1.32.377-.531.552-.857 1.3-.857 2.123 0 .824.326 1.571.857 2.123zm3.68 3.377h-2v-1h2v1zm-1-3c-1.381 0-2.5-1.119-2.5-2.5s1.119-2.5 2.5-2.5 2.5 1.119 2.5 2.5-1.119 2.5-2.5 2.5zm4 3h-2v-1h2v1z" />
-                    </svg>
-                  </i>
                 </div>
-                <div class="w-100"></div>
-                <div className="col"></div>
               </div>
+              <div class="w-100"></div>
+              <div class="col">
+                <div class="row">
+                  <p class="col" style={{ padding: "20px 0px 0px 12px" }}>Expiration Date</p>
+                  <div class="w-100"></div>
+                  <div className="col">
+                    <div className="input">
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="creditCardEXP_M"
+                        placeholder="CreditCardEXP_M"
+                        value={this.state.creditCardEXP_M}
+                        onChange={this.handleFormChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="input">
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="creditCardEXP_Y"
+                        placeholder="CreditCardEXP_Y"
+                        value={this.state.creditCardEXP_Y}
+                        onChange={this.handleFormChange}
+                      />
+                    </div>
+                  </div>
+                  <div class="col">
+                  </div>
 
+                </div>
+
+
+              </div>
+              <div class="col">
+                <div class="row">
+                  <p class="col" style={{ padding: "20px 0px 0px 12px" }}>CCV/CVC</p>
+                  <div class="w-100"></div>
+                  <div className="col">
+                    <div className="input">
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="creditCardPas"
+                        placeholder="CreditcardPas"
+                        value={this.state.creditCardPas}
+                        onChange={this.handleFormChange}
+                      />
+                    </div>
+                  </div>
+                  <div class="col"></div>
+                </div>
+              </div>
             </form>
           </div>
           <div className="col-2"></div>
