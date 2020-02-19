@@ -188,7 +188,7 @@ class Profile extends Component {
                   handleFormChange={this.handleFormChange}
                   value={this.state.dateOfBirth}
                   placeholder="DateOfBirth"
-                  icon="M10 17c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm2-7v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10-4c0-2.206 1.795-4 4-4s4 1.794 4 4v4h-8v-4zm11 16h-14v-10h14v10z"
+                  icon="M17 1c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-12 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2zm13 5v10h-16v-10h16zm2-6h-2v1c0 1.103-.897 2-2 2s-2-.897-2-2v-1h-8v1c0 1.103-.897 2-2 2s-2-.897-2-2v-1h-2v18h20v-18zm4 3v19h-22v-2h20v-17h2zm-17 7h-2v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4h-2v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"
                 />
               </div>
               <div class="w-100"></div>
@@ -326,7 +326,7 @@ class Profile extends Component {
               <div class="w-100 border-top"></div>
               <div className="row mb-4"></div>
               <div class="col">
-                <h3 class="ml-0">Bank Account Details</h3>
+                <h3 class="ml-0">Credit Card Details</h3>
               </div>
               <div class="w-100"></div>
               <div className="col">
@@ -366,7 +366,7 @@ class Profile extends Component {
                         className="form-control"
                         type="text"
                         name="creditCardEXP_M"
-                        placeholder="CreditCardEXP_M"
+                        placeholder="Month"
                         value={this.state.creditCardEXP_M}
                         onChange={this.handleFormChange}
                       />
@@ -378,7 +378,7 @@ class Profile extends Component {
                         className="form-control"
                         type="text"
                         name="creditCardEXP_Y"
-                        placeholder="CreditCardEXP_Y"
+                        placeholder="Year"
                         value={this.state.creditCardEXP_Y}
                         onChange={this.handleFormChange}
                       />
