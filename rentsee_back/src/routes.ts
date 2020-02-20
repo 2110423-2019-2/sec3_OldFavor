@@ -1,8 +1,9 @@
-import * as cars from './cars/controller';
 import * as guard from './guard';
+import * as cars from './cars/controller';
 import * as rents from './rents/controller';
 import * as users from './users/controller';
 
+// prettier-ignore
 export const appRoutes = [
   //* API
   { method: 'get',    path: '/api',             action: ctx => (ctx.body = 'rentsee API') },

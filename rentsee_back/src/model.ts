@@ -1,5 +1,6 @@
 import { ObjectID } from 'mongodb';
 
+// prettier-ignore
 export interface User {
   _id?             : string | ObjectID | any;
   username         : string;
@@ -12,6 +13,7 @@ export interface User {
   creditCardNumber : string;
 }
 
+// prettier-ignore
 export interface Rent {
   _id?          : any;
   carId         : string | ObjectID;
@@ -23,6 +25,7 @@ export interface Rent {
   returnLocation: string;
 }
 
+// prettier-ignore
 export interface Car {
   _id?              : any;
   ownerId           : string | ObjectID;
