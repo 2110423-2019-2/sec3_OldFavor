@@ -34,8 +34,8 @@ class Profile extends Component {
           email: resJson.email,
           username: resJson.username,
           password: resJson.password,
-          fullname: resJson.fullName,
-          dateOfBirth: resJson.dateOfBirth,
+          fullname: resJson.fullname,
+          dateOfBirth: resJson.birthdate,
           phoneNumber: resJson.phoneNumber,
           drivingLisense: resJson.drivingLisense,
           address: resJson.address,
@@ -64,7 +64,7 @@ class Profile extends Component {
         email: this.state.email,
         username: this.state.username,
         password: this.state.password,
-        fullName: this.state.fullName,
+        fullName: this.state.fullname,
         dateOfBirth: this.state.dateOfBirth,
         phoneNumber: this.state.phoneNumber,
         drivingLisense: this.state.drivingLisense,
@@ -162,8 +162,8 @@ class Profile extends Component {
                     className="form-control"
                     type="text"
                     name="fullName"
-                    placeholder="FullName"
-                    value={this.state.fullName}
+                    placeholder="Full Name"
+                    value={this.state.fullname}
                     onChange={this.handleFormChange}
                   />
                   <i>
