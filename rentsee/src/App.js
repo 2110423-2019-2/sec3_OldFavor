@@ -3,10 +3,11 @@ import './App.css';
 import Register from './Register/Register';
 import Home from './Home/Home';
 import Login from './Login/Login';
-import Logout from './Logout/Logout'
+import Logout from './Logout/Logout';
 import AddCar from './AddCar/AddCar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Profile from './Profile/Profile';
+import Search from './Search/Search';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
             <header className='App-header'>
                 {/* <ul>
                     <a href='/'>Home</a>
+                    <a href='/'>Profile</a>
                     <a href='/login'>Login</a>
                     <a href='/register'>Register</a>
                     <a href='/logout'>Logout</a>
@@ -25,7 +27,7 @@ function App() {
                     <Route path='/logout' component={Logout} />
                     <Route path='/profile' component={Profile} />
                     <Route path='/AddCar' component={AddCar} />
-
+                    <Route path='/search' component={Search} />
                 </Router>
             </header>
         </div>

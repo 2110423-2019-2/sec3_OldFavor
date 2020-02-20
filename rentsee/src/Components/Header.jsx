@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Header.css';
 import rentseeLogo from '../images/logo-rentsee-color.svg';
+import downArrow from '../images/down-arrow.svg';
 import utils from '../utils.js';
 
 class Header extends Component {
@@ -32,9 +33,18 @@ class Header extends Component {
         const username = this.state.username;
         if (username) {
             return (
-                <a className='text text-bold' style={{ float: 'right', margin: '35px 18px 35px 80px' }} href='/profile'>
-                    {username}
-                </a>
+                <React.Fragment>
+                    <a style={{ float: 'right', margin: '35px 80px 35px 10px' }} href='/profile'>
+                        <img style={{ width: '17', height: '11.96px' }} className='' src={downArrow} alt='' />
+                    </a>
+                    <a
+                        className='text text-bold'
+                        style={{ float: 'right', margin: '35px 15px 35px 50px' }}
+                        href='/profile'
+                    >
+                        {username}
+                    </a>
+                </React.Fragment>
             );
         }
         return (
