@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import carItem from '../images/car-item.svg';
+import CarDealModal from '../Components/CarDealModal';
 
 class CarItem extends Component {
     state = {};
@@ -21,15 +22,15 @@ class CarItem extends Component {
                     <div className='col'>
                         <div className='car-cost-text'>{this.props.cost}</div>
                         <div className='car-cost-unit-text'>THB/DAY</div>
-                        <button
+                        {/* <button
                             style={{
                                 float: 'right'
                             }}
                             className='btn header mt-4'
-                            href='/register'
                         >
                             View Deal
-                        </button>
+                        </button> */}
+                        <CarDealModal />
                     </div>
                 </div>
             </div>
