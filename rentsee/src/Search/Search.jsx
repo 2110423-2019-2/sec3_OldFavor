@@ -22,6 +22,14 @@ class Search extends Component {
             pickUpLocation: '',
             returnLocation: ''
         };
+        this.handleFormChange = this.handleFormChange.bind(this);
+    }
+    handleFormChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        console.log('change: ' + [name] + ' ' + value);
+        this.setState({ [name]: value });
     }
     componentDidMount() {
         const query = 'getUrl=';
