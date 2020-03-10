@@ -10,17 +10,11 @@ export function find(query: any) {
 export function findById(id: string) {
   return db.cars.findOne({ _id: new ObjectID(id) });
 }
-export function search(query: string) {
-  return db.cars
-    .find({
-      $or: [
-        { licensePlate: { $regex: `.*${query}.*`, $options: 'i' } },
-        { carModel: { $regex: `.*${query}.*`, $options: 'i' } },
-        { carType: { $regex: `.*${query}.*`, $options: 'i' } },
-        { carDescription: { $regex: `.*${query}.*`, $options: 'i' } }
-      ]
-    })
-    .toArray();
+export function findByOwner(id: string) {
+  return db.cars.find({ ownerId: new ObjectID(id) }).toArray();
+}
+export function findByOwnerVerified(id: string) {
+  return db.cars.find({ ownerId: new ObjectID(id), verified:true }).toArray();
 }
 
 export function create(car: Car) {

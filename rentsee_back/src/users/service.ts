@@ -2,7 +2,7 @@ import {
   FilterQuery,
   ObjectID,
 } from 'mongodb';
-
+import * as nodemailer from 'nodemailer';
 import { db } from '../db';
 import * as jwt from '../jwt';
 import { User } from '../model';
@@ -47,6 +47,36 @@ export async function patch(id: string, user: User) {
     { $set: user },
     { upsert: false, returnOriginal: false }
   );
+}
+
+export async function verify(id: string) {
+  return await db.users.findOneAndUpdate(
+    { _id: new ObjectID(id) },
+    { $set: {emailVerified:true} },
+    { upsert: false, returnOriginal: false }
+  );
+}
+
+export async function sendEmail(email: string, id: string) {
+  const host = 'https://hueco.ml/rentsee/';
+  const url = host + 'api/users/emailVerify/' + id +'/' + Math.random().toString(36).substring(7);
+  const testAccount = await nodemailer.createTestAccount();
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'sheetplus.income.notifier@gmail.com',
+      pass: 'SheetplusIncome1'
+    }
+  });
+  const info = await transporter.sendMail({
+    from: '"RENTSEE" <sheetplus.income.notifier@gmail.com>',
+    to: email,
+    subject: "RENTSEE: Email Verification",
+    text: "Please use this link: "+url,
+    html: "<b>Verification URL:</b> <a href='"+url+"'>click</a><br>Or use "+url
+  });
 }
 
 export async function find(query: FilterQuery<User>) {

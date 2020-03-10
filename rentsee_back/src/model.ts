@@ -5,8 +5,10 @@ export interface User {
   _id?             : string | ObjectID | any;
   username         : string;
   password         : string;
-  drivingLisense   : string;
+  drivingLicense   : string;
+  licenseVerified  : boolean;
   email            : string;
+  emailVerified    : boolean;
   bankAccountNumber: string;
   address          : string;
   phoneNumber      : string;
@@ -19,10 +21,17 @@ export interface Rent {
   carId         : string | ObjectID;
   renterId      : string | ObjectID;
   lessorId      : string | ObjectID;
+  status        : number; //0=created 1=matched 2=lessorcancel 3=lesseecancel 4=done
+  cancelReason  : string;
   pickUpDateTime: Date;
   pickUpLocation: string;
   returnDateTime: Date;
   returnLocation: string;
+  pricePerDay   : number;
+  totalPrice    : number;
+  policy        : string;
+  created       : Date;
+  matched       : Date;
 }
 
 // prettier-ignore
@@ -33,8 +42,17 @@ export interface Car {
   capacity          : number;
   photoOfCar        : string;
   photoOfCarDocument: string;
+  verified          : boolean;
   carModel          : string;
   carType           : string;
   carDescription    : string;
-  pricePerDay       : number;
+}
+
+// prettier-ignore
+export interface Notification {
+  _id?              : any;
+  to                : string | ObjectID;
+  message           : string;
+  read              : boolean;
+  created           : Date;
 }

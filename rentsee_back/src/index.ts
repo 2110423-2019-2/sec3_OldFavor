@@ -22,6 +22,7 @@ const server = app
     db.cars = ctx.db.collection('cars');
     db.users = ctx.db.collection('users');
     db.rents = ctx.db.collection('rents');
+	db.notifications = ctx.db.collection('notifications');
     db.users.createIndex('username', { unique: true });
     return next();
   })

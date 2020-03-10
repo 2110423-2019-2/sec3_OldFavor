@@ -10,13 +10,19 @@ export async function find(ctx: Context) {
 export async function findById(ctx: Context) {
   ctx.body = await service.findById(ctx.params.id);
 }
-export async function search(ctx: Context) {
-  const query = ctx.query.q;
-  ctx.body = await service.search(query);
+
+export async function mine(ctx: Context) {
+  ctx.body = await service.findByOwner(ctx.state.user._id);
+  ctx.assert(ctx.body, 404);
+}
+export async function rentableMine(ctx: Context) {
+  ctx.body = await service.findByOwnerVerified(ctx.state.user._id);
+  ctx.assert(ctx.body, 404);
 }
 
 export async function create(ctx: Context) {
   const car: Car = ctx.request.body;
+  car.verified = false;
   car.ownerId = new ObjectID(ctx.state.user._id);
   ctx.body = await service.create(ctx.request.body);
 }
