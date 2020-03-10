@@ -1,0 +1,40 @@
+.car-title-text {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 43px;
+
+    color: #333333;
+}
+.car-type-text {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    color: #828282;
+}
+
+.car-cost-text {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 56px;
+    line-height: 67px;
+    text-align: right;
+
+    color: #333333;
+}
+.car-cost-unit-text {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 26px;
+    text-align: right;
+
+    color: #333333;
+}

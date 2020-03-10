@@ -56,10 +56,10 @@ class Header extends Component {
                             display: this.state.tooltipState
                         }}
                     >
-                        <a class='text' href='/profile'>
+                        <a className='text' href='/profile'>
                             <div className='text-center'>Profile</div>
                         </a>
-                        <a class='text-red' href='/logout'>
+                        <a className='text-red' href='/logout'>
                             <div className='text-center'>Logout</div>
                         </a>
                     </div>

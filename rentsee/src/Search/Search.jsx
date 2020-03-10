@@ -5,6 +5,8 @@ import BarStatus from '../Components/BarStatus';
 import SearchPickUpReturn from '../Components/SearchPickUpReturn';
 import FormInput from '../Components/FormInput';
 import SortBy from '../Components/SortBy';
+import CarItem from '../Components/CarItem';
+import './Search.css';
 
 class Search extends Component {
     constructor(props) {
@@ -127,6 +129,23 @@ class Search extends Component {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className='container mt-3'>
+                    <CarItem
+                        brand='NISSAN'
+                        type='ALMERA 1.2 E CVT or similar'
+                        cost='1,587'
+                    />
+                    <CarItem
+                        brand='TOYOTA'
+                        type='ALMERA 1.2 E CVT or similar'
+                        cost='1,420'
+                    />
+                    <CarItem
+                        brand='TESLA'
+                        type='ALMERA 1.2 E CVT or similar'
+                        cost='1,969'
+                    />
                 </div>
             </React.Fragment>
         );
