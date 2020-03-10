@@ -4,6 +4,9 @@
 .text {
     color: #545372 !important;
 }
+.text-red {
+    color: #ff0000 !important;
+}
 .sidenav {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
@@ -45,4 +48,14 @@
     .sidenav a {
         font-size: 18px;
     }
+}
+
+.clear-btn {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
 }
