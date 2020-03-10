@@ -53,7 +53,11 @@ h2 {
     height: 100vh;
     left: 0px;
     top: 0px;
-    background: linear-gradient(180deg, #545372 0%, rgba(189, 211, 225, 0.1) 114.11%);
+    background: linear-gradient(
+        180deg,
+        #545372 0%,
+        rgba(189, 211, 225, 0.1) 114.11%
+    );
     background-blend-mode: screen;
     mix-blend-mode: normal;
 }
