@@ -104,20 +104,20 @@ class Search extends Component {
             });
     }
     carResult() {
-        // const rents = this.state.searchRes;
-        const rents = [
-            {
-                policy: 'No alcohol',
-                pricePerDay: 1760,
-                car: {
-                    capacity: 5,
-                    photoOfCar:
-                        'https://cors-anywhere.herokuapp.com/https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/2018-tesla-model-s-100d-1545165580.jpg?crop=0.819xw:1.00xh;0,0&resize=640:*',
-                    carModel: 'Tesla Model S',
-                    carType: 'Electric Car, very cool'
-                }
-            }
-        ];
+        const rents = this.state.searchRes;
+        // const rents = [
+        //     {
+        //         policy: 'No alcohol',
+        //         pricePerDay: 1760,
+        //         car: {
+        //             capacity: 5,
+        //             photoOfCar:
+        //                 'https://cors-anywhere.herokuapp.com/https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/2018-tesla-model-s-100d-1545165580.jpg?crop=0.819xw:1.00xh;0,0&resize=640:*',
+        //             carModel: 'Tesla Model S',
+        //             carType: 'Electric Car, very cool'
+        //         }
+        //     }
+        // ];
         // console.log(cars);
         return rents.map(rent => {
             return (
