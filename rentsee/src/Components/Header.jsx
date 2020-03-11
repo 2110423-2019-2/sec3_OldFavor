@@ -3,6 +3,7 @@ import './Header.css';
 import rentseeLogo from '../images/logo-rentsee-color.svg';
 import downArrow from '../images/down-arrow.svg';
 import utils from '../utils.js';
+import Notification from '../Components/Notification';
 
 class Header extends Component {
     constructor(props) {
@@ -56,10 +57,10 @@ class Header extends Component {
                             display: this.state.tooltipState
                         }}
                     >
-                        <a class='text' href='/profile'>
+                        <a className='text' href='/profile'>
                             <div className='text-center'>Profile</div>
                         </a>
-                        <a class='text-red' href='/logout'>
+                        <a className='text-red' href='/logout'>
                             <div className='text-center'>Logout</div>
                         </a>
                     </div>
@@ -82,12 +83,13 @@ class Header extends Component {
                         className='text text-bold'
                         style={{
                             float: 'right',
-                            margin: '35px 15px 35px 50px'
+                            margin: '35px 15px 35px 25px'
                         }}
                         href='/profile'
                     >
                         {username}
                     </a>
+                    <Notification />
                 </React.Fragment>
             );
         }
