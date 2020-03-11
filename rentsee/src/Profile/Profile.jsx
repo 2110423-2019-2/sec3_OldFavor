@@ -302,9 +302,7 @@ class Profile extends Component {
                     ></img>
                     </div>
                     <div class="col">
-                    <div class="row">{this.verify(this.licenseVerified)}</div>
-
-
+                      <div class="row">{this.verify(this.licenseVerified)}</div>
                       <div class="row">
                         <form id="getLicense">
                           <input
