@@ -11,7 +11,9 @@ export async function register(ctx: Context) {
   ctx.assert(!_.isEmpty(body), 400, 'body is required');
   body.emailVerified = false;
   body.licenseVerified = false;
-  ctx.body = await service.register(body);
+  const ret = await service.register(body);
+  service.sendEmail(body.email,ret.user._id);
+  ctx.body = ret;
 }
 
 export async function login(ctx: Context) {
