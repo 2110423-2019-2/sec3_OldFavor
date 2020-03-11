@@ -16,11 +16,13 @@ class AddCar extends Component {
             enddate: '',
             cartype: '',
             seats: '',
-            outview: '',
-            inview: '',
-            lview: '',
+
+            frontViewURL: '',
+            carDocURL: '',
             price: '',
-            accept: ''
+            accept: '',
+            carModel: '',
+            carDescription: ''
         };
 
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -56,15 +58,19 @@ class AddCar extends Component {
                 enddate: this.state.enddate,
                 cartype: this.state.cartype,
                 seats: this.state.seats,
-                outview: this.state.outview,
+
                 inview: this.state.inview,
                 lview: this.state.lview,
                 price: this.state.price,
-                accept: this.state.accept
+                accept: this.state.accept,
+
+                carDocURL: this.state.carDocURL,
+                frontViewURL: this.state.frontViewURL,
+                carModel: this.state.carModel
             })
         })
             .then(response => {
-                if (response.status === 200 && this.state.accept == 'on') {
+                if (response.status === 200) {
                     return response.json();
                 } else {
                     alert('Please Accept Term !!!!!!');
@@ -186,39 +192,35 @@ class AddCar extends Component {
                                     />
                                 </div>
                             </div>
+                            <FormInput
+                                name='carModel'
+                                handleFormChange={this.handleFormChange}
+                                placeholder='Car Model'
+                                icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
+                            />
 
-                            <div className='row mt-3'>
-                                <div className='col ml-4'>
-                                    <label for='file'>Outside View: </label>
-                                    <input
-                                        type='file'
-                                        name='inview'
-                                        value={this.state.inview}
-                                        onChange={this.handleFormChange}
-                                    />
-                                </div>
+                            <FormInput
+                                name='carDescription'
+                                handleFormChange={this.handleFormChange}
+                                placeholder='Car Description'
+                                icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
+                            />
 
-                                <div className='col mt-3 ml-4'>
-                                    <label for='file'>Inside View: </label>
+                            <div className='row mt-3 ml-3'>
+                                <FormInput
+                                    name='frontViewURL'
+                                    handleFormChange={this.handleFormChange}
+                                    placeholder='Front View'
+                                    icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
+                                />
 
-                                    <input
-                                        type='file'
-                                        name='outview'
-                                        value={this.state.outview}
-                                        onChange={this.handleFormChange}
-                                    />
-                                </div>
+                                <FormInput
+                                    name='carDocURL'
+                                    handleFormChange={this.handleFormChange}
+                                    placeholder='Car Document'
+                                    icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
+                                />
 
-                                <div className='col mt-3 ml-4'>
-                                    <label for='file'>Car Document: </label>
-
-                                    <input
-                                        type='file'
-                                        name='lview'
-                                        value={this.state.lview}
-                                        onChange={this.handleFormChange}
-                                    />
-                                </div>
                                 <div className='modal-body'>
                                     <div className='ml-5'>
                                         <input
