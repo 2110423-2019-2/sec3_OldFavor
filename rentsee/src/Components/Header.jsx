@@ -60,6 +60,9 @@ class Header extends Component {
                         <a className='text' href='/profile'>
                             <div className='text-center'>Profile</div>
                         </a>
+                        <a className='text' href='/history'>
+                            <div className='text-center'>History</div>
+                        </a>
                         <a className='text-red' href='/logout'>
                             <div className='text-center'>Logout</div>
                         </a>

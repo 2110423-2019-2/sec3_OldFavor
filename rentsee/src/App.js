@@ -5,6 +5,7 @@ import Home from './Home/Home';
 import Login from './Login/Login';
 import Logout from './Logout/Logout';
 import AddCar from './AddCar/AddCar';
+import History from './History/History';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Profile from './Profile/Profile';
 import Search from './Search/Search';
@@ -28,6 +29,7 @@ function App() {
                     <Route path='/profile' component={Profile} />
                     <Route path='/AddCar' component={AddCar} />
                     <Route path='/search' component={Search} />
+                    <Route path='/history' component={History} />
                 </Router>
             </header>
         </div>
