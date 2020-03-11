@@ -25,24 +25,7 @@ class Profile extends Component {
       .then(resJson => {
         console.log(resJson);
         this.setState({
-          email: resJson.email,
-          username: resJson.username,
-          password: resJson.password,
-          fullname: resJson.fullname,
-          dateOfBirth: resJson.birthdate,
-          phoneNumber: resJson.phoneNumber,
-          drivingLisense: resJson.drivingLisense,
-          address: resJson.address,
-
-          bankOwner:resJson.bankOwner,
-          bankAccountNumber: resJson.bankAccountNumber,
-
-          creditCardName: resJson.creditCardName,
-          creditCardNumber: resJson.creditCardNumber,
-          creditCardEXP_M: resJson.creditCardEXP_M,
-          creditCardEXP_Y: resJson.creditCardEXP_Y,
-          creditCardPas: resJson.creditCardPas
-         
+          
         });
       })
       .catch(error => {
