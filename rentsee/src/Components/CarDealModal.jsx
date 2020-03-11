@@ -66,23 +66,15 @@ class CarDealModal extends Component {
                                 </button>
                             </div>
                             <div className='modal-body'>
-                                <p>
-                                    DealDeal DeDeal Deal Deal Deal Deal Deal
-                                    Deal Deal Deal Deal Deal Deal Deal Deal Deal
-                                    Deal Deal Deal Deal Deal Deal Deal{' '}
-                                </p>
+                                <p>{this.props.policy}</p>
                                 <div className='ml-5'>
                                     <input
                                         type='checkbox'
                                         className='form-check-input'
                                         name='accept'
-                                        id='exampleCheck1'
                                         onChange={this.handleChange}
                                     />
-                                    <label
-                                        className='form-check-label'
-                                        for='exampleCheck1'
-                                    >
+                                    <label className='form-check-label'>
                                         I Accept Terms and Agreement
                                     </label>
                                 </div>

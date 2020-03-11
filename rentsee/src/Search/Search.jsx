@@ -23,6 +23,7 @@ class Search extends Component {
             returnLocation: ''
         };
         this.handleFormChange = this.handleFormChange.bind(this);
+        this.carResult = this.carResult.bind(this);
     }
     handleFormChange(event) {
         const target = event.target;
@@ -102,6 +103,35 @@ class Search extends Component {
                 console.log(error);
             });
     }
+    carResult() {
+        // const rents = this.state.searchRes;
+        const rents = [
+            {
+                policy: 'No alcohol',
+                pricePerDay: 1760,
+                car: {
+                    capacity: 5,
+                    photoOfCar:
+                        'https://cors-anywhere.herokuapp.com/https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/2018-tesla-model-s-100d-1545165580.jpg?crop=0.819xw:1.00xh;0,0&resize=640:*',
+                    carModel: 'Tesla Model S',
+                    carType: 'Electric Car, very cool'
+                }
+            }
+        ];
+        // console.log(cars);
+        return rents.map(rent => {
+            return (
+                <CarItem
+                    brand={rent.car.carModel}
+                    type={rent.car.carType}
+                    cost={rent.pricePerDay}
+                    photoOfCar={rent.car.photoOfCar}
+                    capacity={rent.car.capacity}
+                    policy={rent.policy}
+                />
+            );
+        });
+    }
     render() {
         return (
             <React.Fragment>
@@ -139,10 +169,14 @@ class Search extends Component {
                     </div>
                 </div>
                 <div className='container mt-3'>
+                    {this.carResult()}
                     <CarItem
                         brand='NISSAN'
                         type='ALMERA 1.2 E CVT or similar'
                         cost='1,587'
+                        policy='No alcohol'
+                        photoOfCar='https://cors-anywhere.herokuapp.com/https://i.picsum.photos/id/1071/3000/1996.jpg'
+                        capacity='5'
                     />
                     <CarItem
                         brand='TOYOTA'
