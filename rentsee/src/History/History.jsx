@@ -8,14 +8,8 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      drivingLisense: "",
-      email: "",
-      bankAccountNumber: "",
-      address: "",
-      phoneNumber: "",
-      creditCardNumber: ""
+      historyResult: [],
+      historyValue: ''
     };
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -125,26 +119,16 @@ class Profile extends Component {
         <div className="row">
           <div className="col-2"></div>
           <div className="col">
-            <h1 className="ml-0">Edit Profile</h1>
+            <h1 className="ml-0">Rental History</h1>
           </div>
           <div className="col"></div>
-          <form className="col" onSubmit={this.handleSubmit}>
-            <input
-              className="btn d-flex float-right "
-              type="submit"
-              value="Edt Profile"
-            />
-          </form>
           <div className="col-2"></div>
         </div>
         <div className="row mb-4"></div>
         <div className="row">
           <div className="col-2"></div>
-          <div
-            className="col h-100 d-flex"
-          >
-            <form className="row"  >
-
+          <div className="col h-100 d-flex">
+            <form className="row">
               <div className="col">
                 <p>E-mail</p>
                 <FormInput
