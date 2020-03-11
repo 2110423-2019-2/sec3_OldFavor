@@ -157,6 +157,14 @@ class Profile extends Component {
         console.log("error: ", error);
       });
   }
+  verify(verifier) {
+    if (verifier) {
+      return <p style={{ textAlign: "right", color: "green" }}>Verified</p>
+    }
+    else {
+      return <p style={{ textAlign: "right", color: "red" }}>Not Verified</p>
+    }
+  }
   render() {
     return (
       <React.Fragment>
@@ -188,7 +196,16 @@ class Profile extends Component {
               <form className="row"  >
 
                 <div className="col">
-                  <p>E-mail</p>
+                  <div class="row">
+                    <div class="col">
+                      <p>E-mail</p>
+                    </div>
+                    <div class="col">
+                      {this.verify(this.emailVerified)}
+                    </div>
+
+                  </div>
+
                   <FormInput
                     name="email"
                     handleFormChange={this.handleFormChangeWithValidate}
@@ -285,19 +302,22 @@ class Profile extends Component {
                     ></img>
                     </div>
                     <div class="col">
+                    <div class="row">{this.verify(this.licenseVerified)}</div>
 
-                      <form id="getLicense">
-                        <input
-                          class="form-control-file"
-                          type="file"
-                          name="drivingLisense"
-                          placeholder="DrivingLisense"
-                          //value={this.state.drivingLisense}
-                          onChange={this.handleLicense}
-                        />
-                      </form>
+
+                      <div class="row">
+                        <form id="getLicense">
+                          <input
+                            class="form-control-file"
+                            type="file"
+                            name="drivingLisense"
+                            placeholder="DrivingLisense"
+                            //value={this.state.drivingLisense}
+                            onChange={this.handleLicense}
+                          />
+                        </form>
+                      </div>
                     </div>
-
                   </div>
                 </div>
                 <div class="w-100"></div>
