@@ -1,29 +1,29 @@
 .test {
-  width: 100%;
-  justify-content: center;
+    width: 100%;
+    justify-content: center;
 }
 
 .test3 {
-  width: 100%;
-  height: 100%;
-  justify-content: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
 }
 
 .addcar-card {
-  z-index: 1;
-  position: absolute;
-  width: 450px;
-  height: 600px;
-  left: calc(50vw - 275px);
-  top: 170px;
-  background: linear-gradient(
-    180deg,
-    #ffff 0%,
-    rgba(189, 211, 225, 0.1) 114.11%
-  );
-  background-blend-mode: screen;
-  mix-blend-mode: normal;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 10px;
+    z-index: 1;
+    position: absolute;
+    width: 400px;
+    height: 800px;
+    left: calc(50vw - 275px);
+    top: 50px;
+    background: linear-gradient(
+        180deg,
+        #ffff 0%,
+        rgba(189, 211, 225, 0.1) 114.11%
+    );
+    background-blend-mode: screen;
+    mix-blend-mode: normal;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
 }
