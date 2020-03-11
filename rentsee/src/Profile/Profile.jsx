@@ -10,18 +10,20 @@ class Profile extends Component {
     this.state = {
       username: "",
       password: "",
+      fullname: "",
       drivingLicense: "",
       drivingLicensePicName: "",
       email: "",
       bankAccountNumber: "",
       address: "",
       phoneNumber: "",
-      creditCardNumber: ""
+      creditCardNumber: "",
+      emailVerified:false,
+      licenseVerified:false
     };
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLicense = this.handleLicense.bind(this);
-    //this.getLicense = this.getLicense.bind(this);
   }
   componentDidMount() {
     fetch("https://hueco.ml/rentsee/api/profile", {
@@ -50,7 +52,10 @@ class Profile extends Component {
           creditCardNumber: resJson.creditCardNumber,
           creditCardEXP_M: resJson.creditCardEXP_M,
           creditCardEXP_Y: resJson.creditCardEXP_Y,
-          creditCardPas: resJson.creditCardPas
+          creditCardPas: resJson.creditCardPas,
+
+          emailVerified: resJson.emailVerified,
+          licenseVerified: resJson.lisenseVerified
 
         });
       })
@@ -67,7 +72,7 @@ class Profile extends Component {
         email: this.state.email,
         username: this.state.username,
         password: this.state.password,
-        fullName: this.state.fullname,
+        fullname: this.state.fullname,
         dateOfBirth: this.state.dateOfBirth,
         phoneNumber: this.state.phoneNumber,
         drivingLicense: this.state.drivingLicense,
@@ -106,27 +111,12 @@ class Profile extends Component {
     console.log("change: " + [name] + " " + value);
     this.setState({ [name]: value });
   }
-  handleFormChangeWithValidate(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    console.log("change: " + [name] + " " + value);
-    this.setState({ [name]: value });
-    if (this.state.emailVerified == false) {
-
-    }
-    else {
-
-    }
-  }
   handleLicense(event) {
     const target = event.target.files[0];
-    //const value = target.value;
     const name = target.name;
     let formData = new FormData();
     formData.append('file', target);
     console.log("change: " + [name] + " " + target);
-    //this.setState({ [name]: value });
     fetch("https://hueco.ml/temppic/upload.php", {
       method: "POST",
       mode: 'cors',
@@ -140,11 +130,10 @@ class Profile extends Component {
     })
       .then(response => {
         if (response.status === 200) {
-          //alert("License Uploaded");
-          //console.log(response.success);
+          alert("License Uploaded");
           return response.json();
         } else {
-          alert("Request is fucked up");
+          alert("");
         }
       })
       .then(resJson => {
@@ -201,14 +190,13 @@ class Profile extends Component {
                       <p>E-mail</p>
                     </div>
                     <div class="col">
-                      {this.verify(this.emailVerified)}
+                      {this.verify(this.state.emailVerified)}
                     </div>
 
                   </div>
-
                   <FormInput
                     name="email"
-                    handleFormChange={this.handleFormChangeWithValidate}
+                    handleFormChange={this.handleFormChange}
                     value={this.state.email}
                     placeholder="Email"
                     icon="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"
@@ -233,13 +221,14 @@ class Profile extends Component {
                 <div className="col">
                   <p style={{ padding: "20px 0px 0px 0px" }}>Fullname</p>
                   <div className="input-with-icon mt-4">
-                    <input
+                    <FormInput
                       className="form-control"
                       type="text"
-                      name="fullName"
+                      name="fullname"
                       placeholder="Full Name"
+                      handleFormChange={this.handleFormChange}
                       value={this.state.fullname}
-                      onChange={this.handleFormChange}
+
                     />
                     <i>
                       <svg
@@ -302,7 +291,7 @@ class Profile extends Component {
                     ></img>
                     </div>
                     <div class="col">
-                      <div class="row">{this.verify(this.licenseVerified)}</div>
+                      <div class="row">{this.verify(this.state.licenseVerified)}</div>
                       <div class="row">
                         <form id="getLicense">
                           <input
@@ -442,9 +431,12 @@ class Profile extends Component {
                       <div className="input">
                         <input
                           className="form-control"
-                          type="text"
+                          type="number"
+                          maxLength="2"
                           name="creditCardEXP_M"
                           placeholder="Month"
+                          min = "1"
+                          max="12"
                           value={this.state.creditCardEXP_M}
                           onChange={this.handleFormChange}
                         />
@@ -454,7 +446,10 @@ class Profile extends Component {
                       <div className="input">
                         <input
                           className="form-control"
-                          type="text"
+                          type="number"
+                          maxLength="4"
+                          min="2020"
+                          max="2050"
                           name="creditCardEXP_Y"
                           placeholder="Year"
                           value={this.state.creditCardEXP_Y}
@@ -479,7 +474,7 @@ class Profile extends Component {
                           className="form-control"
                           type="password"
                           name="creditCardPas"
-                          placeholder="CreditcardPas"
+                          placeholder="CreditcardPassword"
                           value={this.state.creditCardPas}
                           onChange={this.handleFormChange}
                           maxLength="3"
