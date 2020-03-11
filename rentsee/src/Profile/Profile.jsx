@@ -8,18 +8,23 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: "",
       username: "",
       password: "",
       fullname: "",
-      drivingLicense: "",
-      drivingLicensePicName: "",
-      email: "",
-      bankAccountNumber: "",
-      address: "",
+      dateOfBirth:"",
       phoneNumber: "",
+      drivingLicense: "",
+      address: "",
+      bankOwner:"",
+      bankAccountNumber: "",
+      creditCardName: "",
       creditCardNumber: "",
-      emailVerified:false,
-      licenseVerified:false
+      creditCardEXP_M: "",
+      creditCardEXP_Y: "",
+      creditCardPas: "",
+      emailVerified: false,
+      licenseVerified: false
     };
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,19 +49,15 @@ class Profile extends Component {
           phoneNumber: resJson.phoneNumber,
           drivingLicense: resJson.drivingLicense,
           address: resJson.address,
-
           bankOwner: resJson.bankOwner,
           bankAccountNumber: resJson.bankAccountNumber,
-
           creditCardName: resJson.creditCardName,
           creditCardNumber: resJson.creditCardNumber,
           creditCardEXP_M: resJson.creditCardEXP_M,
           creditCardEXP_Y: resJson.creditCardEXP_Y,
           creditCardPas: resJson.creditCardPas,
-
           emailVerified: resJson.emailVerified,
           licenseVerified: resJson.lisenseVerified
-
         });
       })
       .catch(error => {
@@ -77,19 +78,15 @@ class Profile extends Component {
         phoneNumber: this.state.phoneNumber,
         drivingLicense: this.state.drivingLicense,
         address: this.state.address,
-
         bankOwner: this.state.bankOwner,
         bankAccountNumber: this.state.bankAccountNumber,
-
         creditCardName: this.state.creditCardName,
         creditCardNumber: this.state.creditCardNumber,
         creditCardEXP_M: this.state.creditCardEXP_M,
         creditCardEXP_Y: this.state.creditCardEXP_Y,
         creditCardPas: this.state.creditCardPas,
-
         emailVerified: this.state.emailVerified,
         licenseVerified: this.state.lisenseVerified
-
       })
     })
       .then(response => {
@@ -435,7 +432,7 @@ class Profile extends Component {
                           maxLength="2"
                           name="creditCardEXP_M"
                           placeholder="Month"
-                          min = "1"
+                          min="1"
                           max="12"
                           value={this.state.creditCardEXP_M}
                           onChange={this.handleFormChange}
