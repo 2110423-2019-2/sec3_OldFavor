@@ -7,6 +7,7 @@ import './Home.css';
 import FormInput from '../Components/FormInput';
 import carShadow from '../images/car-shadow.svg';
 import car from '../images/hohdacity.svg';
+import Footer from '../Components/Footer';
 
 class Home extends Component {
     constructor(props) {
@@ -188,6 +189,7 @@ class Home extends Component {
                         alt=''
                     />
                 </div>
+                <Footer />
             </div>
         );
     }
