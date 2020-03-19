@@ -7,6 +7,7 @@ import FormInput from '../Components/FormInput';
 import SortBy from '../Components/SortBy';
 import CarItem from '../Components/CarItem';
 import './Search.css';
+import Footer from '../Components/Footer';
 
 class Search extends Component {
     constructor(props) {
@@ -134,62 +135,65 @@ class Search extends Component {
     }
     render() {
         return (
-            <React.Fragment>
+            <div style={{ minHeight: '100vh' }}>
                 <Header />
-                <div className='container'>
-                    <BarStatus count={4} current={2} />
-                    <SearchPickUpReturn
-                        pickUpLocation={this.state.pickUpLocation}
-                        pickUpDateTime={this.state.pickUpDateTime}
-                        returnLocation={this.state.returnLocation}
-                        returnDateTime={this.state.returnDateTime}
-                    />
-                    <hr className='my-3' />
-                    <div className='row'>
-                        <div className='col'>
-                            <div className='float-left'>
-                                <FormInput
-                                    type='text'
-                                    name='q'
-                                    handleFormChange={this.handleFormChange}
-                                    value={this.state.q}
-                                    placeholder='Search'
-                                    icon='M23.111 20.058l-4.977-4.977c.965-1.52 1.523-3.322 1.523-5.251 0-5.42-4.409-9.83-9.829-9.83-5.42 0-9.828 4.41-9.828 9.83s4.408 9.83 9.829 9.83c1.834 0 3.552-.505 5.022-1.383l5.021 5.021c2.144 2.141 5.384-1.096 3.239-3.24zm-20.064-10.228c0-3.739 3.043-6.782 6.782-6.782s6.782 3.042 6.782 6.782-3.043 6.782-6.782 6.782-6.782-3.043-6.782-6.782zm2.01-1.764c1.984-4.599 8.664-4.066 9.922.749-2.534-2.974-6.993-3.294-9.922-.749z'
-                                />
+                <div style={{ minHeight: 'calc(100vh - 200px)' }}>
+                    <div className='container'>
+                        <BarStatus count={4} current={2} />
+                        <SearchPickUpReturn
+                            pickUpLocation={this.state.pickUpLocation}
+                            pickUpDateTime={this.state.pickUpDateTime}
+                            returnLocation={this.state.returnLocation}
+                            returnDateTime={this.state.returnDateTime}
+                        />
+                        <hr className='my-3' />
+                        <div className='row'>
+                            <div className='col'>
+                                <div className='float-left'>
+                                    <FormInput
+                                        type='text'
+                                        name='q'
+                                        handleFormChange={this.handleFormChange}
+                                        value={this.state.q}
+                                        placeholder='Search'
+                                        icon='M23.111 20.058l-4.977-4.977c.965-1.52 1.523-3.322 1.523-5.251 0-5.42-4.409-9.83-9.829-9.83-5.42 0-9.828 4.41-9.828 9.83s4.408 9.83 9.829 9.83c1.834 0 3.552-.505 5.022-1.383l5.021 5.021c2.144 2.141 5.384-1.096 3.239-3.24zm-20.064-10.228c0-3.739 3.043-6.782 6.782-6.782s6.782 3.042 6.782 6.782-3.043 6.782-6.782 6.782-6.782-3.043-6.782-6.782zm2.01-1.764c1.984-4.599 8.664-4.066 9.922.749-2.534-2.974-6.993-3.294-9.922-.749z'
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div className='col'>
-                            <div className='float-right'>
-                                <SortBy
-                                    sort={this.state.sort}
-                                    options={['created']}
-                                />
+                            <div className='col'>
+                                <div className='float-right'>
+                                    <SortBy
+                                        sort={this.state.sort}
+                                        options={['created']}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div className='container mt-3'>
+                        {this.carResult()}
+                        <CarItem
+                            brand='NISSAN'
+                            type='ALMERA 1.2 E CVT or similar'
+                            cost='1,587'
+                            policy='No alcohol'
+                            photoOfCar='https://cors-anywhere.herokuapp.com/https://i.picsum.photos/id/1071/3000/1996.jpg'
+                            capacity='5'
+                        />
+                        <CarItem
+                            brand='TOYOTA'
+                            type='ALMERA 1.2 E CVT or similar'
+                            cost='1,420'
+                        />
+                        <CarItem
+                            brand='TESLA'
+                            type='ALMERA 1.2 E CVT or similar'
+                            cost='1,969'
+                        />
+                    </div>
                 </div>
-                <div className='container mt-3'>
-                    {this.carResult()}
-                    <CarItem
-                        brand='NISSAN'
-                        type='ALMERA 1.2 E CVT or similar'
-                        cost='1,587'
-                        policy='No alcohol'
-                        photoOfCar='https://cors-anywhere.herokuapp.com/https://i.picsum.photos/id/1071/3000/1996.jpg'
-                        capacity='5'
-                    />
-                    <CarItem
-                        brand='TOYOTA'
-                        type='ALMERA 1.2 E CVT or similar'
-                        cost='1,420'
-                    />
-                    <CarItem
-                        brand='TESLA'
-                        type='ALMERA 1.2 E CVT or similar'
-                        cost='1,969'
-                    />
-                </div>
-            </React.Fragment>
+                <Footer />
+            </div>
         );
     }
 }

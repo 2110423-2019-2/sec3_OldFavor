@@ -9,10 +9,10 @@ class Footer extends Component {
                 style={{
                     backgroundColor: '#545372',
                     textAlign: 'center',
-                    position: 'fixed',
-                    left: 0,
-                    bottom: 0,
-                    width: '100%'
+                    // position: 'absolute',
+                    // bottom: 0,
+                    width: '100%',
+                    height: '200px'
                 }}
             >
                 <img
