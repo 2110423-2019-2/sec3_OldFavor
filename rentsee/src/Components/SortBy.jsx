@@ -45,7 +45,12 @@ class SortBy extends Component {
                 </div>
                 <div
                     className='card'
-                    style={{ display: this.state.tooltipState }}
+                    style={{
+                        display: this.state.tooltipState,
+                        position: 'absolute',
+                        zIndex: 101,
+                        minWidth: 150
+                    }}
                 >
                     {this.options()}
                 </div>

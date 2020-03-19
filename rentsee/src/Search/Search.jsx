@@ -164,7 +164,7 @@ class Search extends Component {
                                 <div className='float-right'>
                                     <SortBy
                                         sort={this.state.sort}
-                                        options={['created']}
+                                        options={['created', 'price', 'rating']}
                                     />
                                 </div>
                             </div>
