@@ -4,8 +4,7 @@ import downArrow from '../images/down-arrow.svg';
 class SortBy extends Component {
     constructor(props) {
         super(props);
-        var sort = this.props.sort;
-        this.state = { tooltipState: 'none', sort: sort };
+        this.state = { tooltipState: 'none' };
         this.tooltip = this.tooltip.bind(this);
         this.options = this.options.bind(this);
     }
@@ -18,7 +17,8 @@ class SortBy extends Component {
     handleOnClickSort = e => {
         var target = e.target;
         var value = target.value;
-        this.setState({ sort: value });
+        // this.setState({ sort: value });
+        this.props.handleSortChange(value);
         this.tooltip();
         // process.nextTick(() => {
         //     console.log('after', this.state.sort);
@@ -46,7 +46,7 @@ class SortBy extends Component {
         return (
             <React.Fragment>
                 <div className='align-bottom'>
-                    Sort By: {this.state.sort}
+                    Sort By: {this.props.sort}
                     <button className='pl-2 clear-btn' onClick={this.tooltip}>
                         <img
                             style={{

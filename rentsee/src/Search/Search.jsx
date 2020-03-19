@@ -104,6 +104,9 @@ class Search extends Component {
                 console.log(error);
             });
     }
+    handleSortChange = sort => {
+        this.setState({ sort: sort });
+    };
     carResult() {
         const rents = this.state.searchRes;
         // const rents = [
@@ -165,6 +168,7 @@ class Search extends Component {
                                     <SortBy
                                         sort={this.state.sort}
                                         options={['created', 'price', 'rating']}
+                                        handleSortChange={this.handleSortChange}
                                     />
                                 </div>
                             </div>
