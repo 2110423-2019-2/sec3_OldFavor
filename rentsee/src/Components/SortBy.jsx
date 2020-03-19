@@ -19,6 +19,7 @@ class SortBy extends Component {
         var target = e.target;
         var value = target.value;
         this.setState({ sort: value });
+        this.tooltip();
         // process.nextTick(() => {
         //     console.log('after', this.state.sort);
         // });
