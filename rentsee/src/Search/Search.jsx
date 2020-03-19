@@ -137,7 +137,7 @@ class Search extends Component {
         return (
             <div style={{ minHeight: '100vh' }}>
                 <Header />
-                <div style={{ minHeight: 'calc(100vh - 200px)' }}>
+                <div className='body-content'>
                     <div className='container'>
                         <BarStatus count={4} current={2} />
                         <SearchPickUpReturn

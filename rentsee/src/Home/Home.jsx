@@ -69,7 +69,7 @@ class Home extends Component {
         return (
             <div>
                 <Header />
-                <div style={{ minHeight: 'calc(100vh - 200px)' }}>
+                <div className='body-content'>
                     <div style={{ width: '1vw' }}>
                         <img
                             style={{

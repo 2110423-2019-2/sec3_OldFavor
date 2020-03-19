@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import rentseeLogoWhite from '../images/logo-rentsee.svg';
+import './Body.css';
 
 class Footer extends Component {
     state = {};
@@ -9,8 +10,7 @@ class Footer extends Component {
                 style={{
                     backgroundColor: '#545372',
                     textAlign: 'center',
-                    // position: 'absolute',
-                    // bottom: 0,
+                    marginTop: '50px',
                     width: '100%',
                     height: '200px'
                 }}
