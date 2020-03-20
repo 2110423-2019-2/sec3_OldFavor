@@ -5,6 +5,7 @@ import utils from '../utils.js';
 import Header from '../Components/Header';
 import addCarBg from './images/AddCar-bg.png';
 import FormUpload from '../Components/FormUpload';
+import { withRouter } from 'react-router-dom';
 
 class AddCar extends Component {
     constructor(props) {
@@ -184,4 +185,4 @@ class AddCar extends Component {
     }
 }
 
-export default AddCar;
+export default withRouter(AddCar);

@@ -185,9 +185,9 @@ class Header extends Component {
                     <a
                         className='text'
                         style={{ float: 'right', margin: '35px 18px' }}
-                        href='/'
+                        href='/AddCar'
                     >
-                        Gallery
+                        Add Car
                     </a>
                     <a
                         className='text'
