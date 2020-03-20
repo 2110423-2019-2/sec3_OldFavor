@@ -33,6 +33,9 @@ class Search extends Component {
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
     }
+    search() {
+        this.props.search();
+    }
     componentDidMount() {
         const query = 'getUrl=';
         const location = this.props.location.search.substring(1);
