@@ -4,25 +4,23 @@ import FormInput from '../Components/FormInput';
 import utils from '../utils.js';
 import Header from '../Components/Header';
 import addCarBg from './images/AddCar-bg.png';
-import CarDealModal from '../Components/CarDealModal';
+import FormUpload from '../Components/FormUpload';
+
 class AddCar extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            pickup: '',
-            dropdown: '',
-            startdate: '',
-            enddate: '',
-            cartype: '',
-            seats: '',
-
-            frontViewURL: '',
-            carDocURL: '',
+            licensePlate: '',
+            capacity: '',
+            photoOfCar: '',
+            photoOfCarDocument: '',
             price: '',
-            accept: '',
             carModel: '',
-            carDescription: ''
+            carType: '',
+            carDescription: '',
+
+            accpet: false
         };
 
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -32,7 +30,6 @@ class AddCar extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        //console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
     }
 
@@ -46,125 +43,63 @@ class AddCar extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('https://hueco.ml/rentsee/api/cars', {
-            method: 'POST',
-
-            headers: utils.authHeader(),
-
-            body: JSON.stringify({
-                pickup: this.state.pickup,
-                dropdown: this.state.dropdown,
-                startdate: this.state.startdate,
-                enddate: this.state.enddate,
-                cartype: this.state.cartype,
-                seats: this.state.seats,
-
-                inview: this.state.inview,
-                lview: this.state.lview,
-                price: this.state.price,
-                accept: this.state.accept,
-
-                carDocURL: this.state.carDocURL,
-                frontViewURL: this.state.frontViewURL,
-                carModel: this.state.carModel
+        if (this.state.accpet) {
+            alert('Please Accept Term !!!!!!');
+        } else {
+            fetch('https://hueco.ml/rentsee/api/cars', {
+                method: 'POST',
+                headers: utils.authHeader(),
+                body: JSON.stringify({
+                    licensePlate: this.state.licensePlate,
+                    capacity: this.state.capacity,
+                    photoOfCar: this.state.photoOfCar,
+                    photoOfCarDocument: this.state.photoOfCarDocument,
+                    price: this.state.price,
+                    carModel: this.state.carModel,
+                    carType: this.state.carType,
+                    carDescription: this.state.carDescription
+                })
             })
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    alert('Please Accept Term !!!!!!');
-                }
-            })
-            .then(resJson => {
-                if (resJson) {
-                    this.props.history.push('/');
-                }
-            })
-            .catch(error => {
-                console.log('error: ', error);
-            });
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    } else {
+                        alert('Failed');
+                    }
+                })
+                .then(resJson => {
+                    if (resJson) {
+                        this.props.history.push('/');
+                    }
+                })
+                .catch(error => {
+                    console.log('error: ', error);
+                });
+        }
     }
+    handleFormUploadChange = (name, url) => {
+        this.setState({ [name]: url });
+    };
     render() {
         return (
             <React.Fragment>
-                <img
+                <div
+                    className='container-fluid full-screen'
                     style={{
-                        width: '100vw',
-                        height: '100vh',
-                        right: 10,
-                        zIndex: -100,
-                        position: 'absolute',
-                        top: 0,
-                        left: -10
+                        backgroundImage: `url(${addCarBg})`,
+                        backgroundSize: 'cover'
                     }}
-                    src={addCarBg}
-                    alt=''
-                />
-                <div className='container-fluid full-screen'>
+                >
                     <Header />
-                    <div className='addcar-card shadow-lg p-3 mb-5 bg-white rounded'>
+                    <div className='addcar-card shadow-lg p-5 mb-5 bg-white rounded'>
+                        <div className='mb-4'>
+                            <h1>
+                                Add Your{' '}
+                                <span style={{ color: '#545372' }}>Car</span>
+                            </h1>
+                            <a>Please fill all the information</a>
+                        </div>
                         <form onSubmit={this.handleSubmit}>
-                            <div className='mb-4 ml-4'>
-                                <h1>
-                                    Add Your{' '}
-                                    <span style={{ color: '#545372' }}>
-                                        Car
-                                    </span>
-                                </h1>
-                                <a>Please fill all the information</a>
-                            </div>
-
-                            <div className=' mb-3 ml mt-3'>
-                                <h5>
-                                    Rental{' '}
-                                    <span style={{ color: '#545372' }}>
-                                        Details
-                                    </span>
-                                </h5>
-                            </div>
-
-                            <FormInput
-                                name='pickup'
-                                handleFormChange={this.handleFormChange}
-                                placeholder='Pick-up Area'
-                                icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
-                            />
-                            <FormInput
-                                name='dropdown'
-                                handleFormChange={this.handleFormChange}
-                                placeholder='Return Area'
-                                icon='M10 17c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm2-7v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10-4c0-2.206 1.795-4 4-4s4 1.794 4 4v4h-8v-4zm11 16h-14v-10h14v10z'
-                            />
-
-                            <div className='row mt-3'>
-                                <div className='col-6 text-label'>
-                                    Pick-up Date:
-                                    <FormInput
-                                        name='startdate'
-                                        handleFormChange={this.handleFormChange}
-                                        placeholder='birthdate'
-                                        type='date'
-                                        value={this.state.birthdate}
-                                    />
-                                </div>
-                                <div className='col-6 text-label'>
-                                    Return Date:
-                                    <FormInput
-                                        name='enddate'
-                                        handleFormChange={this.handleFormChange}
-                                        placeholder='Fullname'
-                                        type='date'
-                                        value={this.state.fullname}
-                                    />
-                                </div>
-                            </div>
-                            <FormInput
-                                name='price'
-                                handleFormChange={this.handleFormChange}
-                                placeholder='Price'
-                                icon='M10 17c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm2-7v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10-4c0-2.206 1.795-4 4-4s4 1.794 4 4v4h-8v-4zm11 16h-14v-10h14v10z'
-                            />
                             <div className=' mb-1  mt-3'>
                                 <h5>
                                     Car{' '}
@@ -176,19 +111,20 @@ class AddCar extends Component {
                             <div className='row'>
                                 <div className='col'>
                                     <FormInput
-                                        name='cartype'
+                                        name='carType'
                                         handleFormChange={this.handleFormChange}
-                                        placeholder='CarType'
-                                        icon='M10 17c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm2-7v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10-4c0-2.206 1.795-4 4-4s4 1.794 4 4v4h-8v-4zm11 16h-14v-10h14v10z'
+                                        placeholder='Car Type'
+                                        icon='M7 13.5c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5.672 1.5 1.5 1.5 1.5-.672 1.5-1.5zm9 1c0-.276-.224-.5-.5-.5h-7c-.276 0-.5.224-.5.5s.224.5.5.5h7c.276 0 .5-.224.5-.5zm4-1c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5.672 1.5 1.5 1.5 1.5-.672 1.5-1.5zm-17.298-6.5h-2.202c-.276 0-.5.224-.5.5v.511c0 .793.926.989 1.616.989l1.086-2zm19.318 3.168c-.761-1.413-1.699-3.17-2.684-4.812-.786-1.312-1.37-1.938-2.751-2.187-1.395-.25-2.681-.347-4.585-.347s-3.19.097-4.585.347c-1.381.248-1.965.875-2.751 2.187-.981 1.637-1.913 3.382-2.684 4.812-.687 1.273-.98 2.412-.98 3.806 0 1.318.42 2.415 1 3.817v2.209c0 .552.448 1 1 1h1.5c.552 0 1-.448 1-1v-1h13v1c0 .552.448 1 1 1h1.5c.552 0 1-.448 1-1v-2.209c.58-1.403 1-2.499 1-3.817 0-1.394-.293-2.533-.98-3.806zm-15.641-3.784c.67-1.117.852-1.149 1.39-1.246 1.268-.227 2.455-.316 4.231-.316s2.963.088 4.231.316c.538.097.72.129 1.39 1.246.408.681.81 1.388 1.195 2.081-1.456.22-4.02.535-6.816.535-3.048 0-5.517-.336-6.805-.555.382-.686.779-1.386 1.184-2.061zm11.595 10.616h-11.948c-1.671 0-3.026-1.354-3.026-3.026 0-1.641.506-2.421 1.184-3.678 1.041.205 3.967.704 7.816.704 3.481 0 6.561-.455 7.834-.672.664 1.231 1.166 2.01 1.166 3.646 0 1.672-1.355 3.026-3.026 3.026zm5.526-10c.276 0 .5.224.5.5v.511c0 .793-.926.989-1.616.989l-1.086-2h2.202z'
                                     />
                                 </div>
 
                                 <div className='col'>
                                     <FormInput
                                         name='seats'
+                                        type='number'
                                         handleFormChange={this.handleFormChange}
                                         placeholder='Seats'
-                                        icon='M10 17c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm3 0c0 .552-.447 1-1 1s-1-.448-1-1 .447-1 1-1 1 .448 1 1zm2-7v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10-4c0-2.206 1.795-4 4-4s4 1.794 4 4v4h-8v-4zm11 16h-14v-10h14v10z'
+                                        icon='M22.548 9l.452-2h-5.364l1.364-6h-2l-1.364 6h-5l1.364-6h-2l-1.364 6h-6.184l-.452 2h6.182l-1.364 6h-5.36l-.458 2h5.364l-1.364 6h2l1.364-6h5l-1.364 6h2l1.364-6h6.185l.451-2h-6.182l1.364-6h5.366zm-8.73 6h-5l1.364-6h5l-1.364 6z'
                                     />
                                 </div>
                             </div>
@@ -196,58 +132,50 @@ class AddCar extends Component {
                                 name='carModel'
                                 handleFormChange={this.handleFormChange}
                                 placeholder='Car Model'
-                                icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
+                                icon='M7 13.5c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5.672 1.5 1.5 1.5 1.5-.672 1.5-1.5zm9 1c0-.276-.224-.5-.5-.5h-7c-.276 0-.5.224-.5.5s.224.5.5.5h7c.276 0 .5-.224.5-.5zm4-1c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5.672 1.5 1.5 1.5 1.5-.672 1.5-1.5zm-17.298-6.5h-2.202c-.276 0-.5.224-.5.5v.511c0 .793.926.989 1.616.989l1.086-2zm19.318 3.168c-.761-1.413-1.699-3.17-2.684-4.812-.786-1.312-1.37-1.938-2.751-2.187-1.395-.25-2.681-.347-4.585-.347s-3.19.097-4.585.347c-1.381.248-1.965.875-2.751 2.187-.981 1.637-1.913 3.382-2.684 4.812-.687 1.273-.98 2.412-.98 3.806 0 1.318.42 2.415 1 3.817v2.209c0 .552.448 1 1 1h1.5c.552 0 1-.448 1-1v-1h13v1c0 .552.448 1 1 1h1.5c.552 0 1-.448 1-1v-2.209c.58-1.403 1-2.499 1-3.817 0-1.394-.293-2.533-.98-3.806zm-15.641-3.784c.67-1.117.852-1.149 1.39-1.246 1.268-.227 2.455-.316 4.231-.316s2.963.088 4.231.316c.538.097.72.129 1.39 1.246.408.681.81 1.388 1.195 2.081-1.456.22-4.02.535-6.816.535-3.048 0-5.517-.336-6.805-.555.382-.686.779-1.386 1.184-2.061zm11.595 10.616h-11.948c-1.671 0-3.026-1.354-3.026-3.026 0-1.641.506-2.421 1.184-3.678 1.041.205 3.967.704 7.816.704 3.481 0 6.561-.455 7.834-.672.664 1.231 1.166 2.01 1.166 3.646 0 1.672-1.355 3.026-3.026 3.026zm5.526-10c.276 0 .5.224.5.5v.511c0 .793-.926.989-1.616.989l-1.086-2h2.202z'
                             />
 
                             <FormInput
                                 name='carDescription'
                                 handleFormChange={this.handleFormChange}
                                 placeholder='Car Description'
-                                icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
+                                icon='M0 1h24v2h-24v-2zm0 7h24v-2h-24v2zm0 5h24v-2h-24v2zm0 5h24v-2h-24v2zm0 5h24v-2h-24v2z'
                             />
-
-                            <div className='row mt-3 ml-3'>
-                                <FormInput
-                                    name='frontViewURL'
-                                    handleFormChange={this.handleFormChange}
-                                    placeholder='Front View'
-                                    icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
-                                />
-
-                                <FormInput
-                                    name='carDocURL'
-                                    handleFormChange={this.handleFormChange}
-                                    placeholder='Car Document'
-                                    icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
-                                />
-
-                                <div className='modal-body'>
-                                    <div className='ml-5'>
-                                        <input
-                                            type='checkbox'
-                                            className='form-check-input'
-                                            name='accept'
-                                            onChange={this.handleFormChange}
-                                        />
-                                        <label className='form-check-label'>
-                                            I Accept Terms and Agreement
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                className=''
-                                style={{
-                                    textAlign: 'center'
-                                }}
-                            >
+                            <br />
+                            <label>Photo of Car</label>
+                            <FormUpload
+                                handleFormUploadChange={
+                                    this.handleFormUploadChange
+                                }
+                                name='photoOfCar'
+                                photoUrl={this.state.photoOfCar}
+                            />
+                            <label>Photo of Car Document</label>
+                            <FormUpload
+                                handleFormUploadChange={
+                                    this.handleFormUploadChange
+                                }
+                                name='photoOfCarDocument'
+                                photoUrl={this.state.photoOfCarDocument}
+                            />
+                            <br />
+                            <div className='ml-4'>
                                 <input
-                                    className='btn mt'
-                                    type='submit'
-                                    value='Submit'
+                                    type='checkbox'
+                                    className='form-check-input'
+                                    name='accept'
+                                    onChange={this.handleFormChange}
                                 />
+                                <label className='form-check-label'>
+                                    I Accept Terms and Agreement
+                                </label>
                             </div>
+
+                            <input
+                                className='btn mt-5'
+                                type='submit'
+                                value='Submit'
+                            />
                         </form>
                     </div>
                 </div>
