@@ -17,7 +17,7 @@ function verify_payment(credit: Credit) {
   return true;
 }
 
-async function pay_payment(money: number, credit: Credit) {
+async function pay_payment(money: number, credit: Credit): Promise<{ok: number, timestamp: number, card: string}> {
   if (verify_payment(credit)) {
     return new Promise(resolve => {
       setTimeout(() => {

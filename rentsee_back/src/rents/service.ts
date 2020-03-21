@@ -88,7 +88,7 @@ export async function _clear(query = {}) {
 
 export function updateStatusById(rentId: string, status: number) {
   return patch(
-    { _id: new ObjectID(id) },
+    { _id: new ObjectID(rentId) },
     { status: status }
   )
 }
