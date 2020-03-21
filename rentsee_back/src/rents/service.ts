@@ -85,3 +85,10 @@ export function patch(query: any, rent: any) {
 export async function _clear(query = {}) {
   return db.rents.remove(query)
 }
+
+export function updateStatusById(rentId: string, status: number) {
+  return patch(
+    { _id: new ObjectID(id) },
+    { status: status }
+  )
+}

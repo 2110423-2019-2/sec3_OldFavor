@@ -2,6 +2,7 @@ import * as guard from './guard';
 import * as cars from './cars/controller';
 import * as rents from './rents/controller';
 import * as users from './users/controller';
+import * as credit from './credit/controller';
 import * as notifications from './notifications/controller';
 
 // prettier-ignore
@@ -37,7 +38,8 @@ export const appRoutes = [
   { method: 'patch',  path: '/api/rents/lessorCancel/:id',action: [guard.loggedIn, rents.lessorCancel] },
   { method: 'patch',  path: '/api/rents/lesseeCancel/:id',action: [guard.loggedIn, rents.lesseeCancel] },
   { method: 'delete', path: '/api/rents/:id',             action: [guard.loggedIn, rents.removeById] },
-  { method: 'delete', path: '/api/rents',                 action: [guard.loggedIn, /* guard.isAdmin, */ rents._clear] },
+  { method: 'delete', path: '/api/rents',                 action: [guard.loggedIn, rents._clear] },
+  { method: 'post',   path: '/api/rents/:id/creditcard',  action: [guard.loggedIn, credit.creditcard_pay] },
   //* NOTIFICATION
   { method: 'get',    path: '/api/notifications',         action: [guard.loggedIn, notifications.getAll] },
   { method: 'get',    path: '/api/notificationsCount',    action: [guard.loggedIn, notifications.getCount] },
