@@ -7,19 +7,3 @@
     color: #545372;
     margin-bottom: 0px !important;
 }
-.text-label {
-    font-family: Lato;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: normal;
-}
-.a-text-white a:link {
-    color: #ffffff !important;
-    text-decoration: none;
-}
-.a-text-white a:active,
-.a-text-white a:visited,
-.a-text-white a:hover {
-    color: #ffffff !important;
-    text-decoration: underline;
-}

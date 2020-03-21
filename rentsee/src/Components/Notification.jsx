@@ -80,7 +80,7 @@ class Notification extends Component {
     render() {
         return (
             <React.Fragment>
-                <i style={{ float: 'right', margin: '35px 0px 35px 15px' }}>
+                <i style={{ float: 'right', marginTop: 35, marginLeft: 15 }}>
                     <button className='clear-btn' onClick={this.tooltip}>
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -103,9 +103,8 @@ class Notification extends Component {
                     className='card text-center py-3'
                     style={{
                         minWidth: 250,
-                        position: 'absolute',
-                        right: 200,
-                        top: 60,
+                        // position: 'absolute',
+
                         backgroundColor: 'rgba(255,255,255)',
                         boxShadow: '10 10',
                         borderRadius: 5,
