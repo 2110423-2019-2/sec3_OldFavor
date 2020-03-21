@@ -60,6 +60,12 @@ class Header extends Component {
                         <a className='text' href='/profile'>
                             <div className='text-center'>Profile</div>
                         </a>
+                        <a className='text' href='/add-car'>
+                            <div className='text-center'>Add Car</div>
+                        </a>
+                        <a className='text' href='/add-deal'>
+                            <div className='text-center'>Add Deal</div>
+                        </a>
                         <a className='text' href='/history'>
                             <div className='text-center'>History</div>
                         </a>
@@ -185,7 +191,7 @@ class Header extends Component {
                     <a
                         className='text'
                         style={{ float: 'right', margin: '35px 18px' }}
-                        href='/AddCar'
+                        href='/add-car'
                     >
                         Add Car
                     </a>

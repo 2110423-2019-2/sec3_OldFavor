@@ -28,7 +28,7 @@ function App() {
                     <Route path='/register' component={Register} />
                     <Route path='/logout' component={Logout} />
                     <Route path='/profile' component={Profile} />
-                    <Route path='/AddCar' component={AddCar} />
+                    <Route path='/add-car' component={AddCar} />
                     <Route path='/search' component={Search} />
                     <Route path='/history' component={History} />
                     <Route path='/add-deal' component={AddDeal} />
