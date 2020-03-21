@@ -32,9 +32,7 @@ class Search extends Component {
         const name = target.name;
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
-    }
-    search() {
-        this.props.search();
+        this.search();
     }
     componentDidMount() {
         const query = 'getUrl=';
@@ -107,25 +105,41 @@ class Search extends Component {
                 console.log(error);
             });
     }
+    search = () => {
+        var getUrl = `https://hueco.ml/rentsee/api/rents/search?q=${
+            this.state.q ? this.state.q : ''
+        }&sort=${this.state.sort ? this.state.sort : ''}&sortWay=${
+            this.state.sortWay ? this.state.sortWay : ''
+        }&pickUpDateTime=${
+            this.state.pickUpDateTime ? this.state.pickUpDateTime : ''
+        }&returnDateTime=${
+            this.state.returnDateTime ? this.state.returnDateTime : ''
+        }&pickUpLocation=${
+            this.state.pickUpLocation ? this.state.pickUpLocation : ''
+        }&returnLocation=${
+            this.state.returnLocation ? this.state.returnLocation : ''
+        }`;
+        this.props.history.push('/search?getUrl=' + getUrl);
+        fetch(getUrl, {
+            method: 'GET'
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(resJson => {
+                const searchRes = resJson;
+                this.setState({ searchRes });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
     handleSortChange = sort => {
         this.setState({ sort: sort });
+        this.search();
     };
     carResult() {
         const rents = this.state.searchRes;
-        // const rents = [
-        //     {
-        //         policy: 'No alcohol',
-        //         pricePerDay: 1760,
-        //         car: {
-        //             capacity: 5,
-        //             photoOfCar:
-        //                 'https://cors-anywhere.herokuapp.com/https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/2018-tesla-model-s-100d-1545165580.jpg?crop=0.819xw:1.00xh;0,0&resize=640:*',
-        //             carModel: 'Tesla Model S',
-        //             carType: 'Electric Car, very cool'
-        //         }
-        //     }
-        // ];
-        // console.log(cars);
         return rents.map(rent => {
             return (
                 <CarItem
