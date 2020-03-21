@@ -150,7 +150,7 @@ class Header extends Component {
                 </a>
                 <div
                     className='sidenav' // mobile only
-                    style={{ position: 'fixed', width: this.state.sideNavWidth }}
+                    style={{ position: 'fixed', width: this.state.sideNavWidth, zIndex: 1000 }}
                 >
                     <button
                         className='closebtn'
