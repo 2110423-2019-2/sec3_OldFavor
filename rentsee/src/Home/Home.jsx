@@ -98,6 +98,7 @@ class Home extends Component {
                         style={{
                             zIndex: 100,
                             width: '36.4vw',
+                            maxWidth: 450,
                             minHeight: 350,
                             position: 'absolute',
                             top: '108px',
@@ -178,13 +179,18 @@ class Home extends Component {
                         <h1 className='card-title'>Reserve You Car</h1>
                         <img
                             src={car}
-                            style={{ width: '48.3vw', zIndex: 10 }}
+                            style={{
+                                width: '48.3vw',
+                                maxWidth: 603,
+                                zIndex: 10
+                            }}
                             alt=''
                         />
                         <img
                             src={carShadow}
                             style={{
                                 width: '48.6vw',
+                                maxWidth: 603,
                                 zIndex: -9,
                                 position: 'absolute',
                                 top: 136,
