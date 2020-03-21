@@ -70,6 +70,7 @@ class AddCar extends Component {
                 })
                 .then(resJson => {
                     if (resJson) {
+                        console.log(resJson);
                         this.props.history.push('/');
                     }
                 })
@@ -121,7 +122,7 @@ class AddCar extends Component {
 
                                 <div className='col'>
                                     <FormInput
-                                        name='seats'
+                                        name='capacity'
                                         type='number'
                                         handleFormChange={this.handleFormChange}
                                         placeholder='Seats'
@@ -175,6 +176,7 @@ class AddCar extends Component {
                             <input
                                 className='btn mt-5'
                                 type='submit'
+                                onSubmit={this.handleSubmit}
                                 value='Submit'
                             />
                         </form>

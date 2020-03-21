@@ -3,7 +3,7 @@ import Header from '../Components/Header';
 import utils from '../utils.js';
 import Footer from '../Components/Footer';
 import BarStatus from '../Components/BarStatus';
-import CarCar from '../Components/CarCard';
+import CarCard from '../Components/CarCard';
 import FormInput from '../Components/FormInput';
 import './AddDeal.css';
 
@@ -29,6 +29,7 @@ class AddDeal extends Component {
                 return response.json();
             })
             .then(resJson => {
+                console.log(resJson);
                 this.setState({ rentableCars: resJson });
             });
     }
@@ -53,7 +54,22 @@ class AddDeal extends Component {
                     policy: this.state.policy
                 })
             }
-        );
+        )
+            .then(response => {
+                return response.json();
+            })
+            .then(resJson => {
+                console.log(resJson);
+                if (resJson) {
+                    this.setState({
+                        state: 3,
+                        deal: resJson
+                    });
+                }
+            })
+            .catch(error => {
+                alert('Failed to add deal!');
+            });
     };
     handleFormChange = event => {
         const target = event.target;
@@ -65,15 +81,21 @@ class AddDeal extends Component {
     renderState1 = () => {
         return (
             <React.Fragment>
-                {this.state.rentableCars.toString()}
-                <CarCar
-                    _id='0'
-                    handleOnClick={this.handleSelectCar}
-                    carModel='NISSAN'
-                    carType='ALMERA 1.2 E CVT or similar'
-                    photoOfCar='https://cors-anywhere.herokuapp.com/https://i.picsum.photos/id/1071/3000/1996.jpg'
-                    capacity='5'
-                />
+                {this.state.rentableCars.map(car => {
+                    return (
+                        <React.Fragment key={car._id}>
+                            <CarCard
+                                _id={car._id}
+                                handleOnClick={this.handleSelectCar}
+                                carModel={car.carModel}
+                                carType={car.carType}
+                                photoOfCar={car.photoOfCar}
+                                capacity={car.capacity}
+                                carDescription={car.carDescription}
+                            />
+                        </React.Fragment>
+                    );
+                })}
             </React.Fragment>
         );
     };
@@ -167,12 +189,49 @@ class AddDeal extends Component {
             </React.Fragment>
         );
     };
+    renderState3 = () => {
+        return (
+            <div className='text-center' style={{ marginTop: '15vh' }}>
+                <div className='mt-5 mb-3'>
+                    <i>
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='15%'
+                            height='15%'
+                            viewBox='0 0 24 24'
+                            fill='#28a745'
+                        >
+                            <path d='M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z' />
+                        </svg>
+                    </i>
+                </div>
+                <div
+                    className='font-weight-bold mb-5'
+                    style={{ fontSize: '1.6em' }}
+                >
+                    Car Deal Added Successfully!
+                </div>
+                <a href='/' className='text mx-3' style={{ fontSize: '1.2em' }}>
+                    Go Home
+                </a>
+                <a
+                    href='/add-deal'
+                    className='text mx-3'
+                    style={{ fontSize: '1.2em' }}
+                >
+                    Add More Deal
+                </a>
+            </div>
+        );
+    };
     renderByState = () => {
         switch (this.state.state) {
             case 1:
                 return this.renderState1();
             case 2:
                 return this.renderState2();
+            case 3:
+                return this.renderState3();
             default:
                 return this.renderState1();
         }
@@ -183,17 +242,18 @@ class AddDeal extends Component {
             <React.Fragment>
                 <Header />
                 <div className='body-content'>
-                    <button
-                        onClick={() => {
-                            this.setState({
-                                state: state - 1 < 1 ? 1 : state - 1
-                            });
-                        }}
-                    >
-                        BACK
-                    </button>
                     <div className='container'>
-                        <BarStatus count={4} current={state} />
+                        <BarStatus count={3} current={state} />
+                        <button
+                            className='btn my-3'
+                            onClick={() => {
+                                this.setState({
+                                    state: state - 1 < 1 ? 1 : state - 1
+                                });
+                            }}
+                        >
+                            BACK
+                        </button>
                         {this.renderByState()}
                     </div>
                 </div>

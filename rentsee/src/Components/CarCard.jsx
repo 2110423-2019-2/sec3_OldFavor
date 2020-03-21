@@ -14,7 +14,14 @@ class CarItem extends Component {
             return;
         } else {
             fetch(image_url, {
-                method: 'GET'
+                method: 'GET',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: {
+                    Accept: '*/*'
+                },
+                redirect: 'follow',
+                referrer: 'no-referrer'
             })
                 .then(response => {
                     if (response.status !== 404) {
@@ -32,7 +39,7 @@ class CarItem extends Component {
     render() {
         return (
             <button
-                className='card shadow-sm px-4 py-5 mt-3'
+                className='card shadow-sm px-4 py-5 mt-3 w-100'
                 onClick={this.handleOnClick}
             >
                 <div className='row'>
@@ -47,7 +54,7 @@ class CarItem extends Component {
                             style={{ width: '100%' }}
                         ></img>
                     </div>
-                    <div className='col'>
+                    <div className='col text-left'>
                         <div className='car-title-text'>
                             {this.props.carModel}
                         </div>
@@ -73,6 +80,22 @@ class CarItem extends Component {
                                 Seats
                             </span>
                         </span>
+                        <div>
+                            <i>
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    width='17'
+                                    height='17'
+                                    viewBox='0 0 24 24'
+                                    fill='#000000'
+                                >
+                                    <path d='M0 1h24v2h-24v-2zm0 7h24v-2h-24v2zm0 5h24v-2h-24v2zm0 5h24v-2h-24v2zm0 5h24v-2h-24v2z' />
+                                </svg>
+                            </i>
+                            <span className='ml-3'>
+                                {this.props.carDescription}
+                            </span>
+                        </div>
                     </div>
                     <div className='col'></div>
                 </div>
