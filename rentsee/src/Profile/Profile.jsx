@@ -111,7 +111,7 @@ class Profile extends Component {
         const name = target.name;
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
-        if (this.state.emailVerified == false) {
+        if (this.state.emailVerified === false) {
         } else {
         }
     }
@@ -306,6 +306,7 @@ class Profile extends Component {
                                                 src={this.state.drivingLicense}
                                                 width='192'
                                                 height='108'
+                                                alt=''
                                             ></img>
                                         </div>
                                         <div class='col'>

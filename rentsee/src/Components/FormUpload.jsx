@@ -10,9 +10,6 @@ class FormUpload extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(event) {
-        this.props.handleFormChange(event);
-    }
-    handleChange(event) {
         const target = event.target.files[0];
         const name = target.name;
         let formData = new FormData();
@@ -55,6 +52,7 @@ class FormUpload extends Component {
                     className='ml-2 text'
                     href={this.props.photoUrl}
                     target='_blank'
+                    rel='noopener noreferrer'
                     style={{
                         textOverflow: 'ellipsis',
                         overflow: 'hidden',
