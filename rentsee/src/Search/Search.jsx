@@ -329,12 +329,17 @@ class Search extends Component {
             </React.Fragment>
         );
     };
+    renderState4 = () => {
+        return <div>DONE</div>;
+    };
     renderByState = () => {
         switch (this.state.state) {
             case 2:
                 return this.renderState2();
             case 3:
                 return this.renderState3();
+            case 4:
+                return this.renderState4();
             default:
                 return this.renderState2();
         }
