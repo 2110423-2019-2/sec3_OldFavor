@@ -28,7 +28,7 @@ class Search extends Component {
             pickUpLocation: '',
             returnLocation: '',
 
-            state: 4,
+            state: 2,
             selectedRentId: '',
             selectedRent: '',
 
