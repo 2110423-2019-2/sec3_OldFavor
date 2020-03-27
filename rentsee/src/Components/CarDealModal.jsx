@@ -24,7 +24,7 @@ class CarDealModal extends Component {
     }
     handleSubmit() {
         if (this.state.accept) {
-            alert('Rent Success!');
+            this.props.handleRent();
         } else {
             alert('Please accept the terms and agreement');
         }
