@@ -17,6 +17,9 @@ class Header extends Component {
         this.tooltip = this.tooltip.bind(this);
     }
     componentDidMount() {
+        window.addEventListener("resize", () => {
+            this.setState(this.state)
+        });
         fetch('https://hueco.ml/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
@@ -43,13 +46,28 @@ class Header extends Component {
         if (username) {
             return (
                 <React.Fragment>
-                    <div
+                    <button
+                        className='clear-btn'
+                        style={{
+                            float: 'right',
+                            margin: '35px 0px 35px 10px',
+                            position: 'relative'
+                        }}
+                        onClick={this.tooltip}
+                    >
+                        <img
+                            style={{ width: '17', height: '11.96px' }}
+                            className=''
+                            src={downArrow}
+                            alt=''
+                        />
+                        <div
                         className='card'
                         style={{
                             minWidth: 150,
                             position: 'absolute',
-                            right: 75,
-                            top: 60,
+                            right: 0,
+                            top: 30,
                             backgroundColor: 'rgba(255,255,255)',
                             boxShadow: '10 10',
                             borderRadius: 5,
@@ -73,20 +91,6 @@ class Header extends Component {
                             <div className='text-center'>Logout</div>
                         </a>
                     </div>
-                    <button
-                        className='clear-btn'
-                        style={{
-                            float: 'right',
-                            margin: '35px 80px 35px 10px'
-                        }}
-                        onClick={this.tooltip}
-                    >
-                        <img
-                            style={{ width: '17', height: '11.96px' }}
-                            className=''
-                            src={downArrow}
-                            alt=''
-                        />
                     </button>
                     <a
                         className='text text-bold'
@@ -130,13 +134,14 @@ class Header extends Component {
     }
     render() {
         return (
-            <div>
-                <a href='/'>
+            <header>
+                
+            <div style={{padding: '10px 20px', maxWidth: 1100, margin: 'auto', display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                <a is='header-logo' href='/'>
                     <img
                         style={{
                             width: '119px',
                             height: '39px',
-                            margin: '30px 80px'
                         }}
                         className=''
                         src={rentseeLogo}
@@ -144,8 +149,8 @@ class Header extends Component {
                     />
                 </a>
                 <div
-                    className='sidenav'
-                    style={{ width: this.state.sideNavWidth }}
+                    className='sidenav' // mobile only
+                    style={{ position: 'fixed', width: this.state.sideNavWidth, zIndex: 1000 }}
                 >
                     <button
                         className='closebtn'
@@ -163,8 +168,6 @@ class Header extends Component {
                     className='d-block d-lg-none'
                     onClick={this.openNav}
                     style={{
-                        float: 'right',
-                        margin: '34px 100px 18px 0px',
                         border: 'none',
                         backgroundColor: '#ffffff00'
                     }}
@@ -208,6 +211,7 @@ class Header extends Component {
                     </a>
                 </div>
             </div>
+            </header>
         );
     }
 }
