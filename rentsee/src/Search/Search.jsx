@@ -11,7 +11,17 @@ import './Search.css';
 import Footer from '../Components/Footer';
 
 function formatNumber(num) {
-    if (num) return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    if (num){
+        let numOut = num;
+        if (numOut.toString().includes('.')) {
+            return numOut
+                .toFixed(2)
+                .toString()
+                .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        } else {
+            return numOut.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        }
+    }
     return num;
 }
 class Search extends Component {
