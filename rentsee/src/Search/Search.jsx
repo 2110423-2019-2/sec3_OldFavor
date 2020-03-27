@@ -528,7 +528,7 @@ class Search extends Component {
                 <Header />
                 <div className='body-content'>
                     <div className='container'>
-                        <BarStatus count={4} current={this.state.state} />
+                        <BarStatus count={4} current={this.state.state} labels={['1. Search for a car', '2. Select a car', '3. Rental Information', '4. Payment']}/>
                         {this.renderByState()}
                     </div>
                 </div>

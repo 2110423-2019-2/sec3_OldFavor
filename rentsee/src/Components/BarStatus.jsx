@@ -8,6 +8,7 @@ class BarStatus extends Component {
             bars.push(
                 <Bar
                     type={i === this.props.current - 1 ? 'enabled' : 'disabled'}
+                    label={this.props.labels ? this.props.labels[i]: ' ' }
                     key={i}
                 />
             );
