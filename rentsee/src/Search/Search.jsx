@@ -28,9 +28,11 @@ class Search extends Component {
             pickUpLocation: '',
             returnLocation: '',
 
-            state: 2,
+            state: 4,
             selectedRentId: '',
-            selectedRent: ''
+            selectedRent: '',
+
+            accepted: false
         };
         this.handleFormChange = this.handleFormChange.bind(this);
         this.carResult = this.carResult.bind(this);
@@ -161,6 +163,13 @@ class Search extends Component {
         });
     };
     handleConfirm = () => {
+        if (!this.state.accepted) {
+            alert('Please, accept the terms and conditions before proceeding');
+        } else {
+            this.setState({ state: 4 });
+        }
+    };
+    handlePayment = () => {
         fetch(
             `https://hueco.ml/rentsee/api/rents/confirm/${this.state.selectedRentId}`,
             {
@@ -179,6 +188,11 @@ class Search extends Component {
             })
             .then(resJson => {
                 console.log(resJson);
+                this.setState({ success: true });
+            })
+            .catch(err => {
+                console.log(err);
+                alert(err);
             });
     };
     carResult() {
@@ -186,6 +200,7 @@ class Search extends Component {
         return rents.map(rent => {
             return (
                 <CarItem
+                    key={rent._id}
                     brand={rent.car.carModel}
                     type={rent.car.carType}
                     cost={rent.pricePerDay}
@@ -245,68 +260,91 @@ class Search extends Component {
         const delta = returnDateTime - pickUpDateTime;
         const days = delta / 86400000;
         const totalCost = days * rent.pricePerDay;
+        const deposite = totalCost * 0.4;
         return (
             <React.Fragment>
                 <div className='container'>
-                    <h1 className='my-3'>Renting Information</h1>
                     <SearchPickUpReturn
                         pickUpLocation={this.state.pickUpLocation}
                         pickUpDateTime={this.state.pickUpDateTime}
                         returnLocation={this.state.returnLocation}
                         returnDateTime={this.state.returnDateTime}
                     />
-                    <div className='row'>
-                        <div className='col'>
-                            <img
-                                src={car.photoOfCar}
-                                alt=''
-                                style={{ width: '100%' }}
-                            ></img>
-                        </div>
-                        <div className='col'>
-                            <div className='car-title-text'>{car.carModel}</div>
-                            <div className='car-type-text'>{car.carType}</div>
-                            <span>
-                                <i>
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        width='17'
-                                        height='17'
-                                        viewBox='0 0 24 24'
-                                        fill='#000000'
-                                    >
-                                        <path d='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z' />
-                                    </svg>
-                                </i>
-                                <span className='ml-3'>
-                                    {car.capacity ? car.capacity : 'N/A'} Seats
-                                </span>
-                            </span>
-                            <div>
-                                <i>
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        width='17'
-                                        height='17'
-                                        viewBox='0 0 24 24'
-                                        fill='#000000'
-                                    >
-                                        <path d='M0 1h24v2h-24v-2zm0 7h24v-2h-24v2zm0 5h24v-2h-24v2zm0 5h24v-2h-24v2zm0 5h24v-2h-24v2z' />
-                                    </svg>
-                                </i>
-                                <span className='ml-3'>
-                                    {car.carDescription}
-                                </span>
+                    <div
+                        className='card px-4 py-5 mt-3 w-100'
+                        onClick={this.handleOnClick}
+                    >
+                        <div className='row'>
+                            <div className='col'>
+                                <img
+                                    src={car.photoOfCar}
+                                    alt=''
+                                    style={{ width: '100%' }}
+                                ></img>
                             </div>
-                        </div>
-                        <div className='col'>
-                            <div className='car-cost-text'>
-                                {formatNumber(rent.pricePerDay)}
+                            <div className='col'>
+                                <div className='car-title-text'>
+                                    {car.carModel}
+                                </div>
+                                <div className='car-type-text'>
+                                    {car.carType}
+                                </div>
+                                <span>
+                                    <i>
+                                        <svg
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            width='17'
+                                            height='17'
+                                            viewBox='0 0 24 24'
+                                            fill='#000000'
+                                        >
+                                            <path d='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z' />
+                                        </svg>
+                                    </i>
+                                    <span className='ml-3'>
+                                        {car.capacity ? car.capacity : 'N/A'}{' '}
+                                        Seats
+                                    </span>
+                                </span>
+                                <div>
+                                    <i>
+                                        <svg
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            width='17'
+                                            height='17'
+                                            viewBox='0 0 24 24'
+                                            fill='#000000'
+                                        >
+                                            <path d='M0 1h24v2h-24v-2zm0 7h24v-2h-24v2zm0 5h24v-2h-24v2zm0 5h24v-2h-24v2zm0 5h24v-2h-24v2z' />
+                                        </svg>
+                                    </i>
+                                    <span className='ml-3'>
+                                        {car.carDescription}
+                                    </span>
+                                </div>
                             </div>
-                            <div className='car-cost-unit-text'>THB/DAY</div>
+                            <div className='col'>
+                                <div className='car-cost-text'>
+                                    {formatNumber(rent.pricePerDay)}
+                                </div>
+                                <div className='car-cost-unit-text'>
+                                    THB/DAY
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <label className='my-3'>
+                    <label className='my-3 text-center w-100'>
+                        <span className='' style={{ fontSize: '1.6em' }}>
+                            Booking Deposite: {formatNumber(deposite)}{' '}
+                        </span>
+                        <span
+                            className='font-weight-thin'
+                            style={{ fontSize: '1.2em' }}
+                        >
+                            THB
+                        </span>
+                    </label>
+                    <label className='my-3 text-center w-100'>
                         <span
                             className='font-weight-bold'
                             style={{ fontSize: '1.6em' }}
@@ -320,7 +358,31 @@ class Search extends Component {
                             THB
                         </span>
                     </label>
-                    <div className='text-right mt-3'>
+                    <div
+                        className='mt-5 mb-4 text-center custom-control'
+                        id='checkout-search'
+                    >
+                        <input
+                            type='checkbox'
+                            className='custom-checkbox'
+                            onChange={this.handleFormChange}
+                            name='accepted'
+                            value={this.state.accepted}
+                        />
+                        <label>
+                            I have read and accept{' '}
+                            <a
+                                className='text'
+                                href='/search/term-and-conditions'
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                style={{ fontWeight: 'bold' }}
+                            >
+                                Rentsee Rental Terms and Conditions
+                            </a>
+                        </label>
+                    </div>
+                    <div className='text-center mt-3'>
                         <button className='btn' onClick={this.handleConfirm}>
                             Confirm
                         </button>
@@ -330,7 +392,113 @@ class Search extends Component {
         );
     };
     renderState4 = () => {
-        return <div>DONE</div>;
+        switch (this.state.success) {
+            case true:
+                return (
+                    <div className='text-center' style={{ marginTop: '15vh' }}>
+                        <div className='mt-5 mb-3'>
+                            <i>
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    width='15%'
+                                    height='15%'
+                                    viewBox='0 0 24 24'
+                                    fill='#28a745'
+                                >
+                                    <path d='M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z' />
+                                </svg>
+                            </i>
+                        </div>
+                        <div
+                            className='font-weight-bold mb-5'
+                            style={{ fontSize: '1.6em' }}
+                        >
+                            Car Rented Successfully!
+                        </div>
+                        <a
+                            href='/'
+                            className='text mx-3'
+                            style={{ fontSize: '1.2em' }}
+                        >
+                            Go Home
+                        </a>
+                    </div>
+                );
+            default:
+                return (
+                    <div className='container px-5 py-5 my-5'>
+                        <div className='row'>
+                            <div className='col'>
+                                <label>Credit Card Number</label>
+                                <FormInput
+                                    name='creditCardNumber'
+                                    type='number'
+                                    value={this.state.creditCardNumber}
+                                    handleFormChange={this.handleFormChange}
+                                    placeholder='Credit Card Number'
+                                />
+                            </div>
+                            <div className='col'>
+                                <label>Credit Card Name</label>
+                                <FormInput
+                                    name='creditCardName'
+                                    type='number'
+                                    value={this.state.creditCardName}
+                                    handleFormChange={this.handleFormChange}
+                                    placeholder='Credit Card Name'
+                                />
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='col'>
+                                <label>Exipiration Date</label>
+                                <div className='row'>
+                                    <div className='col'>
+                                        <FormInput
+                                            name='expMonth'
+                                            type='text'
+                                            value={this.state.expMonth}
+                                            handleFormChange={
+                                                this.handleFormChange
+                                            }
+                                            placeholder='Month'
+                                        />
+                                    </div>
+                                    <div className='col'>
+                                        <FormInput
+                                            name='expYear'
+                                            type='text'
+                                            value={this.state.expYear}
+                                            handleFormChange={
+                                                this.handleFormChange
+                                            }
+                                            placeholder='Year'
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='col'>
+                                <label>CCV/CVC</label>
+                                <FormInput
+                                    name='ccv'
+                                    type='password'
+                                    value={this.state.ccv}
+                                    handleFormChange={this.handleFormChange}
+                                    placeholder='CCV'
+                                />
+                            </div>
+                        </div>
+                        <div className='text-center mt-3'>
+                            <button
+                                className='btn'
+                                onClick={this.handlePayment}
+                            >
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                );
+        }
     };
     renderByState = () => {
         switch (this.state.state) {
