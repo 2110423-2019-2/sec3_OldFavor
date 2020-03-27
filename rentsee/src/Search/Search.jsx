@@ -191,27 +191,7 @@ class Search extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className='container mt-3'>
-                        {this.carResult()}
-                        <CarItem
-                            brand='NISSAN'
-                            type='ALMERA 1.2 E CVT or similar'
-                            cost='1,587'
-                            policy='No alcohol'
-                            photoOfCar='https://cors-anywhere.herokuapp.com/https://i.picsum.photos/id/1071/3000/1996.jpg'
-                            capacity='5'
-                        />
-                        <CarItem
-                            brand='TOYOTA'
-                            type='ALMERA 1.2 E CVT or similar'
-                            cost='1,420'
-                        />
-                        <CarItem
-                            brand='TESLA'
-                            type='ALMERA 1.2 E CVT or similar'
-                            cost='1,969'
-                        />
-                    </div>
+                    <div className='container mt-3'>{this.carResult()}</div>
                 </div>
                 <Footer />
             </div>
