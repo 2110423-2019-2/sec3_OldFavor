@@ -41,7 +41,8 @@ class Search extends Component {
             state: 2,
             selectedRentId: '',
             selectedRent: '',
-
+            totalCost: undefined,
+            deposite: undefined,
             accepted: false
         };
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -164,12 +165,22 @@ class Search extends Component {
     handleRent = _id => {
         var rent = findIndex(this.state.searchRes, ['_id', _id]);
         rent = this.state.searchRes[rent];
+
+        const pickUpDateTime = new Date(this.state.pickUpDateTime);
+        const returnDateTime = new Date(this.state.returnDateTime);
+        const delta = returnDateTime - pickUpDateTime;
+        const days = delta / 86400000;
+        const totalCost = days * rent.pricePerDay;
+        const deposite = totalCost * 0.4;
+
         this.setState({
             selectedRentId: _id,
             state: 3,
             selectedRent: rent,
             pickUpLocation: rent.pickUpLocation,
-            returnLocation: rent.returnLocation
+            returnLocation: rent.returnLocation,
+            totalCost: totalCost,
+            deposite: deposite
         });
     };
     handleConfirm = () => {
@@ -263,14 +274,8 @@ class Search extends Component {
         );
     };
     renderState3 = () => {
-        const rent = this.state.selectedRent;
+        var rent = this.state.selectedRent;
         const car = rent.car;
-        const pickUpDateTime = new Date(this.state.pickUpDateTime);
-        const returnDateTime = new Date(this.state.returnDateTime);
-        const delta = returnDateTime - pickUpDateTime;
-        const days = delta / 86400000;
-        const totalCost = days * rent.pricePerDay;
-        const deposite = totalCost * 0.4;
         return (
             <React.Fragment>
                 <div className='container'>
@@ -345,7 +350,8 @@ class Search extends Component {
                     </div>
                     <label className='my-3 text-center w-100'>
                         <span className='' style={{ fontSize: '1.6em' }}>
-                            Booking Deposite: {formatNumber(deposite)}{' '}
+                            Booking Deposite:{' '}
+                            {formatNumber(this.state.deposite)}{' '}
                         </span>
                         <span
                             className='font-weight-thin'
@@ -359,7 +365,7 @@ class Search extends Component {
                             className='font-weight-bold'
                             style={{ fontSize: '1.6em' }}
                         >
-                            Total: {formatNumber(totalCost)}{' '}
+                            Total: {formatNumber(this.state.totalCost)}{' '}
                         </span>
                         <span
                             className='font-weight-thin'
@@ -436,7 +442,18 @@ class Search extends Component {
                 );
             default:
                 return (
-                    <div className='container px-5 py-5 my-5'>
+                    <div className='container px-5'>
+                        <label className='my-5 text-center w-100'>
+                            <span className='' style={{ fontSize: '1.6em' }}>
+                                Booking Deposite: {formatNumber(this.state.deposite)}{' '}
+                            </span>
+                            <span
+                                className='font-weight-thin'
+                                style={{ fontSize: '1.2em' }}
+                            >
+                                THB
+                            </span>
+                        </label>
                         <div className='row'>
                             <div className='col'>
                                 <label>Credit Card Number</label>
