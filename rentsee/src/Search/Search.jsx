@@ -389,7 +389,7 @@ class Search extends Component {
                             I have read and accept{' '}
                             <a
                                 className='text'
-                                href='/search/term-and-conditions'
+                                href='https://docs.google.com/document/d/10eoplvzsw4_oM6ZOBxlf4d2QTP3KWSQv9VYiPdCw0Uo/edit?usp=sharing'
                                 target='_blank'
                                 rel='noopener noreferrer'
                                 style={{ fontWeight: 'bold' }}
