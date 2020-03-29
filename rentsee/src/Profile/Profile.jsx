@@ -119,16 +119,6 @@ class Profile extends Component {
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
     }
-    handleFormChangeWithValidate(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        console.log('change: ' + [name] + ' ' + value);
-        this.setState({ [name]: value });
-        if (this.state.emailVerified === false) {
-        } else {
-        }
-    }
     handleLicense(event) {
         const target = event.target.files[0];
         //const value = target.value;

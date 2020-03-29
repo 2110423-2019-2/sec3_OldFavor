@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import utils from '../utils.js';
-// import FormInput from '../Components/FormInput';
 import Header from '../Components/Header';
+import CarItem from '../Components/CarItem';
+import { getNodeText } from '@testing-library/react';
+
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            historyResult: [],
-            historyValue: ''
+            historyResult:"",
+            testt: ["1", "2", "3"],
+            historyValue: ""
         };
         this.handleFormChange = this.handleFormChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.carResult = this.carResult.bind(this);
     }
     componentDidMount() {
-        fetch('https://hueco.ml/rentsee/api/profile', {
+        fetch('https://hueco.ml/rentsee/api/rents', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -23,8 +27,11 @@ class Profile extends Component {
                 return response.json();
             })
             .then(resJson => {
-                console.log(resJson);
-                this.setState({});
+                this.historyResult = resJson;
+                this.setState({
+                    historyResult: resJson
+                });
+                console.log(this.historyResult);
             })
             .catch(error => {
                 console.log(error);
@@ -77,32 +84,53 @@ class Profile extends Component {
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
     }
-    handleFormChangeWithValidate(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        console.log('change: ' + [name] + ' ' + value);
-        this.setState({ [name]: value });
-        if (this.state.emailVerified === false) {
-        } else {
-        }
+    carResult() {
+        let rents = this.state.historyResult;
+        //console.log(rents);
+        if(rents.length !== 0){
+            return rents.map(rent => {
+                console.log(rent);
+                return (
+                    <CarItem
+                    brand={rent.car[0].carModel}
+                    type={rent.car[0].carType}
+                    cost={(rent.pricePerDay === null)? 0:rent.pricePerDay}
+                    photoOfCar={rent.car[0].photoOfCar}
+                    capacity={rent.car[0].capacity}
+                    policy={rent.policy}
+                />
+    
+                );
+            });
+        };
+        
     }
     render() {
         return (
-            <div className='container-fluid full-screen'>
-                <Header />
-                <div className='row mb-4'></div>
-                <div className='row mb-4'></div>
-                <div className='row'>
-                    <div className='col-2'></div>
-                    <div className='col'>
-                        <h1 className='ml-0'>Rental History</h1>
+            <React.Fragment>
+                <div className='container-fluid'>
+                    <Header />
+                    <div className='row mb-4'></div>
+                    <div className='row mb-4'></div>
+                    <div className='row'>
+                        <div className='col-2'></div>
+                        <div className='col'>
+                            <h1 className='ml-0'>Rental History</h1>
+                        </div>
+                        <div className='col'></div>
+                        <div className='col-2'></div>
                     </div>
-                    <div className='col'></div>
-                    <div className='col-2'></div>
+                    <div className='row mb-4'></div>
+                    <div className='row'>
+                        <div className='col-2'></div>
+                        <div className='col'>
+                            {this.carResult()}
+
+                        </div>
+                        <div className='col-2'></div>
+                    </div>
                 </div>
-                <div className='row mb-4'></div>
-            </div>
+            </React.Fragment>
         );
     }
 }
