@@ -32,6 +32,9 @@ export interface Rent {
   policy        : string;
   created       : Date;
   matched       : Date;
+  
+  credit_card   : string;
+  credit_date   : Date;
 }
 
 // prettier-ignore

@@ -40,6 +40,7 @@ export const appRoutes = [
   { method: 'delete', path: '/api/rents/:id',             action: [guard.loggedIn, rents.removeById] },
   { method: 'delete', path: '/api/rents',                 action: [guard.loggedIn, rents._clear] },
   { method: 'post',   path: '/api/rents/:id/creditcard',  action: [guard.loggedIn, credit.creditcard_pay] },
+  { method: 'post',   path: '/api/rents/:id/cancel',      action: [guard.loggedIn, credit.creditcard_cancel] },
   //* NOTIFICATION
   { method: 'get',    path: '/api/notifications',         action: [guard.loggedIn, notifications.getAll] },
   { method: 'get',    path: '/api/notificationsCount',    action: [guard.loggedIn, notifications.getCount] },

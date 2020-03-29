@@ -1,5 +1,7 @@
 import * as rent_service from '../rents/service'
+import * as user_service from '../users/service'
 import * as _ from 'lodash'
+import { User } from '../model';
 
 export interface Credit {
   creaditCardNumber: string;
@@ -17,7 +19,7 @@ function verify_payment(credit: Credit) {
   return true;
 }
 
-async function pay_payment(money: number, credit: Credit): Promise<{ok: number, timestamp: number, card: string}> {
+async function exec_payment(money: number, credit: Credit): Promise<{ok: number, timestamp: number, card: string}> {
   if (verify_payment(credit)) {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -33,12 +35,57 @@ async function pay_payment(money: number, credit: Credit): Promise<{ok: number, 
   }
 }
 
+async function dispose_money_from(money: number, credit: Credit) {
+  return exec_payment(-money, credit);
+}
+async function transfer_money_to(money: number, credit: string) {
+  // @ts-ignore
+  return exec_payment(money, {
+    creaditCardNumber: credit
+  });
+}
+
 export async function pay_rent(rentId: string, credit: Credit) {
   const rents = await rent_service.findById(rentId)
   if (_.isEmpty(rents) || rents.length != 1) throw new Error("rentId not found")
-  const pay = await pay_payment(rents[0].totalPrice, credit)
+  const pay = await dispose_money_from(rents[0].totalPrice, credit)
   if (!pay.ok) throw new Error("payment bank error")
-  const write = await rent_service.updateStatusById(rentId, 4) // status 4=done
+  const write = await rent_service.updateById(rentId, {
+    status: 4, // done
+    credit_card: credit.creaditCardNumber,
+    credit_date: new Date()
+  }) // status 4=done
   if (!write.ok) throw new Error("update status error, but payment is done")
   return write.value
+}
+
+export async function cancel_rent(rentId: string, userId: string) {
+  const rents = await rent_service.findById(rentId)
+  const user = await user_service.findById(userId)
+  if (_.isEmpty(rents) || rents.length != 1) throw new Error("rentId not found")
+  const rent = rents[0]
+  if (rent.status != 4) throw new Error(`rent status is not done (${rent.status})`)
+  if (!rent.credit_card || !rent.credit_date) throw new Error(`no payment information`)
+  const diff = new Date().getTime() - new Date(rent.credit_date).getTime()
+  const day = 24 * 60 * 60 * 1000
+  // 2 = lessorcancel 3 = lesseecancel
+  const status = {
+    [String(rent.renterId)]: 2,
+    [String(rent.lessorId)]: 3,
+  }[userId]
+
+  if (!status) throw new Error("you not involve to this payment")
+
+  if (diff > 3 * day) {
+    await transfer_money_to(rent.totalPrice * 1.0, rent.credit_card);
+  } else if (diff > 1 * day) {
+    await transfer_money_to(rent.totalPrice * 0.6, rent.credit_card);
+  } else {
+    await transfer_money_to(rent.totalPrice * 0.2, rent.credit_card);
+  }
+  return await rent_service.updateById(rentId, {
+    status: status,
+    credit_card: null,
+    credit_date: null
+  })
 }
