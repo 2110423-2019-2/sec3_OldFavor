@@ -33,24 +33,35 @@ class Home extends Component {
         this.setState({ [name]: value });
     }
     search() {
-        var getUrl = `https://hueco.ml/rentsee/api/rents/search?q=${
-            this.state.q ? this.state.q : ''
-        }&sort=${this.state.sort ? this.state.sort : ''}&sortWay=${
-            this.state.sortWay ? this.state.sortWay : ''
-        }&pickUpDateTime=${
-            this.state.pickUpDateTime ? this.state.pickUpDateTime : ''
-        }&returnDateTime=${
-            this.state.returnDateTime ? this.state.returnDateTime : ''
-        }&pickUpLocation=${
-            this.state.pickUpLocation ? this.state.pickUpLocation : ''
-        }&returnLocation=${
-            this.state.returnLocation ? this.state.returnLocation : ''
-        }`;
-        this.props.history.push('/search?getUrl=' + getUrl);
+        if (
+            !this.state.pickUpDateTime |
+            !this.state.returnDateTime |
+            !this.state.pickUpLocation |
+            !this.state.returnLocation
+        ) {
+            alert(
+                'Please fill the Pick-up Location and Return Location and Date'
+            );
+        } else {
+            var getUrl = `https://hueco.ml/rentsee/api/rents/search?q=${
+                this.state.q ? this.state.q : ''
+            }&sort=${this.state.sort ? this.state.sort : ''}&sortWay=${
+                this.state.sortWay ? this.state.sortWay : ''
+            }&pickUpDateTime=${
+                this.state.pickUpDateTime ? this.state.pickUpDateTime : ''
+            }&returnDateTime=${
+                this.state.returnDateTime ? this.state.returnDateTime : ''
+            }&pickUpLocation=${
+                this.state.pickUpLocation ? this.state.pickUpLocation : ''
+            }&returnLocation=${
+                this.state.returnLocation ? this.state.returnLocation : ''
+            }`;
+            this.props.history.push('/search?getUrl=' + getUrl);
+        }
     }
     componentDidMount() {
-        window.addEventListener("resize", () => {
-            this.setState(this.state)
+        window.addEventListener('resize', () => {
+            this.setState(this.state);
         });
         fetch('https://hueco.ml/rentsee/api/profile', {
             method: 'GET',
@@ -93,15 +104,20 @@ class Home extends Component {
                         minHeight: 500,
                         display: 'flex',
                         justifyContent: 'center',
-                        alignItems: "center",
+                        alignItems: 'center',
                         paddingTop: 32,
-                        flexDirection: window.innerWidth > 700 ? "row" : "column",
+                        flexDirection:
+                            window.innerWidth > 700 ? 'row' : 'column'
                     }}
                 >
-                    <div id='home-body-left' className='d-none d-md-block' style={{
-                        position: 'relative',
-                        // transform: window.innerWidth > 600 ? "" : "scale(1.6)",
-                    }}>
+                    <div
+                        id='home-body-left'
+                        className='d-none d-md-block'
+                        style={{
+                            position: 'relative'
+                            // transform: window.innerWidth > 600 ? "" : "scale(1.6)",
+                        }}
+                    >
                         <h1 className='card-title'>Reserve You Car</h1>
                         <img
                             src={car}
@@ -133,7 +149,7 @@ class Home extends Component {
                             maxWidth: 400,
                             padding: 35,
                             paddingTop: 25,
-                            height: "100%"
+                            height: '100%'
                         }}
                     >
                         <h5
@@ -159,8 +175,17 @@ class Home extends Component {
                             icon='M17.026 22.957c10.957-11.421-2.326-20.865-10.384-13.309l2.464 2.352h-9.106v-8.947l2.232 2.229c14.794-13.203 31.51 7.051 14.794 17.675z'
                         />
 
-                        <div style={{ display: 'flex', width: '100%', justifyContent: "space-between"}}>
-                            <div className='text-label' style={{width: '49%'}}>
+                        <div
+                            style={{
+                                display: 'flex',
+                                width: '100%',
+                                justifyContent: 'space-between'
+                            }}
+                        >
+                            <div
+                                className='text-label'
+                                style={{ width: '49%' }}
+                            >
                                 Pick-up Date:
                                 <FormInput
                                     type='date'
@@ -169,7 +194,10 @@ class Home extends Component {
                                     icon='M20 19h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm16-14v22h-24v-22h24zm-2 6h-20v14h20v-14zm-8 8h-4v4h4v-4zm-6-6h-4v4h4v-4z'
                                 />
                             </div>
-                            <div className='text-label' style={{width: '49%'}}>
+                            <div
+                                className='text-label'
+                                style={{ width: '49%' }}
+                            >
                                 Return Date:
                                 <FormInput
                                     type='date'
@@ -179,7 +207,7 @@ class Home extends Component {
                                 />
                             </div>
                         </div>
-                        
+
                         <FormInput
                             type='text'
                             name='q'
