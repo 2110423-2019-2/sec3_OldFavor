@@ -74,7 +74,7 @@ export async function create(rent: Rent) {
 export async function removeOne(query) {
   return db.rents.deleteOne(query)
 }
-export function patch(query: any, rent: any) {
+export function patch(query: any, rent: Partial<Rent>) {
   return db.rents.findOneAndUpdate(
     query,
     { $set: rent },
@@ -86,9 +86,9 @@ export async function _clear(query = {}) {
   return db.rents.remove(query)
 }
 
-export function updateStatusById(rentId: string, status: number) {
+export function updateById(rentId: string, rent: Partial<Rent>) {
   return patch(
     { _id: new ObjectID(rentId) },
-    { status: status }
+    rent
   )
 }
