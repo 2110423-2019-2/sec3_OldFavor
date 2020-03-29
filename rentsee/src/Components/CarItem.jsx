@@ -3,7 +3,8 @@ import carItem from '../images/car-item.svg';
 import CarDealModal from '../Components/CarDealModal';
 
 function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    if (num) return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    return num;
 }
 class CarItem extends Component {
     constructor(props) {
@@ -20,7 +21,14 @@ class CarItem extends Component {
             return;
         } else {
             fetch(image_url, {
-                method: 'GET'
+                method: 'GET',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: {
+                    Accept: '*/*'
+                },
+                redirect: 'follow',
+                referrer: 'no-referrer'
             })
                 .then(response => {
                     if (response.status !== 404) {
@@ -32,6 +40,9 @@ class CarItem extends Component {
                 });
         }
     }
+    handleRent = () => {
+        this.props.handleRent(this.props._id);
+    };
     render() {
         return (
             <div className='card shadow-sm px-4 py-5 mt-3'>
@@ -75,7 +86,10 @@ class CarItem extends Component {
                             {formatNumber(this.props.cost)}
                         </div>
                         <div className='car-cost-unit-text'>THB/DAY</div>
-                        <CarDealModal policy={this.props.policy} />
+                        <CarDealModal
+                            policy={this.props.policy}
+                            handleRent={this.handleRent}
+                        />
                     </div>
                 </div>
             </div>
