@@ -5,18 +5,32 @@ import FormInput from '../Components/FormInput';
 import Header from '../Components/Header';
 
 class Profile extends Component {
+
     constructor(props) {
         super(props);
+        var d = new Date();
         this.state = {
+            email: '',
+            emailVerified: '',
             username: '',
             password: '',
-            drivingLicense: '',
-            drivingLicensePicName: '',
-            email: '',
-            bankAccountNumber: '',
-            address: '',
+            fullname: '',
+            dateOfBirth: '',
             phoneNumber: '',
-            creditCardNumber: ''
+            drivingLicense: '',
+            address: '',
+
+            bankOwner: '',
+            bankAccountNumber: '',
+
+            creditCardName: '',
+            creditCardNumber: '',
+            creditCardEXP_M: '',
+            creditCardEXP_Y: '',
+            creditCardPas: '',
+
+            thisYear: d.getFullYear()
+
         };
         this.handleFormChange = this.handleFormChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -67,7 +81,7 @@ class Profile extends Component {
                 email: this.state.email,
                 username: this.state.username,
                 password: this.state.password,
-                fullName: this.state.fullname,
+                fullname: this.state.fullname,
                 dateOfBirth: this.state.dateOfBirth,
                 phoneNumber: this.state.phoneNumber,
                 drivingLicense: this.state.drivingLicense,
@@ -89,7 +103,6 @@ class Profile extends Component {
             .then(response => {
                 if (response.status === 200) {
                     alert('Profile Updated');
-                    //return response.json();
                 } else {
                     alert('Request is fucked up');
                 }
@@ -202,12 +215,10 @@ class Profile extends Component {
                                             )}
                                         </div>
                                     </div>
-
                                     <FormInput
                                         name='email'
-                                        handleFormChange={
-                                            this.handleFormChangeWithValidate
-                                        }
+                                        type='text'
+                                        handleFormChange={this.handleFormChange}
                                         value={this.state.email}
                                         placeholder='Email'
                                         icon='M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z'
@@ -218,7 +229,6 @@ class Profile extends Component {
                                     <FormInput
                                         name='password'
                                         type='password'
-                                        width='200px'
                                         handleFormChange={this.handleFormChange}
                                         value={this.state.password}
                                         placeholder='Password'
@@ -234,25 +244,14 @@ class Profile extends Component {
                                         Fullname
                                     </p>
                                     <div className='input-with-icon mt-4'>
-                                        <input
-                                            className='form-control'
+                                        <FormInput
+                                            name='fullname'
                                             type='text'
-                                            name='fullName'
-                                            placeholder='Full Name'
+                                            handleFormChange={this.handleFormChange}
                                             value={this.state.fullname}
-                                            onChange={this.handleFormChange}
+                                            placeholder='Fullname'
+                                            icon='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z'
                                         />
-                                        <i>
-                                            <svg
-                                                xmlns='http://www.w3.org/2000/svg'
-                                                width='24'
-                                                height='24'
-                                                viewBox='0 0 24 24'
-                                                fill='#C4C4C4'
-                                            >
-                                                <path d='M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z' />
-                                            </svg>
-                                        </i>
                                     </div>
                                 </div>
                                 <div className='col'>
@@ -262,7 +261,6 @@ class Profile extends Component {
                                     <FormInput
                                         name='dateOfBirth'
                                         type='date'
-                                        width='200px'
                                         handleFormChange={this.handleFormChange}
                                         value={this.state.dateOfBirth}
                                         placeholder='DateOfBirth'
@@ -275,25 +273,14 @@ class Profile extends Component {
                                         Phone Number
                                     </p>
                                     <div className='input-with-icon mt-4'>
-                                        <input
-                                            className='form-control'
-                                            type='text'
+                                        <FormInput
                                             name='phoneNumber'
-                                            placeholder='PhoneNumber'
+                                            type='text'
+                                            handleFormChange={this.handleFormChange}
                                             value={this.state.phoneNumber}
-                                            onChange={this.handleFormChange}
+                                            placeholder='PhoneNumber'
+                                            icon='M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z'
                                         />
-                                        <i>
-                                            <svg
-                                                xmlns='http://www.w3.org/2000/svg'
-                                                width='24'
-                                                height='24'
-                                                viewBox='0 0 24 24'
-                                                fill='#C4C4C4'
-                                            >
-                                                <path d='M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z' />
-                                            </svg>
-                                        </i>
                                     </div>
                                 </div>
                                 <div className='col'>
@@ -474,7 +461,7 @@ class Profile extends Component {
                                             <div className='input'>
                                                 <input
                                                     className='form-control'
-                                                    type='text'
+                                                    type='number'
                                                     name='creditCardEXP_M'
                                                     placeholder='Month'
                                                     value={
@@ -484,6 +471,9 @@ class Profile extends Component {
                                                     onChange={
                                                         this.handleFormChange
                                                     }
+                                                    maxLength='2'
+                                                    max="12"
+                                                    min="1"
                                                 />
                                             </div>
                                         </div>
@@ -491,7 +481,7 @@ class Profile extends Component {
                                             <div className='input'>
                                                 <input
                                                     className='form-control'
-                                                    type='text'
+                                                    type='number'
                                                     name='creditCardEXP_Y'
                                                     placeholder='Year'
                                                     value={
@@ -501,6 +491,9 @@ class Profile extends Component {
                                                     onChange={
                                                         this.handleFormChange
                                                     }
+                                                    maxLength='4'
+                                                    min={this.state.thisYear}
+                                                    max={this.state.thisYear + 20}
                                                 />
                                             </div>
                                         </div>
