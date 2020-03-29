@@ -196,12 +196,12 @@ class Search extends Component {
             {
                 method: 'PATCH',
                 headers: utils.authHeader(),
-                body: {
+                body: JSON.stringify({
                     pickUpDateTime: this.state.pickUpDateTime,
                     pickUpLocation: this.state.pickUpLocation,
                     returnDateTime: this.state.returnDateTime,
                     returnLocation: this.state.returnLocation
-                }
+                })
             }
         )
             .then(response => {
