@@ -181,7 +181,7 @@ class Profile extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className='container-fluid full-screen'>
+                <div class="container-fluid">
                     <Header />
                     <div className='row mb-4'></div>
                     <div className='row mb-4'></div>
@@ -504,12 +504,10 @@ class Profile extends Component {
                         <div className='col-2'></div>
                     </div>
                     <div className='row mb-4'></div>
-                    <div className='row mb-4'><Footer/></div>
+                    <div className='row'><Footer/></div>
                     
                 </div>
 
-                
-                
             </React.Fragment>
         );
     }
