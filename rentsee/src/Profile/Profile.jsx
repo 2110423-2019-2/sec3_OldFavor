@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import utils from '../utils.js';
 import FormInput from '../Components/FormInput';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 class Profile extends Component {
 
@@ -503,8 +504,12 @@ class Profile extends Component {
                         <div className='col-2'></div>
                     </div>
                     <div className='row mb-4'></div>
-                    <div className='row mb-4'></div>
+                    <div className='row mb-4'><Footer/></div>
+                    
                 </div>
+
+                
+                
             </React.Fragment>
         );
     }
