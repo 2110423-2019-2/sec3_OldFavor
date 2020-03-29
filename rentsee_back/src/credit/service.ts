@@ -20,19 +20,15 @@ function verify_payment(credit: Credit) {
 }
 
 async function exec_payment(money: number, credit: Credit): Promise<{ok: number, timestamp: number, card: string}> {
-  if (verify_payment(credit)) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve({
-          ok: 1,
-          timestamp: new Date().getTime(),
-          card: credit.creaditCardNumber
-        })
-      }, 100);
-    })
-  } else {
-    throw new Error("payment error")
-  }
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        ok: 1,
+        timestamp: new Date().getTime(),
+        card: credit.creaditCardNumber
+      })
+    }, 100);
+  })
 }
 
 async function dispose_money_from(money: number, credit: Credit) {
@@ -46,8 +42,10 @@ async function transfer_money_to(money: number, credit: string) {
 }
 
 export async function pay_rent(rentId: string, credit: Credit) {
+  verify_payment(credit);
   const rents = await rent_service.findById(rentId)
   if (_.isEmpty(rents) || rents.length != 1) throw new Error("rentId not found")
+  if (rents[0].credit_card) throw new Error("already pay")
   const pay = await dispose_money_from(rents[0].totalPrice, credit)
   if (!pay.ok) throw new Error("payment bank error")
   const write = await rent_service.updateById(rentId, {
@@ -64,8 +62,10 @@ export async function cancel_rent(rentId: string, userId: string) {
   const user = await user_service.findById(userId)
   if (_.isEmpty(rents) || rents.length != 1) throw new Error("rentId not found")
   const rent = rents[0]
-  if (rent.status != 4) throw new Error(`rent status is not done (${rent.status})`)
-  if (!rent.credit_card || !rent.credit_date) throw new Error(`no payment information`)
+  if (rent.status == 2) throw new Error(`rent status is already cancel by lessor`)
+  if (rent.status == 3) throw new Error(`rent status is already cancel by lessee`)
+  if (rent.status != 4) throw new Error(`can not cancel un paid`)
+  if (!rent.credit_card || !rent.credit_date) throw new Error(`no previous payment information`)
   const diff = new Date().getTime() - new Date(rent.credit_date).getTime()
   const day = 24 * 60 * 60 * 1000
   // 2 = lessorcancel 3 = lesseecancel
