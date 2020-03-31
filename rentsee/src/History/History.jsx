@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import FullDeal from '../Components/FullDeal'
 import utils from '../utils.js';
 import Header from '../Components/Header';
-import CarItem from '../Components/CarItem';
-import { getNodeText } from '@testing-library/react';
+import CarHis from '../Components/CarHis';
+import Footer from '../Components/Footer';
 
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            historyResult:"",
-            testt: ["1", "2", "3"],
-            historyValue: ""
+            historyResult: "",
+            fullView: false,
+            fullViewIndex: -1
         };
         this.handleFormChange = this.handleFormChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.carResult = this.carResult.bind(this);
+        this.handleThisView = this.handleThisView.bind(this);
     }
     componentDidMount() {
         fetch('https://hueco.ml/rentsee/api/rents', {
@@ -37,46 +38,6 @@ class Profile extends Component {
                 console.log(error);
             });
     }
-    handleSubmit(event) {
-        event.preventDefault();
-        fetch('https://hueco.ml/rentsee/api/users/me', {
-            method: 'PATCH',
-            headers: utils.authHeader(),
-            body: JSON.stringify({
-                email: this.state.email,
-                username: this.state.username,
-                password: this.state.password,
-                fullName: this.state.fullname,
-                dateOfBirth: this.state.dateOfBirth,
-                phoneNumber: this.state.phoneNumber,
-                drivingLisense: this.state.drivingLisense,
-                address: this.state.address,
-
-                bankOwner: this.state.bankOwner,
-                bankAccountNumber: this.state.bankAccountNumber,
-
-                creditCardName: this.state.creditCardName,
-                creditCardNumber: this.state.creditCardNumber,
-                creditCardEXP_M: this.state.creditCardEXP_M,
-                creditCardEXP_Y: this.state.creditCardEXP_Y,
-                creditCardPas: this.state.creditCardPas,
-
-                emailVerified: this.state.emailVerified,
-                licenseVerified: this.state.lisenseVerified
-            })
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    alert('Profile Updated');
-                    //return response.json();
-                } else {
-                    alert('Request is fucked up');
-                }
-            })
-            .catch(error => {
-                console.log('error: ', error);
-            });
-    }
     handleFormChange(event) {
         const target = event.target;
         const value = target.value;
@@ -84,28 +45,72 @@ class Profile extends Component {
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
     }
+    handleThisView = val => async e => {
+        e.preventDefault();
+
+        this.fullView = true;
+        //alert(this.fullView);
+        let thisId = val;
+        for (let i = 0; i < this.historyResult.length; i++) {
+            if (thisId === this.historyResult[i]._id) {
+                this.setState({
+                    fullView: true,
+                    fullViewIndex: i
+                });
+                //alert(this.historyResult[i].car.carModel);
+                //alert(this.historyResult[i].car.brand);
+                break;
+            }
+        }
+    }
     carResult() {
         let rents = this.state.historyResult;
         //console.log(rents);
-        if(rents.length !== 0){
+        if (rents.length !== 0) {
             return rents.map(rent => {
-                console.log(rent);
+                //console.log(rent);
+                //console.log(rent._id);
                 return (
-                    <CarItem
-                    brand={rent.car[0].carModel}
-                    type={rent.car[0].carType}
-                    cost={(rent.pricePerDay === null)? 0:rent.pricePerDay}
-                    photoOfCar={rent.car[0].photoOfCar}
-                    capacity={rent.car[0].capacity}
-                    policy={rent.policy}
-                />
-    
+
+                    <CarHis
+                        pickUpLocation={rent.pickUpLocation}
+                        returnLocation={rent.returnLocation}
+                        brand={rent.car.carModel}
+                        type={rent.car.carType}
+                        cost={(rent.pricePerDay === null) ? 0 : rent.pricePerDay}
+                        photoOfCar={rent.car.photoOfCar}
+                        capacity={rent.car.capacity}
+                        onClick={this.handleThisView(rent._id)}
+                    />
                 );
             });
         };
-        
     }
+    viewDetail() {
+        let deal = this.state.historyResult[this.state.fullViewIndex];
+        return (
+            <FullDeal
+                pickUpLocation={deal.pickUpLocation}
+                returnLocation={deal.returnLocation}
+                brand={deal.car.carModel}
+                type={deal.car.carType}
+                cost={(deal.pricePerDay === null) ? 0 : deal.pricePerDay}
+                photoOfCar={deal.car.photoOfCar}
+                capacity={deal.car.capacity}
+            />
+        );
+
+    }
+
     render() {
+        console.log(this.fullView);
+        let viewBody;
+        if (!this.fullView) {
+            viewBody = this.carResult()
+        }
+        else {
+            viewBody = this.viewDetail();
+        }
         return (
             <React.Fragment>
                 <div className='container-fluid'>
@@ -124,12 +129,15 @@ class Profile extends Component {
                     <div className='row'>
                         <div className='col-2'></div>
                         <div className='col'>
-                            {this.carResult()}
-
+                            {viewBody}
                         </div>
                         <div className='col-2'></div>
                     </div>
-                </div>
+                    <div className='row mb-4'></div>
+                    </div>
+                    <div className='row' style={{ position:"relative",margin:'0',width:"100%"}}><Footer /></div>
+                
+                
             </React.Fragment>
         );
     }
