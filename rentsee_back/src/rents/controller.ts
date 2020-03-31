@@ -33,23 +33,34 @@ export async function confirm(ctx: Context) {
   const rentId = new ObjectID(ctx.params.id)
   const rent: Rent = await service.findOne({ _id: rentId })
   if (rent.status != 0) ctx.body = null
-  else
+  else {
+    let totalPrice = Math.round(
+      ((Date.parse(ctx.request.body.returnDateTime) -
+        Date.parse(ctx.request.body.pickUpDateTime)) *
+        rent.pricePerDay) /
+        (3600 * 24 * 1000)
+    )
+    let renterId = new ObjectID(ctx.state.user._id)
+
+    await notifications.create({
+      to: renterId,
+      message:
+        'Your card has been charged ' + (totalPrice*0.4).toString() +' Baht',
+      read: false,
+      created: new Date(),
+    })
     ctx.body = await service.patch(
       { _id: rentId },
       {
         pickUpDateTime: new Date(ctx.request.body.pickUpDateTime),
         returnDateTime: new Date(ctx.request.body.returnDateTime),
         status: 1,
-        renterId: new ObjectID(ctx.state.user._id),
-        totalPrice: Math.round(
-          ((Date.parse(ctx.request.body.returnDateTime) -
-            Date.parse(ctx.request.body.pickUpDateTime)) *
-            rent.pricePerDay) /
-            (3600 * 24 * 1000),
-        ),
+        renterId,
+        totalPrice,
         matched: new Date(),
       },
     )
+  }
   ctx.assert(ctx.body, 400, 'Deal is off')
 }
 export async function lessorCancel(ctx: Context) {

@@ -9,6 +9,7 @@ import History from './History/History';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Profile from './Profile/Profile';
 import Search from './Search/Search';
+import Monitor from './Monitor/Monitor';
 import AddDeal from './AddDeal/AddDeal';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                     <Route path='/profile' component={Profile} />
                     <Route path='/add-car' component={AddCar} />
                     <Route path='/search' component={Search} />
+                    <Route path='/admin-monitor' component={Monitor} />
                     <Route path='/history' component={History} />
                     <Route path='/add-deal' component={AddDeal} />
                 </Router>

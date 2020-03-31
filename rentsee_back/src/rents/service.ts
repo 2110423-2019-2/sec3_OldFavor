@@ -4,9 +4,35 @@ import { ObjectID } from 'mongodb'
 
 export async function find(query = {}) {
   return db.rents
-    .find(query)
-    .sort({ created: -1 })
-    .toArray()
+    .aggregate([
+      { $match:query },
+      { $sort: { created: -1 } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'renterId',
+          foreignField: '_id',
+          as: 'renter',
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'lessorId',
+          foreignField: '_id',
+          as: 'lessor',
+        },
+      },
+      {
+        $lookup: {
+          from: 'cars',
+          localField: 'carId',
+          foreignField: '_id',
+          as: 'car',
+        },
+      },
+      { $unwind: '$car' }
+    ]).toArray()
 }
 export function findOne(query) {
   return db.rents.findOne(query)
@@ -23,6 +49,23 @@ export function findById(id: string) {
           as: 'car',
         },
       },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'renterId',
+          foreignField: '_id',
+          as: 'renter',
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'lessorId',
+          foreignField: '_id',
+          as: 'lessor',
+        },
+      },
+      { $unwind: '$car' }
     ])
     .toArray()
 }
