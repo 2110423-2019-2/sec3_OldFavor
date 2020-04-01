@@ -26,6 +26,7 @@ class Profile extends Component {
         this.handleThisViewLessee = this.handleThisViewLessee.bind(this);
         this.handleThisViewLessor = this.handleThisViewLessor.bind(this);
         this.confirmDeal = this.confirmDeal.bind(this);
+		this.cancelDeal = this.cancelDeal.bind(this);
     }
     async componentDidMount() {
         /*await fetch('https://hueco.ml/rentsee/api/profile', {
@@ -173,7 +174,7 @@ class Profile extends Component {
         //alert("ss");
 
         if (window.confirm("Are you sure that a car has arrived?")) {
-            console.log("Confirmed!");
+            alert("Confirmed!");
             fetch('https://hueco.ml/rentsee/api/rents/confirm/' + this.state.dealID, {
                 method: 'PATCH',
                 headers: utils.authHeader()
@@ -198,52 +199,27 @@ class Profile extends Component {
     }
 
     cancelDeal(event) {
-
+		event.preventDefault();
         if (window.confirm("Do you really want to cancel this deal?")) {
-            console.log("Canceled!");
             if (this.state.lesseeState === 1) {
-                fetch('https://hueco.ml/rentsee/api/rents/rents/lesseeCancel/' + this.state.dealID, {
-                    method: 'GET',
+                fetch('https://hueco.ml/rentsee/api/rents/lesseeCancel/' + this.state.dealID, {
+                    method: 'PATCH',
                     headers: utils.authHeader()
                 })
                     .then(response => {
-                        return response.json();
+                        window.location.reload();
                     })
-                    .then(resJson => {
-                        this.lessorHistory = resJson;
-                        this.setState({
-                            lessorHistory: resJson
-                        });
-                        console.log(this.lessorHistory);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
             }
             else if (this.state.lesseeState === 0) {
-                fetch('https://hueco.ml/rentsee/api/rents/rents/lessorCancel/' + this.state.dealID, {
-                    method: 'GET',
+                fetch('https://hueco.ml/rentsee/api/rents/lessorCancel/' + this.state.dealID, {
+                    method: 'PATCH',
                     headers: utils.authHeader()
                 })
                     .then(response => {
-                        return response.json();
+                        window.location.reload();
                     })
-                    .then(resJson => {
-                        this.lessorHistory = resJson;
-                        this.setState({
-                            lessorHistory: resJson
-                        });
-                        console.log(this.lessorHistory);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
 
             }
-
-        }
-        else {
-            event.preventDefault();
         }
     }
     viewDetail() {
