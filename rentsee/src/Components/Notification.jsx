@@ -96,8 +96,8 @@ class Notification extends Component {
                     className='card text-center py-3'
                     style={{
                         minWidth: 250,
-                        // position: 'absolute',
-
+                        position: 'absolute',
+                        top:80,
                         backgroundColor: 'rgba(255,255,255)',
                         boxShadow: '10 10',
                         borderRadius: 5,
