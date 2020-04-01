@@ -42,7 +42,7 @@ class CarHis extends Component {
     render() {
         return (
             <React.Fragment>
-
+                
                 <div className="row">
                     <div className="col">
                         <div className="row">
@@ -139,7 +139,7 @@ class CarHis extends Component {
                 <div className='row mb-4'></div>
                 <div className='row mb-4'></div>
                 <div className='row mb-4'></div>
-                <form className="row" onSubmit={this.props.confirmClick} style={{ display:"flex",alignItems:'center',justifyContent:"center"}}>
+                <form className="row" onSubmit={this.props.confirmClick} style={{ display: "flex", alignItems: 'center', justifyContent: "center" }}>
                     <input
                         className='btn d-flex float-right '
                         type='submit'
@@ -147,9 +147,9 @@ class CarHis extends Component {
                     />
                 </form>
                 <div className='row mb-4'></div>
-                <form className="row" onSubmit={this.props.cancelClick} style={{  display:"flex",alignItems:'center',justifyContent:"center"}}>
+                <form className="row" onSubmit={this.props.cancelClick} style={{ display: "flex", alignItems: 'center', justifyContent: "center" }}>
                     <input
-                        style={{color:'write',backgroundColor:"write"}}
+                        style={{ color: 'write', backgroundColor: "write" }}
                         className='btn btn-outline-danger d-flex float-right '
                         type='submit'
                         value='Cancel Deal'
