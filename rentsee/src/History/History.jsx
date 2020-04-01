@@ -11,19 +11,24 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            thisUID:"",
-            historyResult: "",
+            thisUID: "",
+            lesseeHistory: "",
+            lessorHistory: "",
             fullView: false,
             fullViewIndex: -1,
-            dealState: 0
+            dealState: 0,
+            dealID: "",
+            lesseeState: -1
         };
         this.handleFormChange = this.handleFormChange.bind(this);
-        this.carResult = this.carResult.bind(this);
-        this.handleThisView = this.handleThisView.bind(this);
+        this.lesseeResult = this.lesseeResult.bind(this);
+        this.lessorResult = this.lessorResult.bind(this);
+        this.handleThisViewLessee = this.handleThisViewLessee.bind(this);
+        this.handleThisViewLessor = this.handleThisViewLessor.bind(this);
         this.confirmDeal = this.confirmDeal.bind(this);
     }
     async componentDidMount() {
-        await fetch('https://hueco.ml/rentsee/api/profile', {
+        /*await fetch('https://hueco.ml/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -39,9 +44,9 @@ class Profile extends Component {
             })
             .catch(error => {
                 console.log(error);
-            });
+            });*/
         //await alert('https://hueco.ml/rentsee/api/rents/'+ this.state.thisUID);
-        await fetch('https://hueco.ml/rentsee/api/rents/'+ this.state.thisUID, {
+        fetch('https://hueco.ml/rentsee/api/rents/lesseeHistory', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -49,16 +54,34 @@ class Profile extends Component {
                 return response.json();
             })
             .then(resJson => {
-                this.historyResult = resJson;
+                this.lesseeHistory = resJson;
                 this.setState({
-                    historyResult: resJson
+                    lesseeHistory: resJson
                 });
-                console.log(this.historyResult);
+                console.log(this.lesseeHistory);
             })
             .catch(error => {
                 console.log(error);
             });
-            
+
+        fetch('https://hueco.ml/rentsee/api/rents/lessorHistory', {
+            method: 'GET',
+            headers: utils.authHeader()
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(resJson => {
+                this.lessorHistory = resJson;
+                this.setState({
+                    lessorHistory: resJson
+                });
+                console.log(this.lessorHistory);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
     }
     handleFormChange(event) {
         const target = event.target;
@@ -67,17 +90,17 @@ class Profile extends Component {
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
     }
-    handleThisView = val => e => {
+    handleThisViewLessee = val => e => {
         e.preventDefault();
-
         this.fullView = true;
-        //alert(this.fullView);
-        let thisId = val;
-        for (let i = 0; i < this.historyResult.length; i++) {
-            if (thisId === this.historyResult[i]._id) {
+        this.lesseeState = 1;
+        let dealID = val;
+        for (let i = 0; i < this.lesseeHistory.length; i++) {
+            if (dealID === this.lesseeHistory[i]._id) {
                 this.setState({
                     fullView: true,
-                    fullViewIndex: i
+                    fullViewIndex: i,
+                    lesseeState : 1
                 });
                 //alert(this.historyResult[i].car.carModel);
                 //alert(this.historyResult[i].car.brand);
@@ -85,13 +108,50 @@ class Profile extends Component {
             }
         }
     }
-    carResult() {
-        let rents = this.state.historyResult;
+    handleThisViewLessor = val => e => {
+        e.preventDefault();
+        this.fullView = true;
+        this.lesseeState = 0;
+        let dealID = val;
+        for (let i = 0; i < this.lessorHistory.length; i++) {
+            if (dealID === this.lessorHistory[i]._id) {
+                this.setState({
+                    fullView: true,
+                    fullViewIndex: i,
+                    lesseeState : 0
+                });
+                //alert(this.historyResult[i].car.carModel);
+                //alert(this.historyResult[i].car.brand);
+                break;
+            }
+        }
+    }
+    lesseeResult() {
+        let rents = this.state.lesseeHistory;
         console.log(rents);
         if (rents.length !== 0 && rents !== null) {
             return rents.map(rent => {
-                //console.log(rent);
-                //console.log(rent._id);
+                return (
+                    <CarHis
+                        pickUpLocation={rent.pickUpLocation}
+                        returnLocation={rent.returnLocation}
+                        brand={rent.car.carModel}
+                        type={rent.car.carType}
+                        cost={(rent.pricePerDay === null) ? 0 : rent.pricePerDay}
+                        photoOfCar={rent.car.photoOfCar}
+                        capacity={rent.car.capacity}
+                        onClick={this.handleThisViewLessee(rent._id)}
+                    />
+                );
+            });
+        };
+    }
+    lessorResult() {
+        let rents = this.state.lessorHistory;
+        console.log(rents);
+        if (rents.length !== 0 && rents !== null) {
+            return rents.map(rent => {
+
                 return (
 
                     <CarHis
@@ -102,7 +162,7 @@ class Profile extends Component {
                         cost={(rent.pricePerDay === null) ? 0 : rent.pricePerDay}
                         photoOfCar={rent.car.photoOfCar}
                         capacity={rent.car.capacity}
-                        onClick={this.handleThisView(rent._id)}
+                        onClick={this.handleThisViewLessor(rent._id)}
                     />
                 );
             });
@@ -111,8 +171,26 @@ class Profile extends Component {
     confirmDeal(event) {
         //confirm("Are you sure that car is arrived");
         //alert("ss");
+
         if (window.confirm("Are you sure that a car has arrived?")) {
             console.log("Confirmed!");
+            fetch('https://hueco.ml/rentsee/api/rents/confirm/' + this.state.dealID, {
+                method: 'PATCH',
+                headers: utils.authHeader()
+            })
+                .then(response => {
+                    return response.json();
+                })
+                .then(resJson => {
+                    this.lessorHistory = resJson;
+                    this.setState({
+                        lessorHistory: resJson
+                    });
+                    console.log(this.lessorHistory);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
         else {
             event.preventDefault();
@@ -120,15 +198,64 @@ class Profile extends Component {
     }
 
     cancelDeal(event) {
+
         if (window.confirm("Do you really want to cancel this deal?")) {
             console.log("Canceled!");
+            if (this.state.lesseeState === 1) {
+                fetch('https://hueco.ml/rentsee/api/rents/rents/lesseeCancel/' + this.state.dealID, {
+                    method: 'GET',
+                    headers: utils.authHeader()
+                })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(resJson => {
+                        this.lessorHistory = resJson;
+                        this.setState({
+                            lessorHistory: resJson
+                        });
+                        console.log(this.lessorHistory);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+            else if (this.state.lesseeState === 0) {
+                fetch('https://hueco.ml/rentsee/api/rents/rents/lessorCancel/' + this.state.dealID, {
+                    method: 'GET',
+                    headers: utils.authHeader()
+                })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(resJson => {
+                        this.lessorHistory = resJson;
+                        this.setState({
+                            lessorHistory: resJson
+                        });
+                        console.log(this.lessorHistory);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+            }
+
         }
         else {
             event.preventDefault();
         }
     }
     viewDetail() {
-        let deal = this.state.historyResult[this.state.fullViewIndex];
+        let deal
+        if (this.state.lesseeState === 1) {
+            deal = this.state.lesseeHistory[this.state.fullViewIndex];
+        }
+        else if (this.state.lesseeState === 0) {
+            deal = this.state.lessorHistory[this.state.fullViewIndex];
+        }
+        //alert(this.state.lesseeState);
+        this.state.dealID = deal._id;
         return (
             <FullDeal
                 pickUpLocation={deal.pickUpLocation}
@@ -148,13 +275,26 @@ class Profile extends Component {
     render() {
         console.log(this.fullView);
         let backButton;
-        let confirmModal;
-        let viewBody;
+        let lessorBody;
+        let lesseeBody;
+        let headBody;
+        let midBody;
+        let midBody2;
+        let midBody3;
+        let midBody4;
         if (!this.fullView) {
-            viewBody = this.carResult();
+            lesseeBody = this.lesseeResult();
+            lessorBody = this.lessorResult();
+            headBody = <div className="row"><h3 className='ml-0'>Lessee</h3></div>;
+            midBody = <div className='row mb-4'></div>
+            midBody2 = <div class='w-100 border-top'></div>
+            midBody3 = <div className='row mb-4'></div>
+            midBody4 = <div className="row"><h3 className='ml-0'>Lessor</h3></div>
         }
         else {
-            viewBody = this.viewDetail();
+
+            midBody = this.viewDetail();
+
             backButton =
                 <form className='col' onSubmit={this.handleBack}>
                     <input
@@ -163,44 +303,14 @@ class Profile extends Component {
                         value='Back'
                     />
                 </form>
-            if (this.state.dealState === 1) {
-                confirmModal = <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-4">.col-md-4</div>
-                            <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 ml-auto">.col-md-3 .ml-auto</div>
-                            <div class="col-md-2 ml-auto">.col-md-2 .ml-auto</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto">.col-md-6 .ml-auto</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-9">
-                                Level 1: .col-sm-9
-                        <div class="row">
-                                    <div class="col-8 col-sm-6">
-                                        Level 2: .col-8 .col-sm-6
-                        </div>
-                                    <div class="col-4 col-sm-6">
-                                        Level 2: .col-4 .col-sm-6
-                        </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
+
 
         }
         return (
             <React.Fragment>
                 <div className='container-fluid'>
                     <Header />
-                    {this.confirmDeal}
-                    {confirmModal}
+
                     <div className='row mb-4'></div>
                     <div className='row mb-4'></div>
                     <div className='row'>
@@ -217,7 +327,18 @@ class Profile extends Component {
                     <div className='row'>
                         <div className='col-2'></div>
                         <div className='col'>
-                            {viewBody}
+                            {headBody}
+                            <div className="row">
+                                {lesseeBody}
+                            </div>
+                            {midBody}
+                            {midBody2}
+                            {midBody3}
+                            {midBody4}
+                            <div className='row'>
+                                {lessorBody}
+                            </div>
+
                         </div>
                         <div className='col-2'></div>
                     </div>
