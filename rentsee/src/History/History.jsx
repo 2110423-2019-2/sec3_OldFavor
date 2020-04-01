@@ -212,3 +212,4 @@ class Profile extends Component {
 }
 
 export default withRouter(Profile);
+
