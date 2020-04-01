@@ -469,7 +469,7 @@ class Search extends Component {
                                 <label>Credit Card Name</label>
                                 <FormInput
                                     name='creditCardName'
-                                    type='number'
+                                    type='text'
                                     value={this.state.creditCardName}
                                     handleFormChange={this.handleFormChange}
                                     placeholder='Credit Card Name'

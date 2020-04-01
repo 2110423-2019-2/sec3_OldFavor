@@ -13,6 +13,7 @@ class Profile extends Component {
         this.state = {
             email: '',
             emailVerified: '',
+            licenseVerified: '',
             username: '',
             password: '',
             fullname: '',
@@ -51,6 +52,7 @@ class Profile extends Component {
                 this.setState({
                     email: resJson.email,
                     emailVerified: resJson.emailVerified,
+                    licenseVerified: resJson.licenseVerified,
                     username: resJson.username,
                     password: resJson.password,
                     fullname: resJson.fullname,
@@ -98,7 +100,7 @@ class Profile extends Component {
                 creditCardPas: this.state.creditCardPas,
 
                 emailVerified: this.state.emailVerified,
-                licenseVerified: this.state.lisenseVerified
+                licenseVerified: this.state.licenseVerified
             })
         })
             .then(response => {
@@ -495,7 +497,7 @@ class Profile extends Component {
                     </div>
                     <div className='row mb-4'></div>
                     <div className='row'><Footer/></div>
-                    
+
                 </div>
 
             </React.Fragment>
