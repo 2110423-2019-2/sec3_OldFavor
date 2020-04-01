@@ -88,17 +88,23 @@ class Profile extends Component {
             });
         };
     }
-    confirmDeal() {
+    confirmDeal(event) {
         //confirm("Are you sure that car is arrived");
         //alert("ss");
         if( window.confirm("Are you sure that a car has arrived?")){
             console.log("Confirmed!");
         }
+        else{
+            event.preventDefault();
+        }
     }
 
-    cancelDeal() {
+    cancelDeal(event) {
         if( window.confirm("Do you really want to cancel this deal?")){
             console.log("Canceled!");
+        }
+        else{
+            event.preventDefault();
         }
     }
     viewDetail() {
