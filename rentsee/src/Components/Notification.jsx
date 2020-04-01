@@ -33,25 +33,18 @@ class Notification extends Component {
             .catch(error => {
                 console.log(error);
             });
-        fetch('https://hueco.ml/rentsee/api/notifications', {
-            method: 'GET',
-            headers: utils.authHeader()
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(resJson => {
-                const notifications = resJson;
-                this.setState({ notifications });
-            })
-            .catch(error => {
-                console.log(error);
-            });
     }
     display() {
         return this.state.notificationsCount > 0 ? 'inline-block' : 'none';
     }
-    tooltip() {
+    async tooltip() {
+		var  res = await fetch('https://hueco.ml/rentsee/api/notifications', {
+            method: 'GET',
+            headers: utils.authHeader()
+        });
+		var notifications = await res.json();
+		console.log(notifications);
+		await this.setState({ notifications });
         const tooltipState = this.state.tooltipState;
         this.setState({
             tooltipState: tooltipState === 'none' ? 'block' : 'none'
