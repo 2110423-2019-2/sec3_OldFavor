@@ -290,7 +290,7 @@ class Profile extends Component {
                                         <div class='col'>
                                             <div class='row'>
                                                 {this.verify(
-                                                    this.licenseVerified
+                                                    this.state.licenseVerified
                                                 )}
                                             </div>
 

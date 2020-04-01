@@ -11,18 +11,37 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            thisUID:"",
             historyResult: "",
             fullView: false,
             fullViewIndex: -1,
-            dealState:0
+            dealState: 0
         };
         this.handleFormChange = this.handleFormChange.bind(this);
         this.carResult = this.carResult.bind(this);
         this.handleThisView = this.handleThisView.bind(this);
         this.confirmDeal = this.confirmDeal.bind(this);
     }
-    componentDidMount() {
-        fetch('https://hueco.ml/rentsee/api/rents', {
+    async componentDidMount() {
+        await fetch('https://hueco.ml/rentsee/api/profile', {
+            method: 'GET',
+            headers: utils.authHeader()
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(resJson => {
+                console.log(resJson);
+                this.setState({
+                    thisUID: resJson._id,
+                });
+                this.state.thisUID = resJson._id;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        //await alert('https://hueco.ml/rentsee/api/rents/'+ this.state.thisUID);
+        await fetch('https://hueco.ml/rentsee/api/rents/'+ this.state.thisUID, {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -39,6 +58,7 @@ class Profile extends Component {
             .catch(error => {
                 console.log(error);
             });
+            
     }
     handleFormChange(event) {
         const target = event.target;
@@ -67,8 +87,8 @@ class Profile extends Component {
     }
     carResult() {
         let rents = this.state.historyResult;
-        //console.log(rents);
-        if (rents.length !== 0) {
+        console.log(rents);
+        if (rents.length !== 0 && rents !== null) {
             return rents.map(rent => {
                 //console.log(rent);
                 //console.log(rent._id);
@@ -91,19 +111,19 @@ class Profile extends Component {
     confirmDeal(event) {
         //confirm("Are you sure that car is arrived");
         //alert("ss");
-        if( window.confirm("Are you sure that a car has arrived?")){
+        if (window.confirm("Are you sure that a car has arrived?")) {
             console.log("Confirmed!");
         }
-        else{
+        else {
             event.preventDefault();
         }
     }
 
     cancelDeal(event) {
-        if( window.confirm("Do you really want to cancel this deal?")){
+        if (window.confirm("Do you really want to cancel this deal?")) {
             console.log("Canceled!");
         }
-        else{
+        else {
             event.preventDefault();
         }
     }
@@ -143,35 +163,35 @@ class Profile extends Component {
                         value='Back'
                     />
                 </form>
-            if(this.state.dealState === 1){
+            if (this.state.dealState === 1) {
                 confirmModal = <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-4">.col-md-4</div>
-                        <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 ml-auto">.col-md-3 .ml-auto</div>
-                        <div class="col-md-2 ml-auto">.col-md-2 .ml-auto</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 ml-auto">.col-md-6 .ml-auto</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-9">
-                            Level 1: .col-sm-9
+                    <div class="container-fluid">
                         <div class="row">
-                                <div class="col-8 col-sm-6">
-                                    Level 2: .col-8 .col-sm-6
+                            <div class="col-md-4">.col-md-4</div>
+                            <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
                         </div>
-                                <div class="col-4 col-sm-6">
-                                    Level 2: .col-4 .col-sm-6
+                        <div class="row">
+                            <div class="col-md-3 ml-auto">.col-md-3 .ml-auto</div>
+                            <div class="col-md-2 ml-auto">.col-md-2 .ml-auto</div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6 ml-auto">.col-md-6 .ml-auto</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                Level 1: .col-sm-9
+                        <div class="row">
+                                    <div class="col-8 col-sm-6">
+                                        Level 2: .col-8 .col-sm-6
+                        </div>
+                                    <div class="col-4 col-sm-6">
+                                        Level 2: .col-4 .col-sm-6
+                        </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             }
 
         }
