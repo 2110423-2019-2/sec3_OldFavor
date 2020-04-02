@@ -243,7 +243,15 @@ class AddDeal extends Component {
                 <Header />
                 <div className='body-content'>
                     <div className='container'>
-                        <BarStatus count={3} current={state} />
+                        <BarStatus
+                            count={3}
+                            current={state}
+                            labels={[
+                                '1. Select a car',
+                                '2. Rental Information',
+                                '3. Result'
+                            ]}
+                        />
                         <button
                             className='btn my-3'
                             onClick={() => {
