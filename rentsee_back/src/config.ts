@@ -9,7 +9,7 @@ console.log(result.parsed);
 const config = {
   port: process.env.PORT,
   mongo: {
-    // uri: process.env.MONGO_URI,
+    uri: process.env.MONGO_URI,
     db: process.env.MONGO_DB
   },
   jwt: {

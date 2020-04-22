@@ -19,7 +19,7 @@ class Notification extends Component {
         setInterval(this.fetchNotifications, 10000);
     }
     fetchNotifications() {
-        fetch('https://hueco.ml/rentsee/api/notificationsCount', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/notificationsCount', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -38,7 +38,7 @@ class Notification extends Component {
         return this.state.notificationsCount > 0 ? 'inline-block' : 'none';
     }
     async tooltip() {
-		var  res = await fetch('https://hueco.ml/rentsee/api/notifications', {
+		var  res = await fetch('https://rentsee.poomrokc.services/rentsee/api/notifications', {
             method: 'GET',
             headers: utils.authHeader()
         });

@@ -28,7 +28,7 @@ class Profile extends Component {
         this.confirmDeal = this.confirmDeal.bind(this);
     }
     async componentDidMount() {
-        /*await fetch('https://hueco.ml/rentsee/api/profile', {
+        /*await fetch('https://rentsee.poomrokc.services/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -45,8 +45,8 @@ class Profile extends Component {
             .catch(error => {
                 console.log(error);
             });*/
-        //await alert('https://hueco.ml/rentsee/api/rents/'+ this.state.thisUID);
-        fetch('https://hueco.ml/rentsee/api/rents/lesseeHistory', {
+        //await alert('https://rentsee.poomrokc.services/rentsee/api/rents/'+ this.state.thisUID);
+        fetch('https://rentsee.poomrokc.services/rentsee/api/rents/lesseeHistory', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -64,7 +64,7 @@ class Profile extends Component {
                 console.log(error);
             });
 
-        fetch('https://hueco.ml/rentsee/api/rents/lessorHistory', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/rents/lessorHistory', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -174,7 +174,7 @@ class Profile extends Component {
 
         if (window.confirm("Are you sure that a car has arrived?")) {
             console.log("Confirmed!");
-            fetch('https://hueco.ml/rentsee/api/rents/confirm/' + this.state.dealID, {
+            fetch('https://rentsee.poomrokc.services/rentsee/api/rents/confirm/' + this.state.dealID, {
                 method: 'PATCH',
                 headers: utils.authHeader()
             })
@@ -202,7 +202,7 @@ class Profile extends Component {
         if (window.confirm("Do you really want to cancel this deal?")) {
             console.log("Canceled!");
             if (this.state.lesseeState === 1) {
-                fetch('https://hueco.ml/rentsee/api/rents/lesseeCancel/' + this.state.dealID, {
+                fetch('https://rentsee.poomrokc.services/rentsee/api/rents/lesseeCancel/' + this.state.dealID, {
                     method: 'GET',
                     headers: utils.authHeader()
                 })
@@ -221,7 +221,7 @@ class Profile extends Component {
                     });
             }
             else if (this.state.lesseeState === 0) {
-                fetch('https://hueco.ml/rentsee/api/rents/lessorCancel/' + this.state.dealID, {
+                fetch('https://rentsee.poomrokc.services/rentsee/api/rents/lessorCancel/' + this.state.dealID, {
                     method: 'GET',
                     headers: utils.authHeader()
                 })

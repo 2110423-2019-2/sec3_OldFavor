@@ -58,7 +58,7 @@ export async function verify(id: string) {
 }
 
 export async function sendEmail(email: string, id: string) {
-  const host = 'https://hueco.ml/rentsee/';
+  const host = 'https://rentsee.poomrokc.services/rentsee/';
   const url = host + 'api/users/emailVerify/' + id +'/' + Math.random().toString(36).substring(7);
   const testAccount = await nodemailer.createTestAccount();
   const transporter = nodemailer.createTransport({
@@ -67,7 +67,7 @@ export async function sendEmail(email: string, id: string) {
     secure: true,
     auth: {
       user: 'sheetplus.income.notifier@gmail.com',
-      pass: 'SheetplusIncome1'
+      pass: 'npoeqegwjzeyfksz'
     }
   });
   const info = await transporter.sendMail({

@@ -112,7 +112,7 @@ class Search extends Component {
                 console.log(error);
             });
 
-        fetch('https://hueco.ml/rentsee/api/profile', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -128,7 +128,7 @@ class Search extends Component {
             });
     }
     search = () => {
-        var getUrl = `https://hueco.ml/rentsee/api/rents/search?q=${
+        var getUrl = `https://rentsee.poomrokc.services/rentsee/api/rents/search?q=${
             this.state.q ? this.state.q : ''
         }&sort=${this.state.sort ? this.state.sort : ''}&sortWay=${
             this.state.sortWay ? this.state.sortWay : ''
@@ -192,7 +192,7 @@ class Search extends Component {
     };
     handlePayment = () => {
         fetch(
-            `https://hueco.ml/rentsee/api/rents/confirm/${this.state.selectedRentId}`,
+            `https://rentsee.poomrokc.services/rentsee/api/rents/confirm/${this.state.selectedRentId}`,
             {
                 method: 'PATCH',
                 headers: utils.authHeader(),

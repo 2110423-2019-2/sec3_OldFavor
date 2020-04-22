@@ -20,7 +20,7 @@ class Header extends Component {
         window.addEventListener("resize", () => {
             this.setState(this.state)
         });
-        fetch('https://hueco.ml/rentsee/api/profile', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
         })

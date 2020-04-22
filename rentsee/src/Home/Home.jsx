@@ -43,7 +43,7 @@ class Home extends Component {
                 'Please fill the Pick-up Location and Return Location and Date'
             );
         } else {
-            var getUrl = `https://hueco.ml/rentsee/api/rents/search?q=${
+            var getUrl = `https://rentsee.poomrokc.services/rentsee/api/rents/search?q=${
                 this.state.q ? this.state.q : ''
             }&sort=${this.state.sort ? this.state.sort : ''}&sortWay=${
                 this.state.sortWay ? this.state.sortWay : ''
@@ -63,7 +63,7 @@ class Home extends Component {
         window.addEventListener('resize', () => {
             this.setState(this.state);
         });
-        fetch('https://hueco.ml/rentsee/api/profile', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
         })

@@ -47,7 +47,7 @@ class AddCar extends Component {
         if (this.state.accpet) {
             alert('Please Accept Term !!!!!!');
         } else {
-            fetch('https://hueco.ml/rentsee/api/cars', {
+            fetch('https://rentsee.poomrokc.services/rentsee/api/cars', {
                 method: 'POST',
                 headers: utils.authHeader(),
                 body: JSON.stringify({
