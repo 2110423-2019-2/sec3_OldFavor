@@ -22,7 +22,7 @@ class Login extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        fetch('https://hueco.ml/rentsee/api/login', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

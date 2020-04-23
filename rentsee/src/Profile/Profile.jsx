@@ -40,7 +40,7 @@ class Profile extends Component {
         //this.getLicense = this.getLicense.bind(this);
     }
     componentDidMount() {
-        fetch('https://hueco.ml/rentsee/api/profile', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -77,7 +77,7 @@ class Profile extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        fetch('https://hueco.ml/rentsee/api/users/me', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/users/me', {
             method: 'PATCH',
             headers: utils.authHeader(),
             body: JSON.stringify({

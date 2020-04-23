@@ -43,7 +43,7 @@ class Monitor extends Component {
         this.setState({ [name]: value });
     }
     componentDidMount() {
-        fetch('https://hueco.ml/rentsee/api/profile', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/profile', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -59,7 +59,7 @@ class Monitor extends Component {
         this.search();
     }
     search = () => {
-        var getUrl = `https://hueco.ml/rentsee/api/rents/`;
+        var getUrl = `https://rentsee.poomrokc.services/rentsee/api/rents/`;
         fetch(getUrl, {
             method: 'GET',
             headers: utils.authHeader()

@@ -17,7 +17,7 @@ class SearchBar extends Component {
         setInterval(this.fetchCars, 30000);
     }
     fetchCars() {
-        fetch('https://hueco.ml/rentsee/api/cars', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/cars', {
             method: 'GET',
             'Content-Type': 'application/json'
         })

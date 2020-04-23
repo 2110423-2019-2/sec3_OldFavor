@@ -21,7 +21,7 @@ class AddDeal extends Component {
         selectedCarId: ''
     };
     componentDidMount() {
-        fetch('https://hueco.ml/rentsee/api/cars/me/rent', {
+        fetch('https://rentsee.poomrokc.services/rentsee/api/cars/me/rent', {
             method: 'GET',
             headers: utils.authHeader()
         })
@@ -41,7 +41,7 @@ class AddDeal extends Component {
     };
     handleSubmitAddDeal = () => {
         fetch(
-            `https://hueco.ml/rentsee/api/rents/${this.state.selectedCarId}`,
+            `https://rentsee.poomrokc.services/rentsee/api/rents/${this.state.selectedCarId}`,
             {
                 method: 'POST',
                 headers: utils.authHeader(),
