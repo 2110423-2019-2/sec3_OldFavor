@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 class CancelButton extends Component {
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {
+            display: 'd-block'
+        };
     }
 
     onCancel = () => {
@@ -14,11 +16,12 @@ class CancelButton extends Component {
     onAccept = () => {
         const id = this.props._id;
         alert(`Boop Beep accept change policy update deal ${id}!`);
+        this.setState({display: 'd-none'})
     }
 
     render() {
         return this.props.haveChanged === true ? (
-            <div className='w-100'>
+            <div className={`w-100 ${this.state.display}`}>
                 <div className='d-flex flex-row justify-content-end text-danger'>Policy has been changed. Do you accept the change?</div>
                 <div className='d-flex flex-row justify-content-end'>
                     <button className='d-flex flex-column mx-1 btn'>

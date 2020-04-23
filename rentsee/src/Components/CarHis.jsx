@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import carItem from '../images/car-item.svg';
 import History from '../History/History';
+import PrintOut from '../PrintOut/PrintOut';
 
 
 function formatNumber(num) {
@@ -147,7 +148,6 @@ class CarHis extends Component {
                                     value='View Detail'
                                 />
                             </form>
-
                         </div>
                     </div>
 
