@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import carItem from '../images/car-item.svg';
+import EditModal from './EditModal'
 
 function formatNumber(num) {
     if (num) return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -24,64 +25,52 @@ class CarHis extends Component {
                 mode: 'no-cors',
                 cache: 'no-cache',
                 headers: {
-                    Accept: '*/*'
+                    Accept: '*/*',
                 },
                 redirect: 'follow',
-                referrer: 'no-referrer'
+                referrer: 'no-referrer',
             })
-                .then(response => {
+                .then((response) => {
                     if (response.status !== 404) {
                         this.setState({ imageDidExists: true });
                     }
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error);
                 });
         }
     }
+    handleEditDeal = (policy) => {
+        const _id = this.props.deal._id
+        alert(`beep boop edit mock on rent id ${_id} ${policy}`)
+    }
     render() {
         return (
             <React.Fragment>
-                
-                <div className="row">
-                    <div className="col">
-                        <div className="row">
-                            <div className='col-1'>
-
-                            </div>
-                            <div className='col'>
-                                Pick Up Location:
-                            </div>
-
+                <div className='row'>
+                    <div className='col'>
+                        <div className='row'>
+                            <div className='col-1'></div>
+                            <div className='col'>Pick Up Location:</div>
                         </div>
-                        <div className="row">
-                            <div className='col-1'>
-
-                            </div>
-                            <div className='col' style={{ fontWeight: "bold" }}>
+                        <div className='row'>
+                            <div className='col-1'></div>
+                            <div className='col' style={{ fontWeight: 'bold' }}>
                                 {this.props.pickUpLocation}
                             </div>
                         </div>
-
                     </div>
-                    <div className="col">
-                        <div className="row">
-                            <div className='col-1'>
-
-                            </div>
-                            <div className='col'>
-                                Return Location:
-                            </div>
+                    <div className='col'>
+                        <div className='row'>
+                            <div className='col-1'></div>
+                            <div className='col'>Return Location:</div>
                         </div>
-                        <div className="row">
-                            <div className='col-1'>
-
-                            </div>
-                            <div className='col' style={{ fontWeight: "bold" }}>
+                        <div className='row'>
+                            <div className='col-1'></div>
+                            <div className='col' style={{ fontWeight: 'bold' }}>
                                 {this.props.returnLocation}
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div className='row mb-4'></div>
@@ -95,7 +84,7 @@ class CarHis extends Component {
                                     : carItem
                             }
                             alt=''
-                            style={{ maxHeight: "200px", width: '100%' }}
+                            style={{ maxHeight: '200px', width: '100%' }}
                         ></img>
                     </div>
                     <div className='col'>
@@ -121,25 +110,43 @@ class CarHis extends Component {
                             </span>
                         </span>
                     </div>
-                    <div className="col-2">
-                        <div className="row">
-                            <div className='col' style={{ padding: "50px 0px 0px 0px" }}>
+                    <div className='col-2'>
+                        <div className='row'>
+                            <div
+                                className='col'
+                                style={{ padding: '50px 0px 0px 0px' }}
+                            >
                                 <div className='car-cost-text'>
                                     {formatNumber(this.props.cost)}
                                 </div>
-                                <div className='car-cost-unit-text'>THB/DAY</div>
-
+                                <div className='car-cost-unit-text'>
+                                    THB/DAY
+                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <div className='row mb-4'></div>
-                <div className='row mb-4'></div>
-                <div className='row mb-4'></div>
-                <div className='row mb-4'></div>
-                <div className='row mb-4'></div>
-                <form className="row" onSubmit={this.props.confirmClick} style={{ display: "flex", alignItems: 'center', justifyContent: "center" }}>
+                <div className='row mb-1 font-weight-bold'>Policy</div>
+                <div className='row mb-4'>
+                    {this.props.deal.policy && this.props.deal.policy}
+                </div>
+                <div className='row mb-4'>
+                    <EditModal
+                        policy={this.props.deal.policy}
+                        handleEditDeal={this.handleEditDeal}
+                    />
+                </div>
+                <div className='row my-4'></div>
+                <form
+                    className='row'
+                    onSubmit={this.props.confirmClick}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
                     <input
                         className='btn d-flex float-right '
                         type='submit'
@@ -147,9 +154,17 @@ class CarHis extends Component {
                     />
                 </form>
                 <div className='row mb-4'></div>
-                <form className="row" onSubmit={this.props.cancelClick} style={{ display: "flex", alignItems: 'center', justifyContent: "center" }}>
+                <form
+                    className='row'
+                    onSubmit={this.props.cancelClick}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
                     <input
-                        style={{ color: 'write', backgroundColor: "write" }}
+                        style={{ color: 'write', backgroundColor: 'write' }}
                         className='btn btn-outline-danger d-flex float-right '
                         type='submit'
                         value='Cancel Deal'

@@ -258,6 +258,7 @@ class Profile extends Component {
         this.state.dealID = deal._id;
         return (
             <FullDeal
+                deal={deal}
                 pickUpLocation={deal.pickUpLocation}
                 returnLocation={deal.returnLocation}
                 brand={deal.car.carModel}
