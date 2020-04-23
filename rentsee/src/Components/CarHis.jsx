@@ -48,7 +48,7 @@ class CarHis extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className='card shadow-sm px-4 py-5 mt-3'>
+                <div className='card shadow-sm px-4 py-5 mt-3 w-100'>
                     <div className="row">
                         <div className="col">
                             <div className="row">
