@@ -248,16 +248,20 @@ class Profile extends Component {
     }
     viewDetail() {
         let deal
+        let role;
         if (this.state.lesseeState === 1) {
             deal = this.state.lesseeHistory[this.state.fullViewIndex];
+            role = 'lessee';
         }
         else if (this.state.lesseeState === 0) {
             deal = this.state.lessorHistory[this.state.fullViewIndex];
+            role = 'lessor';
         }
         //alert(this.state.lesseeState);
         this.state.dealID = deal._id;
         return (
             <FullDeal
+                role={role}
                 deal={deal}
                 pickUpLocation={deal.pickUpLocation}
                 returnLocation={deal.returnLocation}

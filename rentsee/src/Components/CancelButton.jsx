@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 class CancelButton extends Component {
     constructor(props){
-        super(props)
+        super(props);
+        this.state = {};
     }
 
     onCancel = () => {
@@ -16,11 +17,20 @@ class CancelButton extends Component {
     }
 
     render() {
-        return (
-            <div className='d-flex flex-row'>
-                <button className='btn'>Cancel Change</button>
-                <button className='btn'>Accept Change</button>
+        return this.props.haveChanged === true ? (
+            <div className='w-100'>
+                <div className='d-flex flex-row justify-content-end text-danger'>Policy has been changed. Do you accept the change?</div>
+                <div className='d-flex flex-row justify-content-end'>
+                    <button className='d-flex flex-column mx-1 btn'>
+                        Cancel Change
+                    </button>
+                    <button className='d-flex flex-column mx-1 btn'>
+                        Accept Change
+                    </button>
+                </div>
             </div>
+        ) : (
+            <div></div>
         );
     }
 }

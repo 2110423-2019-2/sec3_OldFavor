@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import carItem from '../images/car-item.svg';
 import EditModal from './EditModal'
+import CancelButton from './CancelButton';
 
 function formatNumber(num) {
     if (num) return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -132,10 +133,14 @@ class CarHis extends Component {
                     {this.props.deal.policy && this.props.deal.policy}
                 </div>
                 <div className='row mb-4'>
-                    <EditModal
-                        policy={this.props.deal.policy}
-                        handleEditDeal={this.handleEditDeal}
-                    />
+                    {this.props.role === 'lessor' ? (
+                        <EditModal
+                            policy={this.props.deal.policy}
+                            handleEditDeal={this.handleEditDeal}
+                        />
+                    ) : (
+                        <CancelButton haveChanged={true}/>
+                    )}
                 </div>
                 <div className='row my-4'></div>
                 <form
