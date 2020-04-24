@@ -7,6 +7,7 @@ const dealStatusColor=[
     {text:'Matched',color:'black'},
     {text:'Lessor Cancelled',color:'red'},
     {text:'Lessee Cancelled',color:'red'},
+	{text:'Car received by lessee',color:'black'},
     {text:'Done',color:'green'}
 ]
 
