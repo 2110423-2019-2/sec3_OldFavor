@@ -21,7 +21,7 @@ export interface Rent {
   carId         : string | ObjectID;
   renterId      : string | ObjectID;
   lessorId      : string | ObjectID;
-  status        : number; //0=created 1=matched 2=lessorcancel 3=lesseecancel 4=done
+  status        : number; //0=created 1=matched 2=lessorcancel 3=lesseecancel 4=received car 5=return(complete)
   cancelReason  : string;
   pickUpDateTime: Date;
   pickUpLocation: string;
