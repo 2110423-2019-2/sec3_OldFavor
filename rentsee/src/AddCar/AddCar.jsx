@@ -12,16 +12,14 @@ class AddCar extends Component {
         super(props);
 
         this.state = {
-            licensePlate: '',
             capacity: '',
             photoOfCar: '',
             photoOfCarDocument: '',
-            price: '',
             carModel: '',
             carType: '',
             carDescription: '',
 
-            accpet: false
+            accpet: false,
         };
 
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -41,11 +39,26 @@ class AddCar extends Component {
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
     }
-
+    isNormalInteger = (str) => {
+        var n = Math.floor(Number(str));
+        return n !== Infinity && String(n) === str && n >= 0;
+    };
+    haveEmpty = () => {
+        return (
+            !this.state.capacity |
+            !this.state.photoOfCar |
+            !this.state.photoOfCarDocument |
+            !this.state.carModel |
+            !this.state.carType |
+            !this.state.carDescription |
+            (this.state.capacity > 0) |
+            !this.isNormalInteger(this.state.capacity)
+        );
+    };
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.accpet) {
-            alert('Please Accept Term !!!!!!');
+        if (!this.state.accept | this.haveEmpty()) {
+            alert('Fill all the information and accept Terms and Agreements.');
         } else {
             fetch('https://rentsee.poomrokc.services/rentsee/api/cars', {
                 method: 'POST',
@@ -58,23 +71,23 @@ class AddCar extends Component {
                     price: this.state.price,
                     carModel: this.state.carModel,
                     carType: this.state.carType,
-                    carDescription: this.state.carDescription
-                })
+                    carDescription: this.state.carDescription,
+                }),
             })
-                .then(response => {
+                .then((response) => {
                     if (response.status === 200) {
                         return response.json();
                     } else {
                         alert('Failed');
                     }
                 })
-                .then(resJson => {
+                .then((resJson) => {
                     if (resJson) {
                         console.log(resJson);
                         this.props.history.push('/');
                     }
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log('error: ', error);
                 });
         }
@@ -89,7 +102,7 @@ class AddCar extends Component {
                     className='container-fluid full-screen'
                     style={{
                         backgroundImage: `url(${addCarBg})`,
-                        backgroundSize: 'cover'
+                        backgroundSize: 'cover',
                     }}
                 >
                     <Header />
