@@ -117,6 +117,27 @@ class CarHis extends Component {
                 console.log(error);
             });
     };
+    handleReceipt = () => {
+        const _id = this.props.deal._id;
+        fetch(
+            `https://rentsee.poomrokc.services/rentsee/api/rents/receipt/${_id}`,
+            {
+                method: 'GET',
+                headers: utils.authHeader(),
+            }
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((resJson) => {
+                console.log(resJson);
+                this.setState({ printState: 2, receipt: resJson });
+            })
+            .catch((error) => {
+                console.log('Oh on! An error occur :(');
+                console.log(error);
+            });
+    };
     renderHistory = () => {
         return (
             <React.Fragment>
@@ -219,6 +240,16 @@ class CarHis extends Component {
                     >
                         Print
                     </button>
+                    <button
+                        style={{
+                            float: 'right',
+                        }}
+                        type='button'
+                        className='btn mt-4 mx-1'
+                        onClick={this.handleReceipt}
+                    >
+                        E-Receipt
+                    </button>
                 </div>
 
                 <div className='row mb-4'>
@@ -273,6 +304,35 @@ class CarHis extends Component {
             </div>
         );
     };
+    renderReceipt = () => {
+        const receipt = this.state.receipt;
+        console.log(receipt);
+        const deposite = receipt.totalPrice * 0.4;
+        return (
+            <div>
+                <h1>E-Receipt</h1>
+                <div>lessor id: {this.state.receipt.lessorId}</div>
+                <div>
+                    lessor fullname: {this.state.receipt.lessor[0].fullname}
+                </div>
+                <div>lessee id: {this.state.receipt.renterId}</div>
+                <div>
+                    lessee fullname: {this.state.receipt.renter[0].fullname}
+                </div>
+                <div>pickUp Datetime: {this.state.receipt.pickUpDateTime}</div>
+                <div>pickUp Location: {this.state.receipt.pickUpLocation}</div>
+                <div>return Datetime: {this.state.receipt.returnDateTime}</div>
+                <div>return Location: {this.state.receipt.returnLocation}</div>
+                <p className='my-5'>
+                    Total Price: {formatNumber(receipt.totalPrice)} THB
+                </p>
+                <p className='my-5'>Deposite: {formatNumber(deposite)} THB</p>
+                <button className='btn' onClick={() => window.print()}>
+                    Print
+                </button>
+            </div>
+        );
+    };
     handlePrint = () => {
         this.setState({ printState: 1 });
     };
@@ -280,6 +340,8 @@ class CarHis extends Component {
         switch (this.state.printState) {
             case 1:
                 return this.renderPrint();
+            case 2:
+                return this.renderReceipt();
             default:
                 return this.renderHistory();
         }
