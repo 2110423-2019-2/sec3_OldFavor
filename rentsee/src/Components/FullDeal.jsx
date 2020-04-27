@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import carItem from '../images/car-item.svg';
-import EditModal from './EditModal'
+import EditModal from './EditModal';
 import CancelButton from './CancelButton';
+import utils from '../utils.js';
 
 function formatNumber(num) {
     if (num) return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -41,11 +42,82 @@ class CarHis extends Component {
                 });
         }
     }
+    cancelDeal = (event) => {
+        const _id = this.props.deal._id;
+        if (window.confirm('Do you really want to cancel this deal?')) {
+            console.log('Canceled!');
+            if (this.props.lesseeState === 1) {
+                fetch(
+                    'https://rentsee.poomrokc.services/rentsee/api/rents/lesseeCancel/' +
+                        _id,
+                    {
+                        method: 'PATCH',
+                        headers: utils.authHeader(),
+                    }
+                )
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((resJson) => {
+                        this.lessorHistory = resJson;
+                        this.setState({
+                            lessorHistory: resJson,
+                        });
+                        console.log(this.lessorHistory);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else if (this.props.lesseeState === 0) {
+                fetch(
+                    'https://rentsee.poomrokc.services/rentsee/api/rents/lessorCancel/' +
+                        _id,
+                    {
+                        method: 'PATCH',
+                        headers: utils.authHeader(),
+                    }
+                )
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((resJson) => {
+                        this.setState({
+                            lessorHistory: resJson,
+                        });
+                        console.log(this.resJson);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        } else {
+            event.preventDefault();
+        }
+    };
     handleEditDeal = (policy) => {
-        const _id = this.props.deal._id
-        alert(`beep boop edit mock on rent id ${_id} ${policy}`)
-    }
-    render() {
+        const _id = this.props.deal._id;
+        fetch(
+            `https://rentsee.poomrokc.services/rentsee/api/rents/editPolicy/${_id}`,
+            {
+                method: 'PATCH',
+                headers: utils.authHeader(),
+                body: JSON.stringify({
+                    policy: policy,
+                }),
+            }
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((resJson) => {
+                console.log(resJson);
+            })
+            .catch((error) => {
+                console.log('Oh on! An error occur :(');
+                console.log(error);
+            });
+    };
+    renderHistory = () => {
         return (
             <React.Fragment>
                 <div className='row'>
@@ -133,14 +205,24 @@ class CarHis extends Component {
                     {this.props.deal.policy && this.props.deal.policy}
                 </div>
                 <div className='row mb-4'>
-                    {this.props.role === 'lessor' ? (
-                        <EditModal
-                            policy={this.props.deal.policy}
-                            handleEditDeal={this.handleEditDeal}
-                        />
-                    ) : (
-                        <CancelButton haveChanged={true}/>
-                    )}
+                    <EditModal
+                        policy={this.props.deal.policy}
+                        handleEditDeal={this.handleEditDeal}
+                    />
+                    <button
+                        style={{
+                            float: 'right',
+                        }}
+                        type='button'
+                        className='btn mt-4 mx-1'
+                        onClick={this.handlePrint}
+                    >
+                        Print
+                    </button>
+                </div>
+
+                <div className='row mb-4'>
+                    <CancelButton handleCancel={this.props.cancelClick} />
                 </div>
                 <div className='row my-4'></div>
                 <form
@@ -177,6 +259,33 @@ class CarHis extends Component {
                 </form>
             </React.Fragment>
         );
+    };
+    renderPrint = () => {
+        return (
+            <div>
+                <h1>Rental Agreement</h1>
+                <p className='my-5'>
+                    {this.props.deal.policy && this.props.deal.policy}
+                </p>
+                <button className='btn' onClick={() => window.print()}>
+                    Print
+                </button>
+            </div>
+        );
+    };
+    handlePrint = () => {
+        this.setState({ printState: 1 });
+    };
+    renderByState = () => {
+        switch (this.state.printState) {
+            case 1:
+                return this.renderPrint();
+            default:
+                return this.renderHistory();
+        }
+    };
+    render() {
+        return this.renderByState();
     }
 }
 

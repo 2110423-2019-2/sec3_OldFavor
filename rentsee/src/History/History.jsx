@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import FullDeal from '../Components/FullDeal'
+import FullDeal from '../Components/FullDeal';
 import utils from '../utils.js';
 import Header from '../Components/Header';
 import CarHis from '../Components/CarHis';
 import Footer from '../Components/Footer';
 
-
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            thisUID: "",
-            lesseeHistory: "",
-            lessorHistory: "",
+            thisUID: '',
+            lesseeHistory: '',
+            lessorHistory: '',
             fullView: false,
             fullViewIndex: -1,
             dealState: 0,
-            dealID: "",
-            lesseeState: -1
+            dealID: '',
+            lesseeState: -1,
         };
         this.handleFormChange = this.handleFormChange.bind(this);
         this.lesseeResult = this.lesseeResult.bind(this);
@@ -46,42 +45,47 @@ class Profile extends Component {
                 console.log(error);
             });*/
         //await alert('https://rentsee.poomrokc.services/rentsee/api/rents/'+ this.state.thisUID);
-        fetch('https://rentsee.poomrokc.services/rentsee/api/rents/lesseeHistory', {
-            method: 'GET',
-            headers: utils.authHeader()
-        })
-            .then(response => {
+        fetch(
+            'https://rentsee.poomrokc.services/rentsee/api/rents/lesseeHistory',
+            {
+                method: 'GET',
+                headers: utils.authHeader(),
+            }
+        )
+            .then((response) => {
                 return response.json();
             })
-            .then(resJson => {
+            .then((resJson) => {
                 this.lesseeHistory = resJson;
                 this.setState({
-                    lesseeHistory: resJson
+                    lesseeHistory: resJson,
                 });
                 console.log(this.lesseeHistory);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
 
-        fetch('https://rentsee.poomrokc.services/rentsee/api/rents/lessorHistory', {
-            method: 'GET',
-            headers: utils.authHeader()
-        })
-            .then(response => {
+        fetch(
+            'https://rentsee.poomrokc.services/rentsee/api/rents/lessorHistory',
+            {
+                method: 'GET',
+                headers: utils.authHeader(),
+            }
+        )
+            .then((response) => {
                 return response.json();
             })
-            .then(resJson => {
+            .then((resJson) => {
                 this.lessorHistory = resJson;
                 this.setState({
-                    lessorHistory: resJson
+                    lessorHistory: resJson,
                 });
                 console.log(this.lessorHistory);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
-
     }
     handleFormChange(event) {
         const target = event.target;
@@ -90,7 +94,7 @@ class Profile extends Component {
         console.log('change: ' + [name] + ' ' + value);
         this.setState({ [name]: value });
     }
-    handleThisViewLessee = val => e => {
+    handleThisViewLessee = (val) => (e) => {
         e.preventDefault();
         this.fullView = true;
         this.lesseeState = 1;
@@ -100,15 +104,15 @@ class Profile extends Component {
                 this.setState({
                     fullView: true,
                     fullViewIndex: i,
-                    lesseeState : 1
+                    lesseeState: 1,
                 });
                 //alert(this.historyResult[i].car.carModel);
                 //alert(this.historyResult[i].car.brand);
                 break;
             }
         }
-    }
-    handleThisViewLessor = val => e => {
+    };
+    handleThisViewLessor = (val) => (e) => {
         e.preventDefault();
         this.fullView = true;
         this.lesseeState = 0;
@@ -118,142 +122,193 @@ class Profile extends Component {
                 this.setState({
                     fullView: true,
                     fullViewIndex: i,
-                    lesseeState : 0
+                    lesseeState: 0,
                 });
                 //alert(this.historyResult[i].car.carModel);
                 //alert(this.historyResult[i].car.brand);
                 break;
             }
         }
-    }
+    };
     lesseeResult() {
         let rents = this.state.lesseeHistory;
         console.log(rents);
         if (rents.length !== 0 && rents !== null) {
-            return rents.map(rent => {
+            return rents.map((rent) => {
                 return (
                     <CarHis
+                        returnCar={this.returnCar}
+                        receivedCar={this.receivedCar}
                         pickUpLocation={rent.pickUpLocation}
                         returnLocation={rent.returnLocation}
                         brand={rent.car.carModel}
                         type={rent.car.carType}
-                        cost={(rent.pricePerDay === null) ? 0 : rent.pricePerDay}
+                        cost={rent.pricePerDay === null ? 0 : rent.pricePerDay}
                         photoOfCar={rent.car.photoOfCar}
                         capacity={rent.car.capacity}
                         onClick={this.handleThisViewLessee(rent._id)}
                     />
                 );
             });
-        };
+        }
     }
     lessorResult() {
         let rents = this.state.lessorHistory;
         console.log(rents);
         if (rents.length !== 0 && rents !== null) {
-            return rents.map(rent => {
-
+            return rents.map((rent) => {
                 return (
-
                     <CarHis
+                        returnCar={this.returnCar}
+                        receivedCar={this.receivedCar}
                         pickUpLocation={rent.pickUpLocation}
                         returnLocation={rent.returnLocation}
                         brand={rent.car.carModel}
                         type={rent.car.carType}
-                        cost={(rent.pricePerDay === null) ? 0 : rent.pricePerDay}
+                        cost={rent.pricePerDay === null ? 0 : rent.pricePerDay}
                         photoOfCar={rent.car.photoOfCar}
                         capacity={rent.car.capacity}
                         onClick={this.handleThisViewLessor(rent._id)}
                     />
                 );
             });
-        };
+        }
     }
+
+    receivedCar = () => {
+        const _id = this.props.deal._id;
+        fetch(
+            `https://rentsee.poomrokc.services/rentsee/api/rents/receivedCar/${_id}`,
+            {
+                method: 'PATCH',
+                headers: utils.authHeader(),
+            }
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((resJson) => {
+                console.log(resJson);
+            })
+            .catch((error) => {
+                console.log('Oh on! An error occur :(');
+                console.log(error);
+            });
+    };
+
+    returnCar = () => {
+        const _id = this.props.deal._id;
+        fetch(
+            `https://rentsee.poomrokc.services/rentsee/api/rents/returnCar/${_id}`,
+            {
+                method: 'PATCH',
+                headers: utils.authHeader(),
+            }
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((resJson) => {
+                console.log(resJson);
+            })
+            .catch((error) => {
+                console.log('Oh on! An error occur :(');
+                console.log(error);
+            });
+    };
+
     confirmDeal(event) {
         //confirm("Are you sure that car is arrived");
         //alert("ss");
 
-        if (window.confirm("Are you sure that a car has arrived?")) {
-            console.log("Confirmed!");
-            fetch('https://rentsee.poomrokc.services/rentsee/api/rents/confirm/' + this.state.dealID, {
-                method: 'PATCH',
-                headers: utils.authHeader()
-            })
-                .then(response => {
+        if (window.confirm('Are you sure that a car has arrived?')) {
+            console.log('Confirmed!');
+            fetch(
+                'https://rentsee.poomrokc.services/rentsee/api/rents/confirm/' +
+                    this.state.dealID,
+                {
+                    method: 'PATCH',
+                    headers: utils.authHeader(),
+                }
+            )
+                .then((response) => {
                     return response.json();
                 })
-                .then(resJson => {
+                .then((resJson) => {
                     this.lessorHistory = resJson;
                     this.setState({
-                        lessorHistory: resJson
+                        lessorHistory: resJson,
                     });
                     console.log(this.lessorHistory);
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error);
                 });
-        }
-        else {
+        } else {
             event.preventDefault();
         }
     }
 
     cancelDeal(event) {
-
-        if (window.confirm("Do you really want to cancel this deal?")) {
-            console.log("Canceled!");
+        if (window.confirm('Do you really want to cancel this deal?')) {
+            console.log('Canceled!');
             if (this.state.lesseeState === 1) {
-                fetch('https://rentsee.poomrokc.services/rentsee/api/rents/lesseeCancel/' + this.state.dealID, {
-                    method: 'GET',
-                    headers: utils.authHeader()
-                })
-                    .then(response => {
+                fetch(
+                    'https://rentsee.poomrokc.services/rentsee/api/rents/lesseeCancel/' +
+                        this.state.dealID,
+                    {
+                        method: 'PATCH',
+                        headers: utils.authHeader(),
+                    }
+                )
+                    .then((response) => {
                         return response.json();
                     })
-                    .then(resJson => {
+                    .then((resJson) => {
                         this.lessorHistory = resJson;
                         this.setState({
-                            lessorHistory: resJson
+                            lessorHistory: resJson,
                         });
                         console.log(this.lessorHistory);
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         console.log(error);
                     });
-            }
-            else if (this.state.lesseeState === 0) {
-                fetch('https://rentsee.poomrokc.services/rentsee/api/rents/lessorCancel/' + this.state.dealID, {
-                    method: 'GET',
-                    headers: utils.authHeader()
-                })
-                    .then(response => {
+            } else if (this.state.lesseeState === 0) {
+                fetch(
+                    'https://rentsee.poomrokc.services/rentsee/api/rents/lessorCancel/' +
+                        this.state.dealID,
+                    {
+                        method: 'PATCH',
+                        headers: utils.authHeader(),
+                    }
+                )
+                    .then((response) => {
                         return response.json();
                     })
-                    .then(resJson => {
+                    .then((resJson) => {
                         this.lessorHistory = resJson;
                         this.setState({
-                            lessorHistory: resJson
+                            lessorHistory: resJson,
                         });
                         console.log(this.lessorHistory);
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         console.log(error);
                     });
-
             }
-
-        }
-        else {
+        } else {
             event.preventDefault();
         }
     }
+
     viewDetail() {
-        let deal
+        let deal;
         let role;
         if (this.state.lesseeState === 1) {
             deal = this.state.lesseeHistory[this.state.fullViewIndex];
             role = 'lessee';
-        }
-        else if (this.state.lesseeState === 0) {
+        } else if (this.state.lesseeState === 0) {
             deal = this.state.lessorHistory[this.state.fullViewIndex];
             role = 'lessor';
         }
@@ -261,23 +316,22 @@ class Profile extends Component {
         this.state.dealID = deal._id;
         return (
             <FullDeal
+                lesseeState={this.state.lesseeState}
                 role={role}
                 deal={deal}
                 pickUpLocation={deal.pickUpLocation}
                 returnLocation={deal.returnLocation}
                 brand={deal.car.carModel}
                 type={deal.car.carType}
-                cost={(deal.pricePerDay === null) ? 0 : deal.pricePerDay}
+                cost={deal.pricePerDay === null ? 0 : deal.pricePerDay}
                 photoOfCar={deal.car.photoOfCar}
                 capacity={deal.car.capacity}
                 confirmClick={this.confirmDeal}
                 cancelClick={this.cancelDeal}
             />
         );
-
     }
-
-    render() {
+    renderHistory = () => {
         console.log(this.fullView);
         let backButton;
         let lessorBody;
@@ -290,17 +344,23 @@ class Profile extends Component {
         if (!this.fullView) {
             lesseeBody = this.lesseeResult();
             lessorBody = this.lessorResult();
-            headBody = <div className="row"><h3 className='ml-0'>Lessee</h3></div>;
-            midBody = <div className='row mb-4'></div>
-            midBody2 = <div class='w-100 border-top'></div>
-            midBody3 = <div className='row mb-4'></div>
-            midBody4 = <div className="row"><h3 className='ml-0'>Lessor</h3></div>
-        }
-        else {
-
+            headBody = (
+                <div className='row'>
+                    <h3 className='ml-0'>Lessee</h3>
+                </div>
+            );
+            midBody = <div className='row mb-4'></div>;
+            midBody2 = <div class='w-100 border-top'></div>;
+            midBody3 = <div className='row mb-4'></div>;
+            midBody4 = (
+                <div className='row'>
+                    <h3 className='ml-0'>Lessor</h3>
+                </div>
+            );
+        } else {
             midBody = this.viewDetail();
 
-            backButton =
+            backButton = (
                 <form className='col' onSubmit={this.handleBack}>
                     <input
                         className='btn btn-outline-danger d-flex float-right '
@@ -308,54 +368,70 @@ class Profile extends Component {
                         value='Back'
                     />
                 </form>
-
-
+            );
         }
         return (
-            <React.Fragment>
-                <div className='container-fluid'>
-                    <Header />
-
-                    <div className='row mb-4'></div>
-                    <div className='row mb-4'></div>
-                    <div className='row'>
-                        <div className='col-2'></div>
-                        <div className='col'>
-                            <h1 className='ml-0'>Rental History</h1>
-                        </div>
-                        <div className='col'></div>
-                        {backButton}
-
-                        <div className='col-2'></div>
+            <div className='container-fluid'>
+                <Header />
+                <div className='row mb-4'></div>
+                <div className='row mb-4'></div>
+                <div className='row'>
+                    <div className='col-2'></div>
+                    <div className='col'>
+                        <h1 className='ml-0'>Rental History</h1>
                     </div>
-                    <div className='row mb-4'></div>
-                    <div className='row'>
-                        <div className='col-2'></div>
-                        <div className='col'>
-                            {headBody}
-                            <div className="row">
-                                {lesseeBody}
-                            </div>
-                            {midBody}
-                            {midBody2}
-                            {midBody3}
-                            {midBody4}
-                            <div className='row'>
-                                {lessorBody}
-                            </div>
+                    <div className='col'></div>
+                    {backButton}
 
-                        </div>
-                        <div className='col-2'></div>
-                    </div>
-                    <div className='row mb-4'></div>
+                    <div className='col-2'></div>
                 </div>
-                <div className='row' style={{ position: "relative", margin: '0', width: "100%" }}><Footer /></div>
-
-
-            </React.Fragment>
+                <div className='row mb-4'></div>
+                <div className='row'>
+                    <div className='col-2'></div>
+                    <div className='col'>
+                        {headBody}
+                        <div className='row'>{lesseeBody}</div>
+                        {midBody}
+                        {midBody2}
+                        {midBody3}
+                        {midBody4}
+                        <div className='row'>{lessorBody}</div>
+                    </div>
+                    <div className='col-2'></div>
+                </div>
+                <div className='row mb-4'></div>
+                <div
+                    className='row'
+                    style={{ position: 'relative', margin: '0', width: '100%' }}
+                >
+                    <Footer />
+                </div>
+            </div>
         );
+    };
+    // renderPrint = () => {
+    //     return (
+    //         <div>
+    //             <h1>Rental Agreement</h1>
+    //             <p>{this.props.policy && this.props.policy}</p>
+    //             <button onClick={() => window.print()}>PRINT</button>
+    //         </div>
+    //     );
+    // };
+    // handlePrint = () => {
+    //     this.setState({ printState: 1 });
+    // };
+    // renderByState = () => {
+    //     switch (this.state.printState) {
+    //         case 1:
+    //             return this.renderPrint();
+    //         default:
+    //             return this.renderHistory();
+    //     }
+    // };
+    render() {
+        return <React.Fragment>{this.renderHistory()}</React.Fragment>;
     }
 }
 
 export default withRouter(Profile);
-

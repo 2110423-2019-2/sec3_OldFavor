@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import carItem from '../images/car-item.svg';
 import History from '../History/History';
-import PrintOut from '../PrintOut/PrintOut';
-
 
 function formatNumber(num) {
     if (num) return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -27,17 +25,17 @@ class CarHis extends Component {
                 mode: 'no-cors',
                 cache: 'no-cache',
                 headers: {
-                    Accept: '*/*'
+                    Accept: '*/*',
                 },
                 redirect: 'follow',
-                referrer: 'no-referrer'
+                referrer: 'no-referrer',
             })
-                .then(response => {
+                .then((response) => {
                     if (response.status !== 404) {
                         this.setState({ imageDidExists: true });
                     }
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error);
                 });
         }
@@ -50,45 +48,36 @@ class CarHis extends Component {
         return (
             <React.Fragment>
                 <div className='card shadow-sm px-4 py-5 mt-3 w-100'>
-                    <div className="row">
-                        <div className="col">
-                            <div className="row">
-                                <div className='col-1'>
-
-                                </div>
-                                <div className='col'>
-                                    Pick Up Location:
+                    <div className='row'>
+                        <div className='col'>
+                            <div className='row'>
+                                <div className='col-1'></div>
+                                <div className='col'>Pick Up Location:</div>
                             </div>
-
-                            </div>
-                            <div className="row">
-                                <div className='col-1'>
-
-                                </div>
-                                <div className='col' style={{ fontWeight: "bold" }}>
+                            <div className='row'>
+                                <div className='col-1'></div>
+                                <div
+                                    className='col'
+                                    style={{ fontWeight: 'bold' }}
+                                >
                                     {this.props.pickUpLocation}
                                 </div>
                             </div>
-
                         </div>
-                        <div className="col">
-                            <div className="row">
-                                <div className='col-1'>
-
-                                </div>
-                                <div className='col'>
-                                    Return Location:
+                        <div className='col'>
+                            <div className='row'>
+                                <div className='col-1'></div>
+                                <div className='col'>Return Location:</div>
                             </div>
-                            </div>
-                            <div className="row">
-                                <div className='col-1'>
-
-                                </div>
-                                <div className='col' style={{ fontWeight: "bold" }}>
+                            <div className='row'>
+                                <div className='col-1'></div>
+                                <div
+                                    className='col'
+                                    style={{ fontWeight: 'bold' }}
+                                >
                                     {this.props.returnLocation}
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div className='row mb-4'></div>
@@ -102,12 +91,16 @@ class CarHis extends Component {
                                         : carItem
                                 }
                                 alt=''
-                                style={{ maxHeight: "200px", width: '100%' }}
+                                style={{ maxHeight: '200px', width: '100%' }}
                             ></img>
                         </div>
                         <div className='col'>
-                            <div className='car-title-text'>{this.props.brand}</div>
-                            <div className='car-type-text'>{this.props.type}</div>
+                            <div className='car-title-text'>
+                                {this.props.brand}
+                            </div>
+                            <div className='car-type-text'>
+                                {this.props.type}
+                            </div>
                             <span>
                                 <i>
                                     <svg
@@ -124,24 +117,38 @@ class CarHis extends Component {
                                     {this.props.capacity
                                         ? this.props.capacity
                                         : 'N/A'}{' '}
-                                Seats
-                            </span>
+                                    Seats
+                                </span>
                             </span>
                         </div>
-                        <div className="col-2">
-                            <div className="row">
-
-
+                        <div className='col-2'>
+                            <div className='row'>
                                 <div className='col'>
                                     <div className='car-cost-text'>
                                         {formatNumber(this.props.cost)}
                                     </div>
-                                    <div className='car-cost-unit-text'>THB/DAY</div>
-
+                                    <div className='car-cost-unit-text'>
+                                        THB/DAY
+                                    </div>
                                 </div>
-
                             </div>
-                            <form className="row" onSubmit={this.props.onClick} style={{ padding: '80px 0px 0px 30px' }}>
+                            <button
+                                className='btn mt-4'
+                                onClick={this.props.receivedCar}
+                            >
+                                Receive Car
+                            </button>
+                            <button
+                                className='btn mt-4'
+                                onClick={this.props.returnCar}
+                            >
+                                Return Car
+                            </button>
+                            <form
+                                className='row'
+                                onSubmit={this.props.onClick}
+                                style={{ padding: '80px 0px 0px 30px' }}
+                            >
                                 <input
                                     className='btn d-flex float-right '
                                     type='submit'
@@ -150,7 +157,6 @@ class CarHis extends Component {
                             </form>
                         </div>
                     </div>
-
                 </div>
             </React.Fragment>
         );

@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 
 class PrintOut extends Component {
-    state = {  }
+    constructor(props) {
+        super(props);
+        state = {};
+    }
     render() {
-        return <button onClick={() => window.print()}>PRINT</button>;
+        return (
+            <button className='btn' onClick={() => window.print()}>
+                PRINT
+            </button>
+        );
     }
 }
 
