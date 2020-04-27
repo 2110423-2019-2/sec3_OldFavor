@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import carItem from '../images/car-item.svg';
 import History from '../History/History';
+import utils from '../utils.js';
 
 function formatNumber(num) {
     if (num) return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -16,6 +17,49 @@ class CarHis extends Component {
     componentDidMount() {
         this.imageExists(this.props.photoOfCar);
     }
+
+    receivedCar = () => {
+        const _id = this.props._id;
+        fetch(
+            `https://rentsee.poomrokc.services/rentsee/api/rents/receivedCar/${_id}`,
+            {
+                method: 'PATCH',
+                headers: utils.authHeader(),
+            }
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((resJson) => {
+                console.log(resJson);
+            })
+            .catch((error) => {
+                console.log('Oh on! An error occur :(');
+                console.log(error);
+            });
+    };
+
+    returnCar = () => {
+        const _id = this.props._id;
+        fetch(
+            `https://rentsee.poomrokc.services/rentsee/api/rents/returnCar/${_id}`,
+            {
+                method: 'PATCH',
+                headers: utils.authHeader(),
+            }
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((resJson) => {
+                console.log(resJson);
+            })
+            .catch((error) => {
+                console.log('Oh on! An error occur :(');
+                console.log(error);
+            });
+    };
+
     imageExists(image_url) {
         if (image_url === undefined) {
             return;
@@ -135,13 +179,13 @@ class CarHis extends Component {
                             </div>
                             <button
                                 className='btn mt-4'
-                                onClick={this.props.receivedCar}
+                                onClick={this.receivedCar}
                             >
                                 Receive Car
                             </button>
                             <button
                                 className='btn mt-4'
-                                onClick={this.props.returnCar}
+                                onClick={this.returnCar}
                             >
                                 Return Car
                             </button>

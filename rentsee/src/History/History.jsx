@@ -137,8 +137,9 @@ class Profile extends Component {
             return rents.map((rent) => {
                 return (
                     <CarHis
-                        returnCar={this.returnCar(rent._id)}
-                        receivedCar={this.receivedCar(rent._id)}
+                        _id={rent._id}
+                        returnCar={this.returnCar}
+                        receivedCar={this.receivedCar}
                         pickUpLocation={rent.pickUpLocation}
                         returnLocation={rent.returnLocation}
                         brand={rent.car.carModel}
@@ -159,8 +160,9 @@ class Profile extends Component {
             return rents.map((rent) => {
                 return (
                     <CarHis
-                        returnCar={this.returnCar(rent._id)}
-                        receivedCar={this.receivedCar(rent._id)}
+                        _id={rent._id}
+                        returnCar={this.returnCar}
+                        receivedCar={this.receivedCar}
                         pickUpLocation={rent.pickUpLocation}
                         returnLocation={rent.returnLocation}
                         brand={rent.car.carModel}
@@ -175,47 +177,47 @@ class Profile extends Component {
         }
     }
 
-    receivedCar = (_id) => {
-        // const _id = this.props.deal._id;
-        fetch(
-            `https://rentsee.poomrokc.services/rentsee/api/rents/receivedCar/${_id}`,
-            {
-                method: 'PATCH',
-                headers: utils.authHeader(),
-            }
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then((resJson) => {
-                console.log(resJson);
-            })
-            .catch((error) => {
-                console.log('Oh on! An error occur :(');
-                console.log(error);
-            });
-    };
+    // receivedCar = (_id) => {
+    //     // const _id = this.props.deal._id;
+    //     fetch(
+    //         `https://rentsee.poomrokc.services/rentsee/api/rents/receivedCar/${_id}`,
+    //         {
+    //             method: 'PATCH',
+    //             headers: utils.authHeader(),
+    //         }
+    //     )
+    //         .then((response) => {
+    //             return response.json();
+    //         })
+    //         .then((resJson) => {
+    //             console.log(resJson);
+    //         })
+    //         .catch((error) => {
+    //             console.log('Oh on! An error occur :(');
+    //             console.log(error);
+    //         });
+    // };
 
-    returnCar = (_id) => {
-        // const _id = this.props.deal._id;
-        fetch(
-            `https://rentsee.poomrokc.services/rentsee/api/rents/returnCar/${_id}`,
-            {
-                method: 'PATCH',
-                headers: utils.authHeader(),
-            }
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then((resJson) => {
-                console.log(resJson);
-            })
-            .catch((error) => {
-                console.log('Oh on! An error occur :(');
-                console.log(error);
-            });
-    };
+    // returnCar = (_id) => {
+    //     // const _id = this.props.deal._id;
+    //     fetch(
+    //         `https://rentsee.poomrokc.services/rentsee/api/rents/returnCar/${_id}`,
+    //         {
+    //             method: 'PATCH',
+    //             headers: utils.authHeader(),
+    //         }
+    //     )
+    //         .then((response) => {
+    //             return response.json();
+    //         })
+    //         .then((resJson) => {
+    //             console.log(resJson);
+    //         })
+    //         .catch((error) => {
+    //             console.log('Oh on! An error occur :(');
+    //             console.log(error);
+    //         });
+    // };
 
     confirmDeal(event) {
         //confirm("Are you sure that car is arrived");
