@@ -175,7 +175,7 @@ class Header extends Component {
 						</React.Fragment>
 					}
                 </div>
-				<NotificationMobile />
+				{this.state.username&&<NotificationMobile />}
                 <button
                     className='d-block d-lg-none'
                     onClick={this.openNav}
