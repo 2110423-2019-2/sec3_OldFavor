@@ -138,6 +138,8 @@ class Profile extends Component {
                 return (
                     <CarHis
                         _id={rent._id}
+						status={rent.status}
+						mode={'lessee'}
                         returnCar={this.returnCar}
                         receivedCar={this.receivedCar}
                         pickUpLocation={rent.pickUpLocation}
@@ -161,6 +163,8 @@ class Profile extends Component {
                 return (
                     <CarHis
                         _id={rent._id}
+						mode={'lessor'}
+						status={rent.status}
                         returnCar={this.returnCar}
                         receivedCar={this.receivedCar}
                         pickUpLocation={rent.pickUpLocation}
@@ -251,9 +255,9 @@ class Profile extends Component {
         }
     }
 
-    cancelDeal(event) {
+    cancelDeal = (event) => {
+		event.preventDefault();
         if (window.confirm('Do you really want to cancel this deal?')) {
-            console.log('Canceled!');
             if (this.state.lesseeState === 1) {
                 fetch(
                     'https://rentsee.poomrokc.services/rentsee/api/rents/lesseeCancel/' +
@@ -267,11 +271,7 @@ class Profile extends Component {
                         return response.json();
                     })
                     .then((resJson) => {
-                        this.lessorHistory = resJson;
-                        this.setState({
-                            lessorHistory: resJson,
-                        });
-                        console.log(this.lessorHistory);
+						window.location.reload();
                     })
                     .catch((error) => {
                         console.log(error);
@@ -289,11 +289,7 @@ class Profile extends Component {
                         return response.json();
                     })
                     .then((resJson) => {
-                        this.lessorHistory = resJson;
-                        this.setState({
-                            lessorHistory: resJson,
-                        });
-                        console.log(this.lessorHistory);
+                        window.location.reload();
                     })
                     .catch((error) => {
                         console.log(error);
@@ -319,7 +315,10 @@ class Profile extends Component {
         return (
             <FullDeal
                 lesseeState={this.state.lesseeState}
+				lessee={deal.renter[0]}
+				lessor={deal.lessor[0]}
                 role={role}
+				status = {deal.status}
                 deal={deal}
                 pickUpLocation={deal.pickUpLocation}
                 returnLocation={deal.returnLocation}

@@ -229,11 +229,19 @@ class CarHis extends Component {
                 <div className='row mb-4'>
                     {this.props.deal.policy && this.props.deal.policy}
                 </div>
+				<div className='row mb-1 font-weight-bold'>Lessee Contact</div>
                 <div className='row mb-4'>
-                    <EditModal
+					Full Name:&nbsp;<b>{this.props.lessee&&this.props.lessee.fullname?this.props.lessee.fullname:'Not Entered'}</b>&nbsp;Phone:&nbsp;<b>{this.props.lessee&&this.props.lessee.phoneNumber?this.props.lessee.phoneNumber:'Not Entered'}</b>
+                </div>
+				<div className='row mb-1 font-weight-bold'>Lessor Contact</div>
+                <div className='row mb-4'>
+                    Full Name:&nbsp;<b>{this.props.lessor&&this.props.lessor.fullname?this.props.lessor.fullname:'Not Entered'}</b>&nbsp;Phone:&nbsp;<b>{this.props.lessor&&this.props.lessor.phoneNumber?this.props.lessor.phoneNumber:'Not Entered'}</b>
+                </div>
+                <div className='row mb-4'>
+					{this.props.status == 1 &&<EditModal
                         policy={this.props.deal.policy}
                         handleEditDeal={this.handleEditDeal}
-                    />
+                    />}
                     <button
                         style={{
                             float: 'right',
@@ -257,26 +265,11 @@ class CarHis extends Component {
                 </div>
 
                 <div className='row mb-4'>
-                    <CancelButton handleCancel={this.props.cancelClick} />
                 </div>
                 <div className='row my-4'></div>
-                <form
-                    className='row'
-                    onSubmit={this.props.confirmClick}
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <input
-                        className='btn d-flex float-right '
-                        type='submit'
-                        value='Confirm Deal'
-                    />
-                </form>
+
                 <div className='row mb-4'></div>
-                <form
+                {this.props.status == 1 && <form
                     className='row'
                     onSubmit={this.props.cancelClick}
                     style={{
@@ -291,7 +284,7 @@ class CarHis extends Component {
                         type='submit'
                         value='Cancel Deal'
                     />
-                </form>
+                </form>}
             </React.Fragment>
         );
     };

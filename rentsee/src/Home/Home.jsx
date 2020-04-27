@@ -16,7 +16,7 @@ class Home extends Component {
             username: '',
             q: '',
             sort: 'created',
-            sortWay: -1,
+            sortWay: 1,
             pickUpDateTime: undefined,
             returnDateTime: undefined,
             pickUpLocation: '',

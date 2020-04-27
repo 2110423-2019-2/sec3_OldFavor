@@ -36,7 +36,7 @@ class EditModal extends Component {
                     className='btn mt-4'
                     onClick={this.toggle}
                 >
-                    Edit Deal
+                    Edit Policy
                 </button>
                 <div
                     className='modal'

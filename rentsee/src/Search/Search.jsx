@@ -32,7 +32,7 @@ class Search extends Component {
             searchRes: [],
             q: '',
             sort: 'created',
-            sortWay: -1,
+            sortWay: 1,
             pickUpDateTime: undefined,
             returnDateTime: undefined,
             pickUpLocation: '',
@@ -285,7 +285,7 @@ class Search extends Component {
                             <div className='float-right'>
                                 <SortBy
                                     sort={this.state.sort}
-                                    options={['created', 'price', 'rating']}
+                                    options={['created', 'pricePerDay']}
                                     handleSortChange={this.handleSortChange}
                                 />
                             </div>

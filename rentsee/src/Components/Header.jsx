@@ -4,6 +4,7 @@ import rentseeLogo from '../images/logo-rentsee-color.svg';
 import downArrow from '../images/down-arrow.svg';
 import utils from '../utils.js';
 import Notification from '../Components/Notification';
+import NotificationMobile from '../Components/NotificationMobile';
 
 class Header extends Component {
     constructor(props) {
@@ -136,7 +137,7 @@ class Header extends Component {
         return (
             <header>
                 
-            <div style={{padding: '10px 20px', maxWidth: 1100, margin: 'auto', display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+            <div style={{position:'relative',padding: '10px 20px', maxWidth: 1100, margin: 'auto', display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                 <a is='header-logo' href='/'>
                     <img
                         style={{
@@ -159,11 +160,22 @@ class Header extends Component {
                     >
                         &times;
                     </button>
-                    <a href='/'>About</a>
-                    <a href='/'>Services</a>
-                    <a href='/'>Clients</a>
-                    <a href='/'>Contact</a>
+					<a href='/'>Home</a>
+					{this.state.username?
+						<React.Fragment>
+							<a href='/profile'>Profile</a>
+							<a href='/add-car'>Add Car</a>
+							<a href='/add-deal'>Add Deal</a>
+							<a href='/history'>History</a>
+							<a href='/logout'>Logout</a>
+						</React.Fragment>:
+						<React.Fragment>
+							<a href='/login'>Log in</a>
+							<a href='/register'>Register</a>
+						</React.Fragment>
+					}
                 </div>
+				<NotificationMobile />
                 <button
                     className='d-block d-lg-none'
                     onClick={this.openNav}

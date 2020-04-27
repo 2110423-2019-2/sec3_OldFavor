@@ -3,6 +3,9 @@ import carItem from '../images/car-item.svg';
 import History from '../History/History';
 import utils from '../utils.js';
 
+const statusCon=["Open","Matched","Canceled by lessor","Canceled by lessee","Car handed to lessee","Complete(Car returned)"];
+const colorPan=["orange","green","red","red","blue","green"];
+
 function formatNumber(num) {
     if (num) return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     return num;
@@ -32,6 +35,7 @@ class CarHis extends Component {
             })
             .then((resJson) => {
                 console.log(resJson);
+				window.location.reload();
             })
             .catch((error) => {
                 console.log('Oh on! An error occur :(');
@@ -53,6 +57,7 @@ class CarHis extends Component {
             })
             .then((resJson) => {
                 console.log(resJson);
+				window.location.reload();
             })
             .catch((error) => {
                 console.log('Oh on! An error occur :(');
@@ -136,8 +141,9 @@ class CarHis extends Component {
                                         : carItem
                                 }
                                 alt=''
-                                style={{ maxHeight: '200px', width: '100%' }}
+                                style={{ maxHeight: '200px', width: '100%', marginBottom:'20px' }}
                             ></img>
+							<div style={{display:'inline',fontWeight:'bold',fontSize:'20px'}}>Status: <div style={{display:'inline',color:colorPan[this.props.status]}}>{statusCon[this.props.status]}</div></div>
                         </div>
                         <div className='col'>
                             <div className='car-title-text'>
@@ -177,25 +183,30 @@ class CarHis extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <button
-                                className='btn mt-4'
+                            {this.props.status==1&&this.props.mode=='lessee'&&<button
+                                className=''
+								style={{marginTop:'20px',marginLeft:'-15px',marginRight:'-15px',width:'calc(100% + 30px)', textAlign:'center', backgroundColor:'#545372',color:'white',borderRadius:'0.25rem',border:'1px solid #545372',height:'40px'}}
                                 onClick={this.receivedCar}
                             >
-                                Receive Car
+                                Car received
                             </button>
-                            <button
-                                className='btn mt-4'
-                                onClick={this.returnCar}
-                            >
-                                Return Car
-                            </button>
+							}
+							{this.props.status==4&&this.props.mode=='lessor'&&
+								<button
+									className=''
+									style={{marginTop:'20px',marginLeft:'-15px',marginRight:'-15px',width:'calc(100% + 30px)', textAlign:'center', backgroundColor:'#545372',color:'white',borderRadius:'0.25rem',border:'1px solid #545372',height:'40px'}}
+									onClick={this.returnCar}
+								>
+                                Car returned
+                            </button>}
                             <form
                                 className='row'
                                 onSubmit={this.props.onClick}
-                                style={{ padding: '80px 0px 0px 30px' }}
+                                style={{ padding: '80px 0px 0px 0px' }}
                             >
                                 <input
-                                    className='btn d-flex float-right '
+                                    className=''
+									style={{width:'100%', textAlign:'center', backgroundColor:'#545372',color:'white',borderRadius:'0.25rem',border:'1px solid #545372',height:'40px'}}
                                     type='submit'
                                     value='View Detail'
                                 />
