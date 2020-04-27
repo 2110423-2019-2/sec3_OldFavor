@@ -114,6 +114,7 @@ class CarHis extends Component {
                 })
                 .then((resJson) => {
                     console.log(resJson);
+					window.location.reload();
                 })
                 .catch((error) => {
                     console.log('Oh on! An error occur :(');
