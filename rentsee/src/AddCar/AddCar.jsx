@@ -51,7 +51,7 @@ class AddCar extends Component {
             !this.state.carModel |
             !this.state.carType |
             !this.state.carDescription |
-            (this.state.capacity > 0) |
+            !(parseInt(this.state.capacity) > 0) |
             !this.isNormalInteger(this.state.capacity)
         );
     };

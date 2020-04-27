@@ -18,60 +18,75 @@ class AddDeal extends Component {
 
         rentableCars: [],
         state: 1,
-        selectedCarId: ''
+        selectedCarId: '',
     };
     componentDidMount() {
         fetch('https://rentsee.poomrokc.services/rentsee/api/cars/me/rent', {
             method: 'GET',
-            headers: utils.authHeader()
+            headers: utils.authHeader(),
         })
-            .then(response => {
+            .then((response) => {
                 return response.json();
             })
-            .then(resJson => {
+            .then((resJson) => {
                 console.log(resJson);
                 this.setState({ rentableCars: resJson });
             });
     }
-    handleSelectCar = _id => {
+    handleSelectCar = (_id) => {
         this.setState({
             state: 2,
-            selectedCarId: _id
+            selectedCarId: _id,
         });
     };
-    handleSubmitAddDeal = () => {
-        fetch(
-            `https://rentsee.poomrokc.services/rentsee/api/rents/${this.state.selectedCarId}`,
-            {
-                method: 'POST',
-                headers: utils.authHeader(),
-                body: JSON.stringify({
-                    returnLocation: this.state.returnLocation,
-                    pickUpLocation: this.state.pickUpLocation,
-                    returnDateTime: this.state.returnDateTime,
-                    pickUpDateTime: this.state.pickUpDateTime,
-                    pricePerDay: this.state.pricePerDay,
-                    policy: this.state.policy
-                })
-            }
-        )
-            .then(response => {
-                return response.json();
-            })
-            .then(resJson => {
-                console.log(resJson);
-                if (resJson) {
-                    this.setState({
-                        state: 3,
-                        deal: resJson
-                    });
-                }
-            })
-            .catch(error => {
-                alert('Failed to add deal!');
-            });
+    haveEmpty = () => {
+        return (
+            !this.state.pickUpDateTime |
+            !this.state.pickUpLocation |
+            !this.state.returnDateTime |
+            !this.state.returnLocation |
+            !this.state.pricePerDay |
+            !(parseFloat(this.state.pricePerDay) > 0) |
+            !(this.state.pickUpDateTime < this.state.returnDateTime)
+        );
     };
-    handleFormChange = event => {
+    handleSubmitAddDeal = () => {
+        if (this.haveEmpty()) {
+            alert('Fill all the information');
+        } else {
+            fetch(
+                `https://rentsee.poomrokc.services/rentsee/api/rents/${this.state.selectedCarId}`,
+                {
+                    method: 'POST',
+                    headers: utils.authHeader(),
+                    body: JSON.stringify({
+                        returnLocation: this.state.returnLocation,
+                        pickUpLocation: this.state.pickUpLocation,
+                        returnDateTime: this.state.returnDateTime,
+                        pickUpDateTime: this.state.pickUpDateTime,
+                        pricePerDay: this.state.pricePerDay,
+                        policy: this.state.policy,
+                    }),
+                }
+            )
+                .then((response) => {
+                    return response.json();
+                })
+                .then((resJson) => {
+                    console.log(resJson);
+                    if (resJson) {
+                        this.setState({
+                            state: 3,
+                            deal: resJson,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    alert('Failed to add deal!');
+                });
+        }
+    };
+    handleFormChange = (event) => {
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -81,7 +96,7 @@ class AddDeal extends Component {
     renderState1 = () => {
         return (
             <React.Fragment>
-                {this.state.rentableCars.map(car => {
+                {this.state.rentableCars.map((car) => {
                     return (
                         <React.Fragment key={car._id}>
                             <CarCard
@@ -171,13 +186,13 @@ class AddDeal extends Component {
                         className='my-4'
                         style={{
                             alignItems: 'center',
-                            display: 'flex'
+                            display: 'flex',
                         }}
                     >
                         <button
                             style={{
                                 marginLeft: 'auto',
-                                marginRight: 'auto'
+                                marginRight: 'auto',
                             }}
                             className='btn header'
                             onClick={this.handleSubmitAddDeal}
@@ -249,14 +264,14 @@ class AddDeal extends Component {
                             labels={[
                                 '1. Select a car',
                                 '2. Rental Information',
-                                '3. Result'
+                                '3. Result',
                             ]}
                         />
                         <button
                             className='btn my-3'
                             onClick={() => {
                                 this.setState({
-                                    state: state - 1 < 1 ? 1 : state - 1
+                                    state: state - 1 < 1 ? 1 : state - 1,
                                 });
                             }}
                         >
