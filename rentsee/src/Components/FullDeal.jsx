@@ -96,26 +96,30 @@ class CarHis extends Component {
     };
     handleEditDeal = (policy) => {
         const _id = this.props.deal._id;
-        fetch(
-            `https://rentsee.poomrokc.services/rentsee/api/rents/editPolicy/${_id}`,
-            {
-                method: 'PATCH',
-                headers: utils.authHeader(),
-                body: JSON.stringify({
-                    policy: policy,
-                }),
-            }
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then((resJson) => {
-                console.log(resJson);
-            })
-            .catch((error) => {
-                console.log('Oh on! An error occur :(');
-                console.log(error);
-            });
+        if (policy.trim().length === 0) {
+            alert('Invalid policy!');
+        } else {
+            fetch(
+                `https://rentsee.poomrokc.services/rentsee/api/rents/editPolicy/${_id}`,
+                {
+                    method: 'PATCH',
+                    headers: utils.authHeader(),
+                    body: JSON.stringify({
+                        policy: policy,
+                    }),
+                }
+            )
+                .then((response) => {
+                    return response.json();
+                })
+                .then((resJson) => {
+                    console.log(resJson);
+                })
+                .catch((error) => {
+                    console.log('Oh on! An error occur :(');
+                    console.log(error);
+                });
+        }
     };
     handleReceipt = () => {
         const _id = this.props.deal._id;
