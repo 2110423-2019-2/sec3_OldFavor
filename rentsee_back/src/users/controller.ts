@@ -50,7 +50,7 @@ export async function findById(ctx: Context) {
 
 export async function verify(ctx: Context) {
   await service.verify(ctx.params.id);
-  ctx.redirect('https://renteee.poomrokc.services/profile');
+  ctx.redirect('https://rentsee.poomrokc.services/profile');
 }
 
 export async function profile(ctx: Context) {
