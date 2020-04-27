@@ -40,6 +40,7 @@ class CarHis extends Component {
                 });
         }
     }
+
     handleThisView = () => {
         //alert("wew");
         History.handleThisView(this.props._id);

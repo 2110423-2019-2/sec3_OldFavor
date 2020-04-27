@@ -137,8 +137,8 @@ class Profile extends Component {
             return rents.map((rent) => {
                 return (
                     <CarHis
-                        returnCar={this.returnCar}
-                        receivedCar={this.receivedCar}
+                        returnCar={this.returnCar(rent._id)}
+                        receivedCar={this.receivedCar(rent._id)}
                         pickUpLocation={rent.pickUpLocation}
                         returnLocation={rent.returnLocation}
                         brand={rent.car.carModel}
@@ -175,8 +175,8 @@ class Profile extends Component {
         }
     }
 
-    receivedCar = () => {
-        const _id = this.props.deal._id;
+    receivedCar = (_id) => {
+        // const _id = this.props.deal._id;
         fetch(
             `https://rentsee.poomrokc.services/rentsee/api/rents/receivedCar/${_id}`,
             {
@@ -196,8 +196,8 @@ class Profile extends Component {
             });
     };
 
-    returnCar = () => {
-        const _id = this.props.deal._id;
+    returnCar = (_id) => {
+        // const _id = this.props.deal._id;
         fetch(
             `https://rentsee.poomrokc.services/rentsee/api/rents/returnCar/${_id}`,
             {
