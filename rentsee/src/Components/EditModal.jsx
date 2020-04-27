@@ -5,7 +5,7 @@ class EditModal extends Component {
         super(props);
         this.state = {
             display: 'none',
-            policy: this.props.policy
+            policy: this.props.policy,
         };
         this.toggle = this.toggle.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -66,6 +66,7 @@ class EditModal extends Component {
                                     style={{ width: '100%' }}
                                     rows='10'
                                     onChange={this.handleChange}
+                                    name='policy'
                                     value={this.state.policy}
                                 />
                             </div>
