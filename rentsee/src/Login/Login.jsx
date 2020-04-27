@@ -9,7 +9,7 @@ class Login extends Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
         };
         this.handleFormChange = this.handleFormChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,28 +26,29 @@ class Login extends Component {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 username: this.state.username,
-                password: this.state.password
-            })
+                password: this.state.password,
+            }),
         })
-            .then(response => {
+            .then((response) => {
                 if (response.status === 200) {
                     return response.json();
                 } else {
                     alert('Username or password is wrong');
                 }
             })
-            .then(resJson => {
+            .then((resJson) => {
                 if (resJson) {
                     localStorage.setItem('userInfo', JSON.stringify(resJson));
                     this.props.history.push('/');
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log('error: ', error);
+                alert(error.message);
             });
     }
     render() {
@@ -56,10 +57,18 @@ class Login extends Component {
                 <div className='row h-100'>
                     <div className='col-lg-6 col-md-6 d-none d-lg-block h-100'>
                         <a href='/'>
-                            <img className='logo' src={rentseeLogo} alt=''></img>
+                            <img
+                                className='logo'
+                                src={rentseeLogo}
+                                alt=''
+                            ></img>
                         </a>
                         <div className='image-container h-100'>
-                            <img className='login-car' src={loginCar} alt=''></img>
+                            <img
+                                className='login-car'
+                                src={loginCar}
+                                alt=''
+                            ></img>
                         </div>
                         <div className='login-banner'></div>
                         <div className='login-inner-banner'></div>
@@ -113,11 +122,19 @@ class Login extends Component {
                                 <a className='text d-block my-3' href='/login'>
                                     Forget password?
                                 </a>
-                                <input type='submit' className='btn mt-4' value='Login' />
+                                <input
+                                    type='submit'
+                                    className='btn mt-4'
+                                    value='Login'
+                                />
                             </form>
                             <div className='mt-5'>
                                 Don’t have an account yet?{' '}
-                                <a className='text' href='/register' style={{ fontWeight: 'bold' }}>
+                                <a
+                                    className='text'
+                                    href='/register'
+                                    style={{ fontWeight: 'bold' }}
+                                >
                                     Register
                                 </a>
                             </div>
