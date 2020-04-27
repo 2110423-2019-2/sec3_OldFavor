@@ -26,11 +26,12 @@ export async function create(notification: Notification) {
       pass: 'npoeqegwjzeyfksz'
     }
   });
-  return await transporter.sendMail({
+  transporter.sendMail({
     from: '"RENTSEE" <sheetplus.income.notifier@gmail.com>',
     to: email,
     subject: "RENTSEE: Notification",
     text: notification.message,
     html: notification.message,
   });
+  return {success:true};
 }
