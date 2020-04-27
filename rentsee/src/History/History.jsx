@@ -159,8 +159,8 @@ class Profile extends Component {
             return rents.map((rent) => {
                 return (
                     <CarHis
-                        returnCar={this.returnCar}
-                        receivedCar={this.receivedCar}
+                        returnCar={this.returnCar(rent._id)}
+                        receivedCar={this.receivedCar(rent._id)}
                         pickUpLocation={rent.pickUpLocation}
                         returnLocation={rent.returnLocation}
                         brand={rent.car.carModel}
