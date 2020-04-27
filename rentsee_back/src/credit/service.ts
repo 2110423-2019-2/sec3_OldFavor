@@ -49,10 +49,9 @@ export async function pay_rent(rentId: string, credit: Credit) {
   const pay = await dispose_money_from(rents[0].totalPrice, credit)
   if (!pay.ok) throw new Error("payment bank error")
   const write = await rent_service.updateById(rentId, {
-    status: 4, // done
     credit_card: credit.creaditCardNumber,
     credit_date: new Date()
-  }) // status 4=done
+  })
   if (!write.ok) throw new Error("update status error, but payment is done")
   return write.value
 }

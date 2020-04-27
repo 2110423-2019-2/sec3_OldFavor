@@ -42,6 +42,14 @@ export async function confirm(ctx: Context) {
     )
     let renterId = new ObjectID(ctx.state.user._id)
 
+   await notifications.create({
+      to: rent.lessorId,
+      message:
+        'Someone rented your car, please check your history page',
+      read: false,
+      created: new Date(),
+    })
+
     await notifications.create({
       to: renterId,
       message:
