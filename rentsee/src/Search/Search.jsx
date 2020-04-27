@@ -11,7 +11,7 @@ import './Search.css';
 import Footer from '../Components/Footer';
 
 function formatNumber(num) {
-    if (num){
+    if (num) {
         let numOut = num;
         if (numOut.toString().includes('.')) {
             return numOut
@@ -43,7 +43,7 @@ class Search extends Component {
             selectedRent: '',
             totalCost: undefined,
             deposite: undefined,
-            accepted: false
+            accepted: false,
         };
         this.handleFormChange = this.handleFormChange.bind(this);
         this.carResult = this.carResult.bind(this);
@@ -96,34 +96,34 @@ class Search extends Component {
             pickUpDateTime,
             returnDateTime,
             pickUpLocation,
-            returnLocation
+            returnLocation,
         });
         fetch(getUrl, {
-            method: 'GET'
+            method: 'GET',
         })
-            .then(response => {
+            .then((response) => {
                 return response.json();
             })
-            .then(resJson => {
+            .then((resJson) => {
                 const searchRes = resJson;
                 this.setState({ searchRes });
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
 
         fetch('https://rentsee.poomrokc.services/rentsee/api/profile', {
             method: 'GET',
-            headers: utils.authHeader()
+            headers: utils.authHeader(),
         })
-            .then(response => {
+            .then((response) => {
                 return response.json();
             })
-            .then(resJson => {
+            .then((resJson) => {
                 console.log(resJson);
                 this.setState({ username: resJson.username });
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
     }
@@ -143,26 +143,26 @@ class Search extends Component {
         }`;
         this.props.history.push('/search?getUrl=' + getUrl);
         fetch(getUrl, {
-            method: 'GET'
+            method: 'GET',
         })
-            .then(response => {
+            .then((response) => {
                 return response.json();
             })
-            .then(resJson => {
+            .then((resJson) => {
                 const searchRes = resJson;
                 this.setState({ searchRes });
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
     };
-    handleSortChange = sort => {
+    handleSortChange = (sort) => {
         this.setState({ sort: sort });
         process.nextTick(() => {
             this.search();
         });
     };
-    handleRent = _id => {
+    handleRent = (_id) => {
         var rent = findIndex(this.state.searchRes, ['_id', _id]);
         rent = this.state.searchRes[rent];
 
@@ -180,7 +180,7 @@ class Search extends Component {
             pickUpLocation: rent.pickUpLocation,
             returnLocation: rent.returnLocation,
             totalCost: totalCost,
-            deposite: deposite
+            deposite: deposite,
         });
     };
     handleConfirm = () => {
@@ -192,33 +192,56 @@ class Search extends Component {
     };
     handlePayment = () => {
         fetch(
-            `https://rentsee.poomrokc.services/rentsee/api/rents/confirm/${this.state.selectedRentId}`,
+            `https://rentsee.poomrokc.services/rentsee/api/rents/${this.state.selectedRentId}/creditcard`,
             {
-                method: 'PATCH',
+                method: 'POST',
                 headers: utils.authHeader(),
                 body: JSON.stringify({
-                    pickUpDateTime: this.state.pickUpDateTime,
-                    pickUpLocation: this.state.pickUpLocation,
-                    returnDateTime: this.state.returnDateTime,
-                    returnLocation: this.state.returnLocation
-                })
+                    creaditCardNumber: this.state.creditCardNumber,
+                    expireMonth: this.state.expMonth,
+                    expireYear: this.state.expYear,
+                    ccv: this.state.ccv,
+                }),
             }
         )
-            .then(response => {
+            .then((response) => {
                 return response.json();
             })
-            .then(resJson => {
+            .then((resJson) => {
                 console.log(resJson);
-                this.setState({ success: true });
-            })
-            .catch(err => {
-                console.log(err);
-                alert(err);
+                if (resJson.message) {
+                    alert(resJson.message);
+                } else {
+                    fetch(
+                        `https://rentsee.poomrokc.services/rentsee/api/rents/confirm/${this.state.selectedRentId}`,
+                        {
+                            method: 'PATCH',
+                            headers: utils.authHeader(),
+                            body: JSON.stringify({
+                                pickUpDateTime: this.state.pickUpDateTime,
+                                pickUpLocation: this.state.pickUpLocation,
+                                returnDateTime: this.state.returnDateTime,
+                                returnLocation: this.state.returnLocation,
+                            }),
+                        }
+                    )
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((resJson) => {
+                            console.log(resJson);
+                            this.setState({ success: true });
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            alert(err);
+                        });
+                }
             });
     };
     carResult() {
         const rents = this.state.searchRes;
-        return rents.map(rent => {
+        return rents.map((rent) => {
             return (
                 <CarItem
                     key={rent._id}
@@ -445,7 +468,8 @@ class Search extends Component {
                     <div className='container px-5'>
                         <label className='my-5 text-center w-100'>
                             <span className='' style={{ fontSize: '1.6em' }}>
-                                Booking Deposite: {formatNumber(this.state.deposite)}{' '}
+                                Booking Deposite:{' '}
+                                {formatNumber(this.state.deposite)}{' '}
                             </span>
                             <span
                                 className='font-weight-thin'
@@ -545,7 +569,16 @@ class Search extends Component {
                 <Header />
                 <div className='body-content'>
                     <div className='container'>
-                        <BarStatus count={4} current={this.state.state} labels={['1. Search for a car', '2. Select a car', '3. Rental Information', '4. Payment']}/>
+                        <BarStatus
+                            count={4}
+                            current={this.state.state}
+                            labels={[
+                                '1. Search for a car',
+                                '2. Select a car',
+                                '3. Rental Information',
+                                '4. Payment',
+                            ]}
+                        />
                         {this.renderByState()}
                     </div>
                 </div>
