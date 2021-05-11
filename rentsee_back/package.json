@@ -20,7 +20,7 @@
     "koa-mongo": "^1.9.1",
     "koa-router": "^8.0.6",
     "koa2-cors": "^2.0.6",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "nodemailer": "^6.4.4"
   },
   "devDependencies": {
