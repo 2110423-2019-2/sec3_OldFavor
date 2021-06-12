@@ -21,7 +21,7 @@
     "koa-router": "^8.0.6",
     "koa2-cors": "^2.0.6",
     "lodash": "^4.17.21",
-    "nodemailer": "^6.4.4"
+    "nodemailer": "^6.4.16"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.3.7",
